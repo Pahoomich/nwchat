@@ -7,7 +7,8 @@ create table users
 	login varchar(255) not null,
 	password varchar(255) not null,
 	firstname varchar(255) not null,
-	lastname varchar(255) not null
+	lastname varchar(255) not null,
+	active integer
 );
 
 alter table users owner to admin;
@@ -53,8 +54,8 @@ create function update_changetimestamp_column() returns trigger
 	language plpgsql
 as $$
 BEGIN
-  NEW.changetimestamp = now();
-  RETURN NEW;
+	NEW.changetimestamp = now();
+	RETURN NEW;
 END;
 $$;
 
@@ -64,12 +65,12 @@ create function update_modified_column() returns trigger
 	language plpgsql
 as $$
 BEGIN
-  IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
-    NEW.last_used = now();
-    RETURN NEW;
-  ELSE
-    RETURN OLD;
-  END IF;
+	IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
+		NEW.last_used = now();
+		RETURN NEW;
+	ELSE
+		RETURN OLD;
+	END IF;
 END;
 $$;
 
@@ -79,5 +80,5 @@ create trigger bu_persistent_logins
 	before update
 	on persistent_logins
 	for each row
-	execute procedure update_modified_column();
+execute procedure update_modified_column();
 
