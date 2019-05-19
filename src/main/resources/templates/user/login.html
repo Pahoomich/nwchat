@@ -12,15 +12,15 @@
 
 <body>
 <div class="container">
-    <div class="alert alert-danger" role="alert" th:if="${param.error}">
-        The email or password is incorrect!
-    </div>
+    <!--<div class="alert alert-danger" role="alert" th:if="${param.error}">-->
+        <!--The email or password is incorrect!-->
+    <!--</div>-->
     <form th:action="@{/login}" method="post" >
         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
         <label for="inputLogin" class="sr-only">Login</label>
-        <input type="login" id="login" name="login" class="form-control" placeholder="Login" required autofocus>
+        <input type="login" id="inputLogin" name="login" class="form-control" placeholder="login" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" name="remember-me" /> Remember me
