@@ -3,8 +3,6 @@ package com.nwchat.сontroller;
 import com.nwchat.model.User;
 import com.nwchat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value= {"/", "/login"}, method= RequestMethod.GET)
+    @RequestMapping(value= "/login", method= RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView model = new ModelAndView();
 
@@ -27,7 +26,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value= {"/signup"}, method=RequestMethod.GET)
+    @RequestMapping(value= "/signup", method=RequestMethod.GET)
     public ModelAndView signup() {
         ModelAndView model = new ModelAndView();
         User user = new User();
@@ -37,7 +36,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value= {"/signup"}, method=RequestMethod.POST)
+    @RequestMapping(value= "/signup", method=RequestMethod.POST)
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView();
         User userExists = userService.findUserByLogin(user.getLogin());
@@ -54,24 +53,6 @@ public class UserController {
             model.setViewName("user/signup");
         }
 
-        return model;
-    }
-
-    @RequestMapping(value= {"/home/home"}, method=RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView model = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByLogin(auth.getName());
-
-        model.addObject("userName", user.getFirstName() + " " + user.getLastName());
-        model.setViewName("home/home");
-        return model;
-    }
-
-    @RequestMapping(value= {"/access_denied"}, method=RequestMethod.GET)
-    public ModelAndView accessDenied() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("errors/access_denied");
         return model;
     }
 

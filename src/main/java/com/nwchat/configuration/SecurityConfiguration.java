@@ -1,6 +1,5 @@
 package com.nwchat.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -42,16 +41,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/signup").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/user/signup").permitAll()
                 .antMatchers("/home/**").hasAuthority("admin").anyRequest()
                 .authenticated().and().csrf().disable()
-                .formLogin().loginPage("/login").failureUrl("/login?error=true")
+                .formLogin().loginPage("/user/login").failureUrl("/user/login?error=true")
                 .defaultSuccessUrl("/home/home")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                 .logoutSuccessUrl("/")
                 .and().rememberMe()
                 .tokenRepository(persistentTokenRepository())
