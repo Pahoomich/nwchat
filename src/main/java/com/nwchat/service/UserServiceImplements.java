@@ -9,31 +9,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 @Service("userService")
 public class UserServiceImplements implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	private final UserRepository userRepository;
 
-    @Autowired
-    private  RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public User findUserByLogin(String login) {
-        return userRepository.findByLogin(login);
-    }
+	public UserServiceImplements(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
 
-    @Override
-    public void saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(1);
-        Role userRole = roleRepository.findByRole("admin");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
-    }
+	@Override
+	public User findUserByLogin(String login) {
+		return userRepository.findByLogin(login);
+	}
+
+	@Override
+	public void saveUser(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setActive(1);
+		Role userRole = roleRepository.findByRole("admin");
+		user.setRoles(Collections.singleton(userRole));
+		userRepository.save(user);
+	}
 }
