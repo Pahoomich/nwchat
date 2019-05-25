@@ -49,4 +49,10 @@ public class IndexController {
 		return model;
 	}
 
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public ModelAndView error() {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("errors/404");
+		return model;
+	}
 }

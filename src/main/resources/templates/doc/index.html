@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/authenticated}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div class="" layout:fragment="content">
+    <div class="row">
+        <div class="col-10">
+            <h1>
+                Docs
+            </h1>
+        </div>
+        <div class="col-2">
+
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Date Create</th>
+            <th scope="col">Date Update</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <th:block th:each="doc : ${docList}">
+            <tr>
+                <td th:text="${doc.getTitle()}"></td>
+                <td th:text="${doc.dateCreate}">24.03.2002</td>
+                <td th:text="${doc.dateUpdate}">24.03.2002</td>
+                <td th:with="baseUrl=('/doc/'+${doc.id})">
+                    <a class="btn btn-outline-success" th:href="@{${baseUrl}}">View</a>
+                    <a class="btn btn-outline-warning" th:href="@{${baseUrl}+'/edit'}">Edit</a>
+                    <a th:href="@{${baseUrl}}"
+                       data-confirm="Are you sure?" class="btn btn-outline-danger"
+                       rel="nofollow" data-method="delete">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -4,13 +4,22 @@
 <head>
     <title layout:title-pattern="$CONTENT_TITLE"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet"
-          id="bootstrap-css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!--Style-->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animations.css}" rel="stylesheet"/>
+
+    <!--JS-->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+
+    <!--Style Custom-->
     <link th:href="@{/css/animations.css}" rel="stylesheet"/>
     <link th:href="@{/css/core.css}" rel="stylesheet"/>
+
+    <!--JS Custom-->
+
 </head>
 <body>
 <div th:replace="fragments/header :: header">
@@ -18,6 +27,13 @@
 </div>
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+            </div>
+        </div>
+    </div>
     <div class="row" layout:fragment="content">
         <!--   extend     -->
     </div>
