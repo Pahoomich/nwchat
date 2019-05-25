@@ -15,7 +15,7 @@
             </h1>
         </div>
         <div class="col-2">
-
+            <a class="btn btn-success my-2 my-lg-0" th:href="@{/doc/new}">Create</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -37,11 +37,7 @@
                 <td th:with="baseUrl=('/doc/'+${doc.id})">
                     <a class="btn btn-outline-success" th:href="@{${baseUrl}}">View</a>
                     <a class="btn btn-outline-warning" th:href="@{${baseUrl}+'/edit'}">Edit</a>
-                    <a th:href="@{${baseUrl}}"
-                       data-confirm="Are you sure?" class="btn btn-outline-danger"
-                       rel="nofollow" data-method="delete">
-                        Delete
-                    </a>
+                    <a class="btn btn-outline-danger" th:href="@{${baseUrl}+'/delete'}">Delete</a>
                 </td>
             </tr>
         </th:block>
