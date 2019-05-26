@@ -1,5 +1,6 @@
 package com.nwchat.model;
 
+
 public class ChatMessage {
     private MessageType type;
     private String content;

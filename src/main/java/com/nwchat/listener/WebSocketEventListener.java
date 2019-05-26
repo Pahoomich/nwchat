@@ -1,16 +1,12 @@
-package com.nwchat.listener;
+package com.example.websocketdemo.controller;
 
 import com.nwchat.model.ChatMessage;
-import com.nwchat.model.User;
-import com.nwchat.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -22,10 +18,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 public class WebSocketEventListener {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
-//    private final UserService userService;
-//    public WebSocketEventListener(UserService userService) {
-//        this.userService = userService;
-//    }
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
@@ -40,10 +32,6 @@ public class WebSocketEventListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByLogin(auth.getName());
-
-//        String username = user.getFirstName();
         if(username != null) {
             logger.info("User Disconnected : " + username);
 
@@ -51,7 +39,7 @@ public class WebSocketEventListener {
             chatMessage.setType(ChatMessage.MessageType.LEAVE);
             chatMessage.setSender(username);
 
-            messagingTemplate.convertAndSend("/chat/chat/topic/public", chatMessage);
+            messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
     }
 }
