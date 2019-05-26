@@ -62,4 +62,15 @@ public class Doc {
 	public void setDateUpdate(Timestamp dateUpdate) {
 		this.dateUpdate = dateUpdate;
 	}
+
+	@PrePersist
+	protected void onCreate() {
+		dateCreate = new Timestamp(System.currentTimeMillis());
+		dateUpdate = dateCreate;
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		dateUpdate = new Timestamp(System.currentTimeMillis());
+	}
 }
