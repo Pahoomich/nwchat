@@ -8,12 +8,11 @@
 </head>
 <body>
 <div layout:fragment="content">
-
     <form class="form-signin was-validated" th:action="@{/doc/}" method="post" th:object="${doc}">
 
-        <input type="hidden" th:field="*{id}" name="id">
-
         <div class="row">
+            <input type="hidden" th:field="*{id}" name="id">
+
             <div class="col-sm-2 col-12">
                 <label for="title">Title:</label>
             </div>
@@ -31,10 +30,10 @@
 
             <div class="actions col-12">
                 <button class="btn btn-success text-uppercase" type="submit">Save</button>
+                <a class="btn btn-secondary" th:href="@{/doc/}">Back</a>
             </div>
         </div>
     </form>
-
 </div>
 </body>
 </html>
