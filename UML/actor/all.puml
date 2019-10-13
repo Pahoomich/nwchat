@@ -8,8 +8,8 @@
 
 
 
-user <- lk
-user <- brother
-user <- manager
+user <-- lk
+user <--- brother
+user <---- manager
 !endsub
 @enduml

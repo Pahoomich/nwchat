@@ -1,0 +1,165 @@
+@startuml
+' отключить схематическое отображение public private ...
+skinparam classAttributeIconSize 0
+
+'
+'
+' конфиги
+'
+'
+
+class SecurityConfiguration{
+    -  bCryptPasswordEncoder: BCryptPasswordEncoder
+    - dataSource : DataSource
+    - USERS_QUERY : String
+    - ROLES_QUERY : String
+    + SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, DataSource dataSource) : SecurityConfiguration
+    # configure(AuthenticationManagerBuilder auth) : void
+    # configure(HttpSecurity http) : void
+    + persistentTokenRepository() : PersistentTokenRepository
+}
+
+class WebSocketConfig{
+    + registerStompEndpoints(StompEndpointRegistry registry) : void
+    + configureMessageBroker(MessageBrokerRegistry registry) : void
+}
+
+
+class WebMvcConfig{
+	+ passwordEncoder() : BCryptPasswordEncoder
+	+ layoutDialect() : LayoutDialect
+}
+
+class NwchatApplication{
+    + main(String[] args) : void
+}
+
+'
+'
+' интерфейсы
+'
+'
+
+interface UserRepository{
+    findByLogin(String login) : User
+}
+
+interface DocsRepository
+
+interface RoleRepository{
+    findByRole(String role) : Role
+}
+
+
+interface UserService
+
+interface CrudRepository <T, ID> {
+    save(T var1): T
+    saveAll(Iterable<T> var1) : Iterable<T>
+    findById(ID var1) : Optional<T>
+    existsById(ID var1) : boolean
+    findAll() : Iterable<T>
+    findAllById(Iterable<ID> var1) : Iterable<T>
+    count() : long
+    deleteById(ID var1) : void
+    delete(T var1) : void
+    deleteAll(Iterable<T> var1) : void
+    deleteAll() : void
+}
+
+'
+'
+' контроллеры
+'
+'
+
+class ChatController {
+    - UserService userService
+	+ (UserService userService) : ChatController
+	+ sendMessage(@Payload ChatMessage chatMessage) : ChatMessage
+	+ addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) : ChatMessage
+	+ index() : ModelAndView
+}
+
+class "DocController" {
+  	- DocsRepository docsRepository
+  	+ index() : ModelAndView
+  	+ show(long id) : ModelAndView
+  	+ create(Doc doc, BindingResult result) : ModelAndView
+  	+ create() : ModelAndView
+  	+ update(long id) : ModelAndView
+  	+ delete(long id) : ModelAndView
+
+}
+
+class "IndexController" {
+  userService : UserService
+}
+
+class "UserController" {
+  userService : UserService
+}
+
+
+
+
+
+
+
+
+class "Role" {
+  role_id : int
+  role : String
+}
+
+class "ChatMessage" {
+  type : MessageType
+  content : String
+  sender : String
+}
+
+class "Doc" {
+  id : long
+  title : String
+  text : String
+  dateCreate : Timestamp
+  dateUpdate : Timestamp
+}
+
+class "User" {
+  user_id : int
+  login : String
+  firstName : String
+  lastName : String
+  password : String
+  active : int
+  roles : Set<Role>
+}
+
+class "UserServiceImplements" {
+  userRepository : UserRepository
+  roleRepository : RoleRepository
+  bCryptPasswordEncoder : BCryptPasswordEncoder
+}
+
+'
+'
+' связи между интерфейсами
+'
+'
+
+CrudRepository <|-- UserRepository
+CrudRepository <|-- DocsRepository
+CrudRepository <|-- RoleRepository
+
+
+"UserService" <|-- "UserServiceImplements"
+"ChatController" --> "UserService" : userService
+"DocController" --> "DocsRepository" : docsRepository
+"IndexController" --> "UserService" : userService
+"UserController" --> "UserService" : userService
+"User" --> "*" "Role" : roles
+"UserServiceImplements" --> "UserRepository" : userRepository
+"UserServiceImplements" --> "RoleRepository" : roleRepository
+
+@enduml
