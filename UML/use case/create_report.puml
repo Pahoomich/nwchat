@@ -1,0 +1,12 @@
+@startuml
+!startsub BASIC
+usecase (Создать отчет) as UC1_report
+usecase (Проверить \n права доступа) as check
+usecase (CRUD DB) as crud_bd
+
+manager - UC1_report
+
+UC1_report .> check:<<include>>
+UC1_report ..> crud_bd:<<include>>
+!endsub
+@enduml
