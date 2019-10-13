@@ -1,0 +1,11 @@
+@startuml
+!startsub BASIC
+!import ../actor/user.puml
+
+
+usecase (Last\nusecase) as UC4
+
+
+user - UC4
+!endsub
+@enduml
