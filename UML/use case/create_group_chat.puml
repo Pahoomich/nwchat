@@ -1,8 +1,7 @@
 @startuml
 !startsub BASIC
-!import ../actor/manager.puml
 usecase (Создать групповой чат) as UC1_group_chat
-usecase (Проверить \n права доступа) as access
+usecase (Проверить \n права доступа) as check
 usecase (Выбрать \n людей из списка) as select_staff
 usecase (Выбрать  пункты \n чеклиста) as select_item
 usecase (CRUD DB) as crud_bd
@@ -10,7 +9,7 @@ usecase (Создать чат) as create_chat
 
 manager - UC1_group_chat
 
-UC1_group_chat .> access:<<include>>
+UC1_group_chat .> check:<<include>>
 UC1_group_chat ..> select_staff:<<include>>
 UC1_group_chat ..> select_item:<<include>>
 UC1_group_chat ...> create_chat:<<include>>
