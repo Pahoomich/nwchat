@@ -6,7 +6,7 @@ usecase (Проверка прав доступа) as check
 usecase (Запрос в базу данных) as crud_bd
 usecase (Получить идентификатор пользователя) as receive_user_id
 
-user - (check)
+user -- (check)
 check ..> receive_user_id : <<include>>
 check ..> crud_bd : <<include>>
 

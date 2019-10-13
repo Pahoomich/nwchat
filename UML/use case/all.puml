@@ -1,12 +1,12 @@
 @startuml
 !includesub ../actor/all.puml!BASIC
 
+!includesub check_privelegii.puml!BASIC
+!includesub create_group_chat.puml!BASIC
+!includesub create_order.puml!BASIC
+!includesub create_report.puml!BASIC
 !includesub login.puml!BASIC
 !includesub logout.puml!BASIC
-!includesub create_order.puml!BASIC
-!includesub create_group_chat.puml!BASIC
-
-!includesub check_privelegii.puml!BASIC
 !includesub receive_msg.puml!BASIC
 !includesub see_msg.puml!BASIC
 !includesub select_stuff.puml!BASIC
