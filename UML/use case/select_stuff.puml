@@ -1,0 +1,18 @@
+@startuml
+
+!startsub BASIC
+!include ../actor/lk.puml
+!include ../actor/manager.puml
+
+(Выбор людей из списка ) as select
+
+lk --(select)
+manager - (select)
+
+(select) ..>(Поиск идентификатора пользователя в БД )
+(select) ..>(Создание общего чата)
+
+!endsub
+
+@enduml
+

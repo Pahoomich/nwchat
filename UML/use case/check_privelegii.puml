@@ -1,0 +1,10 @@
+@startuml
+!startsub BASIC
+!include ../actor/user.puml
+(Проверка привелегий) as Check
+
+user - (Check)
+(Check) ..> (Запрос в базу данных ):<include>
+(Check) ..> (Предоставление функционала):<include>
+!endsub
+@enduml

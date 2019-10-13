@@ -1,0 +1,10 @@
+@startuml
+!startsub BASIC
+!include ../actor/user.puml
+(Получить сообщение ) as lookMsg
+
+user - (lookMsg)
+(lookMsg) ..> (Запрос в базу данных):<include>
+(lookMsg) ..> (Отображение сообщения в списке):<include>
+!endsub
+@enduml@enduml
