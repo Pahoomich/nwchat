@@ -1,20 +1,20 @@
 @startuml
 !startsub BASIC
 !import ../actor/lk.puml
-usecase (Создать приказ) as UC1
-usecase (Проверить \n права доступа) as UC2
-usecase (Выбрать \n людей из списка) as UC3
-usecase (Выбрать  пункты \n чеклиста) as UC4
-usecase (Сохранить документ) as UC5
-usecase (CRUD DB) as UC6
+usecase (Создать приказ) as UC1_order
+usecase (Проверить \n права доступа) as UC2_order
+usecase (Выбрать \n людей из списка) as UC3_order
+usecase (Выбрать  пункты \n чеклиста) as UC4_order
+usecase (Сохранить документ) as UC5_order
+usecase (CRUD DB) as UC6_order
 
-lk - UC1
+lk - UC1_order
 
-UC1 .> UC2:<<include>>
-UC1 ..> UC3:<<include>>
-UC1 ..> UC4:<<include>>
-UC1 ...> UC5:<<include>>
-UC5 .> UC6:<<include>>
+UC1_order .> UC2_order:<<include>>
+UC1_order ..> UC3_order:<<include>>
+UC1_order ..> UC4_order:<<include>>
+UC1_order ...> UC5_order:<<include>>
+UC5_order .> UC6_order:<<include>>
 !endsub
 
 @enduml

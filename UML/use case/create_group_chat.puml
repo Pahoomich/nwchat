@@ -1,0 +1,20 @@
+@startuml
+!startsub BASIC
+!import ../actor/manager.puml
+usecase (Создать групповой чат) as UC1_group_chat
+usecase (Проверить \n права доступа) as UC2_group_chat
+usecase (Выбрать \n людей из списка) as UC3_group_chat
+usecase (Выбрать  пункты \n чеклиста) as UC4_group_chat
+usecase (Сохранить документ) as UC5_group_chat
+usecase (CRUD DB) as UC6_group_chat
+
+manager - UC1_group_chat
+
+UC1_group_chat .> UC2_group_chat:<<include>>
+UC1_group_chat ..> UC3_group_chat:<<include>>
+UC1_group_chat ..> UC4_group_chat:<<include>>
+UC1_group_chat ...> UC5_group_chat:<<include>>
+UC5_group_chat .> UC6_group_chat:<<include>>
+!endsub
+
+@enduml

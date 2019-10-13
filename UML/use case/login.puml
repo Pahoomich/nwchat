@@ -1,16 +1,16 @@
 @startuml
 !startsub BASIC
 !import ../actor/user.puml
-usecase (Login) as UC1
-usecase (Проверить \n UserLogin и \n Password) as UC2
-usecase (Предоставить\n доступ к системе) as UC3
-usecase (Отобразить \n сообщение \n об ошибке) as UC4
+usecase (Login) as UC1_login
+usecase (Проверить \n UserLogin и \n Password) as UC2_login
+usecase (Предоставить\n доступ к системе) as UC3_login
+usecase (Отобразить \n сообщение \n об ошибке) as UC4_login
 
-user - UC1
+user - UC1_login
 
-UC1 .> UC2:<<include>>
-UC1 <.. UC3:<<extend>>
-UC1 <.. UC4:<<extend>>
+UC1_login .> UC2_login:<<include>>
+UC1_login <.. UC3_login:<<extend>>
+UC1_login <.. UC4_login:<<extend>>
 !endsub
 
 @enduml
