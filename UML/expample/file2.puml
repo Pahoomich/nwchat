@@ -1,0 +1,15 @@
+@startuml
+title this contains only B and D
+!includesub file1.puml!BASIC
+@enduml
+
+
+
+This file would be rendered exactly as if:
+
+@startuml
+
+title this contains only B and D
+B -> B : stuff2
+D -> D : stuff4
+@enduml

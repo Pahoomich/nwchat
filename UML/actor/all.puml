@@ -1,0 +1,17 @@
+@startuml
+
+!include lk.puml
+'!include brother.puml
+'!include manager.puml
+'!include time.puml
+!include user.puml
+
+
+
+
+user <- lk
+'user <- brother
+'user <- manager
+
+
+@enduml
