@@ -1,6 +1,6 @@
 @startuml
 !startsub BASIC
-!import ../actor/user.puml
+!include ../actor/user.puml
 
 usecase (logout) as logout
 
