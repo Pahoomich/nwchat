@@ -1,8 +1,7 @@
 @startuml
-
-!startsub BASIC
 !include ../actor/lk.puml
 !include ../actor/manager.puml
+!startsub BASIC
 
 (Выбрать людей из списка ) as select_stuff
 
@@ -12,6 +11,5 @@ manager - (select_stuff)
 (select_stuff) ..>(Поиск идентификатора пользователя в БД ):<<include>>
 
 !endsub
-
 @enduml
 

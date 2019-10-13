@@ -1,13 +1,14 @@
 @startuml
-!startsub BASIC
 !include ../actor/user.puml
-(Проверка прав доступа) as check
+!startsub BASIC
+
+usecase (Проверка прав доступа) as check
+usecase (Запрос в базу данных) as crud_bd
+usecase (Получить идентификатор пользователя) as receive_user_id
 
 user - (check)
-(Запрос в базу данных) as crud_bd
-(Получить идентификатор пользователя) as receive_id
-(check) ..> (receive_id):<<include>>
-(check) ..> (crud_bd):<<include>>
-(check) ..> (Предоставить функционала)
+check ..> receive_user_id : <<include>>
+check ..> crud_bd : <<include>>
+
 !endsub
 @enduml
