@@ -9,12 +9,12 @@ usecase (Выбрать  пункты \n чеклиста) as select_item
 usecase (CRUD DB) as crud_bd
 usecase (Создать чат) as create_chat
 
-manager - UC1_group_chat
-UC1_group_chat .> check:<<include>>
+manager -- UC1_group_chat
+UC1_group_chat ..> check:<<include>>
 UC1_group_chat ..> select_stuff:<<include>>
 UC1_group_chat ..> select_item:<<include>>
-UC1_group_chat ...> create_chat:<<include>>
-create_chat .> crud_bd:<<include>>
+UC1_group_chat ..> create_chat:<<include>>
+create_chat ..> crud_bd:<<include>>
 
 !endsub
 @enduml

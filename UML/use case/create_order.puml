@@ -8,12 +8,12 @@ usecase (Выбрать  пункты \n чеклиста) as select_item
 usecase (Сохранить документ) as safe_doc
 usecase (CRUD DB) as crud_bd
 
-lk - UC1_order
-UC1_order .> check:<<include>>
+lk -- UC1_order
+UC1_order ..> check:<<include>>
 UC1_order ..> select_stuff:<<include>>
 UC1_order ..> select_item:<<include>>
-UC1_order ...> safe_doc:<<include>>
-safe_doc .> crud_bd:<<include>>
+UC1_order ..> safe_doc:<<include>>
+safe_doc ..> crud_bd:<<include>>
 
 !endsub
 @enduml

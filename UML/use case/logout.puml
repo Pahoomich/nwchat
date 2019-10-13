@@ -6,9 +6,9 @@ usecase (logout) as logout
 usecase (завпись в лог файл) as log_doc
 usecase (Получить идентификатор пользователя) as receive_user_id
 
-user - logout
-logout .> log_doc : include
-logout .> receive_user_id: include
+user -- logout
+logout ..> log_doc : include
+logout ..> receive_user_id: include
 
 !endsub
 @enduml
