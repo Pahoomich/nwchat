@@ -2,19 +2,19 @@
 !startsub BASIC
 !import ../actor/lk.puml
 usecase (Создать приказ) as UC1_order
-usecase (Проверить \n права доступа) as UC2_order
-usecase (Выбрать \n людей из списка) as UC3_order
-usecase (Выбрать  пункты \n чеклиста) as UC4_order
-usecase (Сохранить документ) as UC5_order
-usecase (CRUD DB) as UC6_order
+usecase (Проверить \n права доступа) as access
+usecase (Выбрать \n людей из списка) as select_staff
+usecase (Выбрать  пункты \n чеклиста) as select_item
+usecase (Сохранить документ) as safe_doc
+usecase (CRUD DB) as crud_bd
 
 lk - UC1_order
 
-UC1_order .> UC2_order:<<include>>
-UC1_order ..> UC3_order:<<include>>
-UC1_order ..> UC4_order:<<include>>
-UC1_order ...> UC5_order:<<include>>
-UC5_order .> UC6_order:<<include>>
+UC1_order .> access:<<include>>
+UC1_order ..> select_staff:<<include>>
+UC1_order ..> select_item:<<include>>
+UC1_order ...> safe_doc:<<include>>
+safe_doc .> crud_bd:<<include>>
 !endsub
 
 @enduml
