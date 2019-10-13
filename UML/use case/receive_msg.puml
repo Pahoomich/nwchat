@@ -1,11 +1,14 @@
 @startuml
-!include ../actor/user.puml
 !startsub BASIC
+!include ../actor/user.puml
+!include ../actor/time.puml
 
 (Получить сообщение ) as look_msg
-(Запрос в базу данных) as crud_bd
 
-user -- (look_msg)
+user - (look_msg)
+time - (look_msg)
+
+(Запрос в базу данных) as crud_bd
 (look_msg) ..> (crud_bd):<<include>>
 (look_msg) ..> (Показать сообщения в списке):<include>>
 !endsub
