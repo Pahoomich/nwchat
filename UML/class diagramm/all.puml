@@ -162,4 +162,5 @@ CrudRepository <|-- RoleRepository
 "UserServiceImplements" --> "UserRepository" : userRepository
 "UserServiceImplements" --> "RoleRepository" : roleRepository
 
+
 @enduml

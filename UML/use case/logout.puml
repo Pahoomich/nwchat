@@ -3,11 +3,12 @@
 !include ../actor/user.puml
 
 usecase (logout) as logout
+usecase (завпись в лог файл) as log_doc
 
 user - logout
+
+
+logout .> log_doc : include
+
 !endsub
-
-
-logout .> (завпись в лог файл) : include
-
 @enduml

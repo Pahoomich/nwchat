@@ -2,7 +2,7 @@
 !startsub BASIC
 usecase (Создать приказ) as UC1_order
 usecase (Проверить \n права доступа) as check
-usecase (Выбрать \n людей из списка) as select_staff
+usecase (Выбрать \n людей из списка) as select_stuff
 usecase (Выбрать  пункты \n чеклиста) as select_item
 usecase (Сохранить документ) as safe_doc
 usecase (CRUD DB) as crud_bd
@@ -10,7 +10,7 @@ usecase (CRUD DB) as crud_bd
 lk - UC1_order
 
 UC1_order .> check:<<include>>
-UC1_order ..> select_staff:<<include>>
+UC1_order ..> select_stuff:<<include>>
 UC1_order ..> select_item:<<include>>
 UC1_order ...> safe_doc:<<include>>
 safe_doc .> crud_bd:<<include>>
