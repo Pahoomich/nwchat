@@ -1,10 +1,11 @@
 @startuml
 !startsub BASIC
 !include ../actor/user.puml
-(Проверка привелегий) as Check
+(Проверка прав доступа) as check
 
-user - (Check)
-(Check) ..> (Запрос в базу данных ):<include>
-(Check) ..> (Предоставление функционала):<include>
+user - (check)
+(Запрос в базу данных) as crud_bd
+(check) ..> (crud_bd):<include>
+(check) ..> (Предоставление функционала):<include>
 !endsub
 @enduml

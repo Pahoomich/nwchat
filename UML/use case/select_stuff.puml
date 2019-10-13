@@ -4,13 +4,12 @@
 !include ../actor/lk.puml
 !include ../actor/manager.puml
 
-(Выбор людей из списка ) as select
+(Выбор людей из списка ) as select_stuff
 
-lk --(select)
-manager - (select)
+lk --(select_stuff)
+manager - (select_stuff)
 
-(select) ..>(Поиск идентификатора пользователя в БД )
-(select) ..>(Создание общего чата)
+(select_stuff) ..>(Поиск идентификатора пользователя в БД ):<include>
 
 !endsub
 

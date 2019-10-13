@@ -4,7 +4,9 @@
 (Посмотреть сообщение ) as lookMsg
 
 user - (lookMsg)
-(lookMsg) ..> (Запрос в базу данных):<include>
+
+(Запрос в базу данных) as crud_bd
+(lookMsg) ..> (crud_bd):<include>
 (lookMsg) ..> (Отображение сообщения ):<include>
 !endsub
 @enduml
