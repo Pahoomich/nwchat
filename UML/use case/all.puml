@@ -1,7 +1,9 @@
 @startuml
 !import login.puml
+!import create_order.puml
 
 !includesub ../actor/all.puml!BASIC
 
 !includesub login.puml!BASIC
+!includesub create_order.puml!BASIC
 @enduml

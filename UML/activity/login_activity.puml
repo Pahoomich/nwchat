@@ -1,0 +1,15 @@
+@startuml
+
+(*) --> "Получить
+         UserLogin и
+         Password" as init
+if "[Введенный UserLogin и Password верны?]" then
+  -->[Yes] "Аутентифицировать
+                           User"
+  ---> (*)
+  else
+  -->[No] "Неверный UserLogin
+   или Password"
+  -> init
+endif
+@enduml
