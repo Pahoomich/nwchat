@@ -5,7 +5,9 @@
 
 user - (check)
 (Запрос в базу данных) as crud_bd
-(check) ..> (crud_bd):<include>
-(check) ..> (Предоставление функционала):<include>
+(Получить идентификатор пользователя) as receive_id
+(check) ..> (receive_id):<<include>>
+(check) ..> (crud_bd):<<include>>
+(check) ..> (Предоставить функционала)
 !endsub
 @enduml

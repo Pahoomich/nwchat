@@ -5,7 +5,7 @@
 
 user - (look_msg)
 (Запрос в базу данных) as crud_bd
-(look_msg) ..> (crud_bd):<include>
-(look_msg) ..> (Отображение сообщения в списке):<include>
+(look_msg) ..> (crud_bd):<<include>>
+(look_msg) ..> (Показать сообщения в списке):<include>>
 !endsub
 @enduml@enduml

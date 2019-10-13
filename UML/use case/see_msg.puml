@@ -7,6 +7,6 @@ user - (lookMsg)
 
 (Запрос в базу данных) as crud_bd
 (lookMsg) ..> (crud_bd):<include>
-(lookMsg) ..> (Отображение сообщения ):<include>
+(lookMsg) ..> (Показать сообщение):<<include>>
 !endsub
 @enduml
