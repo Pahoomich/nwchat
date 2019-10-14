@@ -1,5 +1,6 @@
 @startuml
 !include ../actor/user.puml
+!include ../actor/time.puml
 !startsub BASIC
 
 !include low/receive_msg.puml
@@ -7,6 +8,7 @@
 !include low/show_msg.puml
 
 user -- receive_msg
+time -- receive_msg
 receive_msg ..> crud_bd : <include>
 receive_msg ..> show_msg : <include>
 !endsub

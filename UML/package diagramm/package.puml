@@ -1,0 +1,35 @@
+@startuml
+package com.nwchat{
+    namespace Configuration{
+    }
+    namespace Listener{
+    }
+    namespace Model{
+    }
+
+    namespace Repository{
+    }
+
+    namespace Service{
+    }
+
+    namespace Controller{
+    }
+    namespace Templates{
+    }
+    Listener ..> Model:<<import>>
+    Service ..> Model:<<import>>
+    Controller ..> Model:<<import>>
+    Repository ..> Model:<<import>>
+    Templates ..> Model:<<use>>
+    Controller ..> Repository:<<import>>
+}
+
+
+
+
+
+
+
+
+@enduml
