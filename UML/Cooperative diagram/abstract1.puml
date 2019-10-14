@@ -1,0 +1,10 @@
+@startuml
+!include ../actor/user.puml
+
+rectangle "WebPage" as addManger
+rectangle Server
+user ->addManger:1: selectPeople('people1')
+
+addManger-> Server: request()
+addManger<-- Server: response()
+@enduml
