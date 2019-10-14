@@ -15,21 +15,27 @@ package com.nwchat{
 
     namespace Controller{
     }
-    namespace Templates{
-    }
-    Listener ..> Model:<<import>>
-    Service ..> Model:<<import>>
-    Controller ..> Model:<<import>>
-    Repository ..> Model:<<import>>
-    Templates ..> Model:<<use>>
-    Controller ..> Repository:<<import>>
+    Listener ..> Model : <import>
+    Service ..> Model : <import>
+    Controller ..> Model : <import>
+    Repository ..> Model : <import>
+    Controller ..> Repository : <import>
+    Controller ..> Service : <import>
 }
 
+package resources{
+    namespace static{
+        namespace css{
+        }
+        namespace js{
+        }
+    }
 
+    namespace Templates{
+    }
 
-
-
-
-
-
+    Templates ..> static.js : <import>
+    Templates ..> static.css : <import>
+}
+Templates <. Controller : <use>
 @enduml
