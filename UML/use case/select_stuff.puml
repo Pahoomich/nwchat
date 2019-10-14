@@ -3,12 +3,12 @@
 !include ../actor/manager.puml
 !startsub BASIC
 
-(Выбрать людей из списка ) as select_stuff
+!include low/select_stuff.puml
+!include low/crud_bd.puml
 
-lk --(select_stuff)
-manager -- (select_stuff)
-
-(select_stuff) ..>(Поиск идентификатора пользователя в БД ):<<include>>
+lk -- select_stuff
+manager -- select_stuff
+select_stuff ..> crud_bd :<include>
 
 !endsub
 @enduml

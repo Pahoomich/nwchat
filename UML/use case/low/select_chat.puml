@@ -1,0 +1,3 @@
+@startuml
+usecase (Выбрать чат из списка ) as select_chat
+@enduml

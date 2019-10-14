@@ -2,19 +2,19 @@
 !include ../actor/manager.puml
 !startsub BASIC
 
-usecase (Создать групповой чат) as UC1_group_chat
-usecase (Проверить \n права доступа) as check
-usecase (Выбрать \n людей из списка) as select_stuff
-usecase (Выбрать  пункты \n чеклиста) as select_item
-usecase (CRUD DB) as crud_bd
-usecase (Создать чат) as create_chat
+!include low/create_group_chat.puml
+!include low/check.puml
+!include low/select_stuff.puml
+!include low/select_item.puml
+!include low/crud_bd.puml
+!include low/create_chat.puml
 
-manager -- UC1_group_chat
-UC1_group_chat ..> check:<<include>>
-UC1_group_chat ..> select_stuff:<<include>>
-UC1_group_chat ..> select_item:<<include>>
-UC1_group_chat ..> create_chat:<<include>>
-create_chat ..> crud_bd:<<include>>
+manager -- create_group_chat
+create_group_chat ..> check : <include>
+create_group_chat ..> select_stuff : <include>
+create_group_chat ..> select_item : <include>
+create_group_chat ..> create_chat : <include>
+create_chat ..> crud_bd : <include>
 
 !endsub
 @enduml

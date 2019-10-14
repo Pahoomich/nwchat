@@ -1,0 +1,3 @@
+@startuml
+usecase (Выбрать пункты \n чеклиста) as select_item
+@enduml

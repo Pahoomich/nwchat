@@ -1,0 +1,3 @@
+@startuml
+usecase (ответить на сообщение) as response_msg
+@enduml

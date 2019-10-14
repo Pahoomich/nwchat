@@ -1,0 +1,3 @@
+@startuml
+usecase (Проверить \n UserLogin и \n Password) as UC2_login
+@enduml

@@ -1,0 +1,3 @@
+@startuml
+usecase (Завпись в лог файл) as log_doc
+@enduml

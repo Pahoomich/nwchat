@@ -1,0 +1,16 @@
+@startuml
+!include ../actor/user.puml
+!startsub BASIC
+
+!include low/response_msg.puml
+!include low/show_msg.puml
+!include low/crud_bd.puml
+!include low/select_msg.puml
+
+user -- response_msg
+response_msg ..> crud_bd : <include>
+response_msg ..> show_msg : <include>
+response_msg ..> select_msg : <include>
+
+!endsub
+@enduml

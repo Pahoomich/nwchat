@@ -1,0 +1,3 @@
+@startuml
+usecase (выбрать сообщение) as select_msg
+@enduml

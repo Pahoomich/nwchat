@@ -1,0 +1,3 @@
+@startuml
+usecase (Сохранить документ) as safe_doc
+@enduml

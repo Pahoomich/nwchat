@@ -1,17 +1,17 @@
 @startuml
 !include ../actor/user.puml
 !startsub BASIC
-usecase (Login) as UC1_login
-usecase (Проверить \n UserLogin и \n Password) as UC2_login
-usecase (Предоставить\n доступ к системе) as UC3_login
-usecase (Отобразить \n сообщение \n об ошибке) as show_error
-usecase (Завпись в лог файл) as log_doc
+!include low/UC1_login.puml
+!include low/UC2_login.puml
+!include low/UC3_login.puml
+!include low/show_error.puml
+!include low/log_doc.puml
 
 user -- UC1_login
-UC1_login ..> UC2_login:<<include>>
-UC1_login <.. UC3_login:<<extend>>
-UC1_login <.. show_error:<<extend>>
-UC1_login ..> log_doc:<<include>>
+UC1_login ..> UC2_login : <include>
+UC1_login <.. UC3_login : <extend>
+UC1_login <.. show_error : <extend>
+UC1_login ..> log_doc : <include>
 
 !endsub
 @enduml

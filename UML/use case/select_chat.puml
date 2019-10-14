@@ -1,0 +1,13 @@
+@startuml
+!include ../actor/user.puml
+!startsub BASIC
+
+!include low/select_chat.puml
+!include low/crud_bd.puml
+
+user -- select_chat
+select_chat ..> crud_bd :<include>
+
+!endsub
+@enduml
+

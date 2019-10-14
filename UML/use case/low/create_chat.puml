@@ -1,0 +1,3 @@
+@startuml
+usecase (Создать чат) as create_chat
+@enduml

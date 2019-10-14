@@ -1,13 +1,15 @@
 @startuml
 !include ../actor/manager.puml
 !startsub BASIC
-usecase (Создать отчет) as UC1_report
-usecase (Проверить \n права доступа) as check
-usecase (CRUD DB) as crud_bd
+!include low/create_report.puml
+!include low/check.puml
+!include low/crud_bd.puml
+!include low/select_chat.puml
 
-manager -- UC1_report
-UC1_report ..> check:<<include>>
-UC1_report ..> crud_bd:<<include>>
+manager -- create_report
+create_report ..> check : <include>
+create_report ..> select_chat : <include>
+create_report ..> crud_bd : <include>
 
 !endsub
 @enduml
