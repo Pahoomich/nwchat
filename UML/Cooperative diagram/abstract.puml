@@ -1,0 +1,8 @@
+@startuml
+!include ../actor/user.puml
+
+rectangle ":AddManger" as AddManger
+rectangle "people1:AddPeople" as addPeople
+user ->AddManger:1: SelectPeople('people1')
+AddManger->addPeople:1.1 <<add>>
+@enduml
