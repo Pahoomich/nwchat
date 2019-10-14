@@ -1,3 +1,0 @@
-@startuml
-usecase (Предоставить\n доступ к системе) as UC3_login
-@enduml

@@ -1,0 +1,3 @@
+@startuml
+usecase (Предоставить\n доступ к системе) as access_login
+@enduml

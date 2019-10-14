@@ -1,17 +1,17 @@
 @startuml
 !include ../actor/user.puml
 !startsub BASIC
-!include low/UC1_login.puml
-!include low/UC2_login.puml
-!include low/UC3_login.puml
+!include low/use_case_login.puml
+!include low/chek_login.puml
+!include low/access_login.puml
 !include low/show_error.puml
 !include low/log_doc.puml
 
-user -- UC1_login
-UC1_login ..> UC2_login : <include>
-UC1_login <.. UC3_login : <extend>
-UC1_login <.. show_error : <extend>
-UC1_login ..> log_doc : <include>
+user -- use_case_login
+use_case_login ..> chek_login : <include>
+use_case_login <.. access_login : <extend>
+use_case_login <.. show_error : <extend>
+use_case_login ..> log_doc : <include>
 
 !endsub
 @enduml
