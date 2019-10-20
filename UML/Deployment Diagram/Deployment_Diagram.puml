@@ -1,0 +1,21 @@
+@startuml
+node "server" {
+	component "Sping back-end \n aplication" as back_end
+	component "rest api" as rest_api
+    database "Postgresql" as db
+    component "web-aplication" as web_aplication
+}
+rest_api .> back_end
+back_end .> db
+
+node "client" {
+    component "Front-end \n web aplication" as front_end
+    component "Bootstrap.js \n visualization" as visual
+    component "Bootstrap.js \n component" as components
+}
+front_end *. visual
+front_end *.. components
+
+rest_api -0)- front_end : "JSON over HTTP, \n TCP port 8080"
+web_aplication -0)- front_end : "Load HTTP, CSS and JS files\n over HTTP, \n TCP port 80 "
+@enduml
