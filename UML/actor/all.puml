@@ -9,7 +9,7 @@
 
 
 user <-- lk
-user <--- brother
-user <---- manager
+user <--- manager
+user <---- brother
 !endsub
 @enduml

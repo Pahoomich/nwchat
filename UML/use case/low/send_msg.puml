@@ -1,3 +1,3 @@
 @startuml
-usecase (отправить сообщение сообщение) as send_msg
+usecase (отправить сообщение) as send_msg
 @enduml

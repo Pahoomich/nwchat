@@ -7,7 +7,7 @@
 !include low/select_stuff.puml
 !include low/crud_bd.puml
 
-user--create_chat
+user -- create_chat
 create_chat ..> check : <include>
 create_chat ..> select_stuff : <include>
 create_chat ..> crud_bd : <include>
