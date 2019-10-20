@@ -3,6 +3,6 @@
 
 rectangle ":AddManger" as AddManger
 rectangle "people1:AddPeople" as addPeople
-user ->AddManger:1: SelectPeople('people1')
+user ->AddManger:1:  выбрать васю
 AddManger->addPeople:1.1 <<add>>
 @enduml

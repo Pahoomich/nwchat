@@ -1,0 +1,31 @@
+@startuml
+'
+'
+' Implementation view
+'
+'
+
+actor user
+
+participant "web page" as wp
+participant Controller as c
+participant "Security System" as sec
+participant "Data Base" as db
+
+
+user -> wp : push button
+wp -> c : unauthenticated response
+c -> sec : LogOut current user
+alt successful case
+    c <- sec : ok
+    c -> db : Log logout successful
+    c <- db : write
+else failure
+    c <- sec : exception
+    c -> db : Log error
+    c <- db : write
+end
+
+wp <- c : redirect
+user <- wp
+@enduml

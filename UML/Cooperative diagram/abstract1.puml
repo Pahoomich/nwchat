@@ -3,7 +3,7 @@
 
 rectangle "WebPage" as addManger
 rectangle Server
-user ->addManger:1: selectPeople('people1')
+user ->addManger:1: post('get all user')
 
 addManger-> Server: request()
 addManger<-- Server: response()
