@@ -1,0 +1,3 @@
+@startuml
+usecase (Выбрать приказ из списка ) as select_order
+@enduml

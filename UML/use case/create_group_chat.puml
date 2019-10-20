@@ -1,5 +1,8 @@
 @startuml
 !include ../actor/manager.puml
+!include create_chat.puml
+
+
 !startsub BASIC
 
 !include low/create_group_chat.puml
@@ -11,4 +14,5 @@ create_group_chat ..> select_item : <include>
 create_group_chat ..> create_chat : <include>
 
 !endsub
+manager -left-> user
 @enduml

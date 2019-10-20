@@ -4,11 +4,11 @@
 !include low/create_report.puml
 !include low/check.puml
 !include low/crud_bd.puml
-!include low/select_chat.puml
+!include low/select_order.puml
 
 manager -- create_report
 create_report ..> check : <include>
-create_report ..> select_chat : <include>
+create_report ..> select_order : <include>
 create_report ..> crud_bd : <include>
 
 !endsub
