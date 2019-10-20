@@ -1,15 +1,23 @@
 @startuml
 
-(*) --> "Получить
-         UserLogin и
-         Password" as init
-if "[Введенный UserLogin и Password верны?]" then
-  -->[Yes] "Аутентифицировать
+(*) --> "User открывает страницу NWchat" as init
+if "[User авторизирован?(проверка cookies)]" then
+  -left->[Yes] "Аутентифицировать
                            User"
-  ---> (*)
+  --> "Показать домашнию страницу" as home
+  --> (*)
   else
-  -->[No] "Неверный UserLogin
-   или Password"
-  -> init
+    -->[No] "Показать страницу
+    авторизации"
+   --> "User заполняет
+    UserLogin и Password" as fills
+   --> "User нажимает 'Log in'"
+   --> "Сервер верифицирует
+    UserLogin и Password"
+   if "[Данные коректны?]" then
+    -->[Yes] home
+   else
+    -->[No] "Показать сообщение об ошибке"
+    -->fills
 endif
 @enduml
