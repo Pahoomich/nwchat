@@ -51,7 +51,10 @@ interface RoleRepository{
 }
 
 
-interface UserService
+interface UserService{
+    findUserByLogin(String login) : User
+    saveUser(User user) : void
+}
 
 interface CrudRepository <T, ID> {
     save(T var1): T
@@ -81,7 +84,7 @@ class ChatController {
 	+ index() : ModelAndView
 }
 
-class "DocController" {
+class DocController {
   	- DocsRepository docsRepository
   	+ index() : ModelAndView
   	+ show(long id) : ModelAndView

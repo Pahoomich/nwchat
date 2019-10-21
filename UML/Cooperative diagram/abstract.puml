@@ -1,12 +1,16 @@
 @startuml
 !include ../actor/user.puml
 
-rectangle ListPeople
-rectangle Server
+rectangle "List People" as lp
+rectangle Server as ser
+rectangle "List item" as item
 
-user -> ListPeople : 1: Выбрать Васю
-ListPeople -> Server : 2: Получить список пользователей
-ListPeople <- Server : 3: Response()
+user -> lp : 1: нажать на кнопку 'Выбрать пользователя'
+lp -> ser : 2: Получить список пользователей
+lp <- ser : 3: Response()
+lp --> item : 4: create()
+item -> user : 5: отобразить
+user -> item : 6: Выбрать Васю
 
 
 

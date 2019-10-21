@@ -7,7 +7,7 @@
 
 actor user
 
-participant "web page" as wp
+participant "message form" as wp
 participant server as s
 
 
