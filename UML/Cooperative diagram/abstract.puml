@@ -1,8 +1,13 @@
 @startuml
 !include ../actor/user.puml
 
-rectangle ":AddManger" as AddManger
-rectangle "people1:AddPeople" as addPeople
-user ->AddManger:1:  выбрать васю
-AddManger->addPeople:1.1 <<add>>
+rectangle ListPeople
+rectangle Server
+
+user -> ListPeople : 1: Выбрать Васю
+ListPeople -> Server : 2: Получить список пользователей
+ListPeople <- Server : 3: Response()
+
+
+
 @enduml
