@@ -1,0 +1,14 @@
+@startuml
+!include ../actor/user.puml
+'Проверка прав доступа'
+rectangle System as sys
+rectangle DataBase as db
+rectangle Controller as ctr
+
+user -> sys : Предоставить функционал
+sys -> ctr : GetAutorization()
+ctr -> db : Select(role)
+
+
+
+@enduml
