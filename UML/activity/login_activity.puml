@@ -4,20 +4,15 @@
 if "[есть ли идентификатор пользователя?(cookies)]" then
   -left->[Yes] "получить идентификатор пользователя"
   if "[проверка срока годности и идентичности с данными в бд]" then
-    --> [Yes] "Показать домашнию страницу" as home
+    -> [Yes] "Показать домашнию страницу" as home
     --> (*)
-    else
-     -> [No] "Показать страницу
-            входа в систему" as loginP
-  endif
   else
-    -->[No] loginP
-   --> "User заполняет
-    UserLogin и Password" as fills
-   --> "User нажимает 'Log in'"
-   --> "Сервер аутентификацию
-   пользователя по
-    UserLogin и Password"
+    -> [No] "Показать страницу\n входа в систему" as loginP
+  endif
+else
+   -->[No] loginP
+   --> "User заполняет\n UserLogin и Password,\n нажимает 'Log in'" as fills
+   --> "Аутентификацию\n пользователя по\n UserLogin и Password"
    if "[Данные совпадают с данными в бд?]" then
     -->[Yes] home
    else
