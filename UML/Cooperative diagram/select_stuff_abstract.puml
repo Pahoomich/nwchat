@@ -1,6 +1,6 @@
 @startuml
 !include ../actor/user.puml
-
+'Выбрать людей из списка'
 rectangle "List People" as lp
 rectangle Server as ser
 rectangle "List item" as item

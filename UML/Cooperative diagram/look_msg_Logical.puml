@@ -1,0 +1,15 @@
+@startuml
+'Просмотр сообщений'
+
+!include ../actor/user.puml
+rectangle "WebPage" as addManger
+rectangle Server
+rectangle "Data base" as db
+
+user ->addManger: 1: Выбрать чат
+
+addManger--> Server: 2:Get("/chat/{id}/messages/", count, last message)
+addManger<----- Server: 5: Response()
+Server->db: 3: Select messages
+Server<-db: 4:Response()
+@enduml
