@@ -1,13 +1,21 @@
 @startuml
-[*] --> CreateOrderButtonIsPress
+State processing {
+[*] -> CreateOrderButtonIsPress
 CreateOrderButtonIsPress --> CreateOrderFormIsOpen: [Система открывает форму \n 'Создание отчета']
-CreateOrderFormIsOpen --> ChangeFormFills:[User заполняет поля формы \n 'Создание отчета']
+CreateOrderFormIsOpen --> PushOrederButtomIsPress :[User заполняет поля формы \n 'Создание отчета']
+PushOrederButtomIsPress --> CheckExecutOrder
+CheckExecutOrder -> [*]
+}
+processing -> Result
+Error -> Result
+Result -> [*]
+CheckExecutOrder -> Error: [Ошибка отправки \n отчета]
 
 
-
-
-
-CreateOrderButtonIsPress: Нажата кнопка 'Создать отчет'
-CreateOrderFormIsOpen: Форма 'Создание отчета' \n открыта у User на экране
-ChangeFormFills: User вносит изменения в \n активыне поля формы
+State "'Push Order' Buttom is press" as PushOrederButtomIsPress: Нажата кнопка 'Отправить отчет'
+State "'Create Order' Buttom is press" as CreateOrderButtonIsPress: Нажата кнопка 'Создать отчет'
+State "'Create Order' Form is open" as CreateOrderFormIsOpen: Форма 'Создание отчета' \n открыта у User на экране
+State "Check Execution Push Order" as CheckExecutOrder: Проверяется доставлен ли отчет
+State "Writing Error Report" as Error
+State "Displaying Result of Push" as Result
 @enduml
