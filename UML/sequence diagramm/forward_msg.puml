@@ -1,0 +1,39 @@
+@startuml
+'
+'
+' logical View
+'
+'
+
+actor user
+
+participant "web page" as wp
+participant server as s
+participant "data base" as db
+
+
+user -> wp : выбирает сообщение
+user <- wp : отображает выделенное\n сообщение
+user -> wp : пользователь нажимает\n на кнопку переслать\n сообщение
+
+wp -> s : getChatList()
+wp <- s : response
+
+user <- wp : показать список чатов
+user -> wp : выбирает чат
+
+loop message not delivered
+    wp -> s : forward message(message, chat)
+    s -> db : write message
+    alt successful case
+        s <- db : ok
+        wp <- s : message delivered
+    else failure
+        s <- db : fault
+        wp <- s : message not delivered
+
+    end
+end
+user <- wp : display
+
+@enduml

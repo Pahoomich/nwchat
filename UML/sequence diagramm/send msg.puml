@@ -7,11 +7,12 @@
 
 actor user
 
-participant "message form" as wp
+participant "message form\n on web page" as wp
 participant server as s
 
 
-user -> wp : type text and push button
+user -> wp : push button send
+
 loop message not delivered
     wp -> s : send message
     alt successful case

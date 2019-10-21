@@ -23,14 +23,19 @@ alt user authorized
     alt successful case
         sec <- db : removed
         c <- sec : ok
-        wp <- c : redirect
+        wp <- c : redirectPage("home")
         user <- wp : display
     else failure
         sec <- db : fault
         c <- sec : exception
+        wp <- c : display
+        user <- wp : display
     end
 
+else failure
     sec -> c : response null
+    wp <- c : display
+    user <- wp : display
 
 end
 
