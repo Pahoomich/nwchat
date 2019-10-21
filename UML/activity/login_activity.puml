@@ -2,8 +2,8 @@
 
 (*) --> "User открывает страницу NWchat" as init
 if "[User авторизирован?(проверка cookies)]" then
-  -left->[Yes] "Аутентифицировать
-                           User"
+  -left->[Yes] "Авторизировать
+  User"
   --> "Показать домашнию страницу" as home
   --> (*)
   else
