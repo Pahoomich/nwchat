@@ -16,6 +16,6 @@ node "client" {
 front_end *. visual
 front_end *.. components
 
-rest_api -0)- front_end : "JSON over HTTP, \n TCP port 8080"
-web_aplication -0)- front_end : "Load HTTP, CSS and JS files\n over HTTP, \n TCP port 80 "
+rest_api -(0- front_end : "JSON over HTTP, \n TCP port 8080"
+web_aplication -(0- front_end : "Load HTTP, CSS and JS files\n over HTTP, \n TCP port 80 "
 @enduml

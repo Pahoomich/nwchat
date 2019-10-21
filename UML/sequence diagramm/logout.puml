@@ -14,20 +14,24 @@ participant "Data Base" as db
 
 
 user -> wp : push button 'logout'
-wp -> c : get("/logout")
+wp -> c : http_get("/logout")
 c -> sec : getAuthorizationUser()
-sec -> c : response
-c -> sec : logout(current user)
-alt successful case
-    c <- sec : ok
-    c -> db : Log logout successful
-    c <- db : write
-else failure
-    c <- sec : exception
-    c -> db : Log error
-    c <- db : write
+alt user authorized
+    sec -> c : response current user
+    c -> sec : logout(current user)
+    sec -> db : removeToken(user)
+    alt successful case
+        sec <- db : removed
+        c <- sec : ok
+        wp <- c : redirect
+        user <- wp : display
+    else failure
+        sec <- db : fault
+        c <- sec : exception
+    end
+
+    sec -> c : response null
+
 end
 
-wp <- c : redirect
-user <- wp
 @enduml
