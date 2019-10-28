@@ -1,6 +1,6 @@
 @startuml
 'Просмотр сообщений'
-
+frame "Просмотр сообщений"{
 !include ../actor/user.puml
 rectangle "WebPage" as addManger
 rectangle Server

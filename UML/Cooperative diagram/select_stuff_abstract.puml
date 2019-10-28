@@ -1,10 +1,11 @@
 @startuml
+frame "Выбрать людей из списка"{
 !include ../actor/user.puml
 'Выбрать людей из списка'
 rectangle "List People" as lp
 rectangle Server as ser
 rectangle "List item" as item
-
+}
 user -> lp : 1: нажать на кнопку 'Выбрать пользователя'
 lp -> ser : 2: Получить список пользователей
 lp <- ser : 3: Response()

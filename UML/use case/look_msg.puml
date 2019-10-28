@@ -2,10 +2,11 @@
 !include ../actor/user.puml
 !startsub BASIC
 
+rectangle {
 !include low/look_msg.puml
 !include low/show_msg.puml
 !include low/crud_bd.puml
-
+}
 user -- look_msg
 look_msg ..> crud_bd : <include>
 look_msg ..> show_msg : <include>

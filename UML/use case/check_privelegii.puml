@@ -1,11 +1,12 @@
 @startuml
+
 !include ../actor/user.puml
 !startsub BASIC
-
+rectangle {
 !include low/check.puml
 !include low/crud_bd.puml
 !include low/receive_user_id.puml
-
+}
 user -- (check)
 check ..> receive_user_id : <include>
 check ..> crud_bd : <include>

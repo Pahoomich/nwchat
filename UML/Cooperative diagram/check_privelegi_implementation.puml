@@ -1,6 +1,12 @@
 @startuml
-!include ../actor/user.puml
 'Проверка прав доступа'
+
+
+
+
+frame "Проверка прав доступа" {
+!include ../actor/user.puml
+
 artifact "successful: user.authorization == true" as suc
 
 rectangle WebPage as sys
@@ -8,11 +14,12 @@ rectangle DataBase as db
 rectangle Controller as ctr
 rectangle "Security System" as sc
 
+}
+
 user -> sys : 1: Выполняет какие то действия
 sys -> ctr : 2: Get()
 sc <--ctr: 3: CheckAuthorization()
 ctr -> db : 4: [successful] selectRole(user)
-
 
 
 @enduml
