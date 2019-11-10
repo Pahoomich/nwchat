@@ -7,10 +7,12 @@ rectangle {
 !include low/receive_msg.puml
 !include low/crud_bd.puml
 !include low/show_msg.puml
+!include low/update_msg.puml
 }
 user -- receive_msg
-time -- receive_msg
-receive_msg ..> crud_bd : <include>
-receive_msg ..> show_msg : <include>
+time --- update_msg
+receive_msg ..> update_msg: <include>
+update_msg ..> crud_bd : <include>
+update_msg ..> show_msg : <include>
 !endsub
 @enduml@enduml
