@@ -1,11 +1,12 @@
 @startuml
 !include ../actor/manager.puml
 !startsub BASIC
+rectangle {
 !include low/create_report.puml
 !include low/check.puml
 !include low/crud_bd.puml
 !include low/select_order.puml
-
+}
 manager -- create_report
 create_report ..> check : <include>
 create_report ..> select_order : <include>

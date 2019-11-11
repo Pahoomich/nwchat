@@ -1,12 +1,13 @@
 @startuml
 !include ../actor/user.puml
 !startsub BASIC
+rectangle {
 !include low/use_case_login.puml
 !include low/chek_login.puml
 !include low/access_login.puml
 !include low/show_error.puml
 !include low/log_doc.puml
-
+}
 user -- use_case_login
 use_case_login ..> chek_login : <include>
 use_case_login <.. access_login : <extend>
