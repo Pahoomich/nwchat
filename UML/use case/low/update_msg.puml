@@ -1,0 +1,3 @@
+@startuml
+usecase (Обновить сообщения) as update_msg
+@enduml
