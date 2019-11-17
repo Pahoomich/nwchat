@@ -1,12 +1,13 @@
---------------------------------------------------------------------------------------------------------------------------------@startuml
+@startuml
 !include ../actor/user.puml
-!startsub BASIC
 
+rectangle {
 !include low/send_msg.puml
 !include low/crud_bd.puml
+}
 
+!startsub BASIC
 user -- send_msg
 send_msg ..> crud_bd : <include>
-
 !endsub
 @enduml

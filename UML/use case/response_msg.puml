@@ -1,16 +1,17 @@
 @startuml
 !include ../actor/user.puml
-!startsub BASIC
 
+rectangle {
 !include low/response_msg.puml
 !include low/send_msg.puml
 !include low/crud_bd.puml
 !include low/select_msg.puml
+}
 
+!startsub BASIC
 user -- response_msg
 response_msg ..> crud_bd : <include>
 response_msg ..> send_msg : <include>
 response_msg ..> select_msg : <include>
-
 !endsub
 @enduml

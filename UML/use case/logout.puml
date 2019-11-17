@@ -1,14 +1,14 @@
 @startuml
 !include ../actor/user.puml
-!startsub BASIC
-
+rectangle {
 !include low/logout.puml
 !include low/log_doc.puml
 !include low/receive_user_id.puml
+}
 
+!startsub BASIC
 user -- logout
 logout ..> log_doc : <include>
 logout ..> receive_user_id: <include>
-
 !endsub
 @enduml

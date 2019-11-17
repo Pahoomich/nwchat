@@ -1,16 +1,17 @@
 @startuml
 !include ../actor/user.puml
-!startsub BASIC
 
+rectangle {
 !include low/forward_msg.puml
 !include low/crud_bd.puml
 !include low/select_msg.puml
 !include low/select_chat.puml
+}
 
+!startsub BASIC
 user -- forward_msg
 forward_msg ..> crud_bd : <include>
 forward_msg ..> select_msg : <include>
 forward_msg ..> select_chat : <include>
-
 !endsub
 @enduml

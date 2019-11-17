@@ -1,16 +1,17 @@
 @startuml
 !include ../actor/user.puml
-!startsub BASIC
+
 rectangle {
 !include low/create_chat.puml
 !include low/check.puml
 !include low/select_stuff.puml
 !include low/crud_bd.puml
 }
+
+!startsub BASIC
 user -- create_chat
 create_chat ..> check : <include>
 create_chat ..> select_stuff : <include>
 create_chat ..> crud_bd : <include>
-
 !endsub
 @enduml

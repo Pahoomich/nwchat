@@ -1,20 +1,22 @@
 @startuml
 !include ../actor/lk.puml
-!startsub BASIC
+
 rectangle {
-!include low/create_order.puml
-!include low/check.puml
-!include low/select_stuff.puml
-!include low/select_item.puml
-!include low/safe_doc.puml
-!include low/crud_bd.puml
+    !include low/create_order.puml
+    !include low/check.puml
+    !include low/select_stuff.puml
+    !include low/select_item.puml
+    !include low/safe_doc.puml
+    !include low/crud_bd.puml
 }
+
+!startsub BASIC
 lk -- create_order
 create_order ..> check : <include>
 create_order ..> select_stuff : <include>
 create_order ..> select_item : <include>
 create_order ..> safe_doc : <include>
 safe_doc ..> crud_bd : <include>
-
 !endsub
+
 @enduml

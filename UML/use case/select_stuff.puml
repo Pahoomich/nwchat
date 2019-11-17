@@ -1,16 +1,16 @@
 @startuml
 !include ../actor/lk.puml
 !include ../actor/manager.puml
-!startsub BASIC
-rectangle {
 
+rectangle {
 !include low/select_stuff.puml
 !include low/crud_bd.puml
 }
+
+!startsub BASIC
 lk -- select_stuff
 manager -- select_stuff
 select_stuff ..> crud_bd :<include>
-
 !endsub
 @enduml
 

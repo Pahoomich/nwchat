@@ -1,9 +1,10 @@
 @startuml
 
 !includesub ../actor/all.puml!BASIC
+!include low/all.puml
+
 
 !includesub create_order.puml!BASIC
-
 !includesub create_report.puml!BASIC
 
 !includesub create_group_chat.puml!BASIC
@@ -13,8 +14,10 @@
 !includesub select_stuff.puml!BASIC
 
 !includesub send_msg.puml!BASIC
+
 !includesub receive_msg.puml!BASIC
 !includesub look_msg.puml!BASIC
+
 !includesub forward_msg.puml!BASIC
 !includesub response_msg.puml!BASIC
 

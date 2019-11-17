@@ -1,7 +1,7 @@
 @startuml
 !startsub BASIC
 !include lk.puml
-!include brother.puml
+'!include brother.puml
 !include manager.puml
 !include time.puml
 !include user.puml
@@ -10,6 +10,6 @@
 
 user <-- lk
 user <--- manager
-user <---- brother
+'user <---- brother
 !endsub
 @enduml

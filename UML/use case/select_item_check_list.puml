@@ -1,15 +1,14 @@
 @startuml
 !include ../actor/lk.puml
 !include ../actor/manager.puml
-!startsub BASIC
 rectangle {
 !include low/select_item.puml
 !include low/crud_bd.puml
 }
+!startsub BASIC
 lk -- select_item
 manager -- select_item
 select_item ..> crud_bd :<include>
-
 !endsub
 @enduml
 

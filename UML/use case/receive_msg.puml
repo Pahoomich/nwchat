@@ -1,18 +1,19 @@
 @startuml
 !include ../actor/user.puml
 !include ../actor/time.puml
-!startsub BASIC
-rectangle {
 
+rectangle {
 !include low/receive_msg.puml
 !include low/crud_bd.puml
 !include low/show_msg.puml
 !include low/update_msg.puml
 }
+
+!startsub BASIC
 user -- receive_msg
 time --- update_msg
 receive_msg ..> update_msg: <include>
 update_msg ..> crud_bd : <include>
 update_msg ..> show_msg : <include>
 !endsub
-@enduml@enduml
+@enduml

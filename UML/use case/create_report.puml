@@ -8,14 +8,15 @@ rectangle {
 !include low/check.puml
 !include low/crud_bd.puml
 !include low/select_order.puml
-!startsub BASIC
 !include low/create_report.puml
 }
+
+!startsub BASIC
 manager -- create_report
 create_report ..> check : <include>
 create_report ..> parse_order_info : <include>
-parse_order_info ..> select_order : <include>
 !endsub
+parse_order_info ..> select_order : <include>
 select_order ..> crud_bd : <include>
 select_order ..> select_stuff: <include>
 select_order ..> select_item: <include>
