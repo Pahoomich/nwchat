@@ -1,0 +1,3 @@
+@startuml
+usecase (Заполнить форму "отчет") as parse_order_info
+@enduml

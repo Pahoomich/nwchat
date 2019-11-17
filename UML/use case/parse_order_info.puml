@@ -1,0 +1,17 @@
+@startuml
+!include ../actor/manager.puml
+rectangle {
+!include low/select_stuff.puml
+!include low/select_item.puml
+!include low/select_order.puml
+!include low/crud_bd.puml
+!startsub BASIC
+!include low/parse_order_info.puml
+}
+manager -- parse_order_info
+parse_order_info ..> select_order: <include>
+!endsub
+select_order ..> select_stuff: <include>
+select_order ..> select_item: <include>
+select_order ..> crud_bd: <include>
+@enduml

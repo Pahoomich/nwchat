@@ -1,0 +1,19 @@
+@startuml
+!include ../actor/user.puml
+
+!startsub BASIC
+!include low/select_order.puml
+!include low/select_item.puml
+!include low/select_stuff.puml
+!include low/crud_bd.puml
+
+
+user -- select_order
+select_order ..> select_item : <include>
+select_order ..> select_stuff : <include>
+select_order ..> crud_bd : <include>
+select_item ..> crud_bd : <include>
+select_stuff ..> crud_bd : <include>
+
+!endsub
+@enduml

@@ -1,7 +1,6 @@
 @startuml
 !include ../actor/manager.puml
 !include ../actor/user.puml
-'!include create_chat.puml
 
 rectangle {
 !include low/create_chat.puml
@@ -18,11 +17,11 @@ create_chat ..> crud_bd : <include>
 !include low/create_group_chat.puml
 !include low/select_item.puml
 !include low/create_chat.puml
+
 }
 manager -- create_group_chat
 create_group_chat ..> select_item : <include>
 create_group_chat ..> create_chat : <include>
-
 !endsub
 manager -left-> user
 @enduml

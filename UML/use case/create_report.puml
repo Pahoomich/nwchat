@@ -1,16 +1,22 @@
 @startuml
 !include ../actor/manager.puml
-!startsub BASIC
+
 rectangle {
-!include low/create_report.puml
+!include low/select_stuff.puml
+!include low/select_item.puml
+!include low/parse_order_info.puml
 !include low/check.puml
 !include low/crud_bd.puml
 !include low/select_order.puml
+!startsub BASIC
+!include low/create_report.puml
 }
 manager -- create_report
 create_report ..> check : <include>
-create_report ..> select_order : <include>
-create_report ..> crud_bd : <include>
-
+create_report ..> parse_order_info : <include>
+parse_order_info ..> select_order : <include>
 !endsub
+select_order ..> crud_bd : <include>
+select_order ..> select_stuff: <include>
+select_order ..> select_item: <include>
 @enduml
