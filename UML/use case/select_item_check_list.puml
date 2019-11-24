@@ -4,10 +4,13 @@
 rectangle {
 !include low/select_item.puml
 !include low/crud_bd.puml
+!include low/show_checklists.puml
 }
 !startsub BASIC
 lk -- select_item
 manager -- select_item
+select_item ..> show_checklists :<include>
+show_checklists  ..>crud_bd :<include>
 select_item ..> crud_bd :<include>
 !endsub
 @enduml

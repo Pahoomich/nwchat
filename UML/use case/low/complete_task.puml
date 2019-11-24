@@ -1,0 +1,3 @@
+@startuml
+usecase (Пометить пункт \n чек-листа, \n как выполненный ) as complete_task
+@enduml
