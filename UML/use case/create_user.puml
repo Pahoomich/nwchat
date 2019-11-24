@@ -1,0 +1,15 @@
+@startuml
+!include ../actor/lk.puml
+
+rectangle {
+!include low/create_user.puml
+!include low/check.puml
+!include low/crud_bd.puml
+}
+
+!startsub BASIC
+lk -- create_user
+create_user ..> check : <include>
+create_user ..> crud_bd : <include>
+!endsub
+@enduml

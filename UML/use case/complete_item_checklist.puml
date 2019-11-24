@@ -1,0 +1,14 @@
+@startuml
+
+!include ../actor/user.puml
+
+rectangle {
+!include low/complete_task.puml
+!include low/crud_bd.puml
+}
+
+!startsub BASIC
+user -- complete_task
+complete_task ..> crud_bd
+!endsub
+@enduml

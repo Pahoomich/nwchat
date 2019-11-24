@@ -1,0 +1,3 @@
+@startuml
+usecase (Поменять состояние\n пункта чеклиста\n выполнен/не выполнен) as complete_task
+@enduml

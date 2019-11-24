@@ -1,3 +1,0 @@
-@startuml
-usecase (Проверить \n UserLogin и \n Password) as chek_login
-@enduml
