@@ -1,0 +1,14 @@
+@startuml
+!include ../actor/manager.puml
+
+rectangle {
+!include low/show_checklists.puml
+!include low/crud_bd.puml
+
+}
+
+!startsub BASIC
+manager --show_checklists
+show_checklists ..>crud_bd:<include>
+!endsub
+@enduml
