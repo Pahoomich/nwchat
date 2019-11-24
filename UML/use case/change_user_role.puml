@@ -1,0 +1,15 @@
+@startuml
+!include ../actor/lk.puml
+
+rectangle {
+!include low/change_user_role.puml
+!include low/check.puml
+!include low/crud_bd.puml
+}
+
+!startsub BASIC
+lk -- change_user_role
+change_user_role ..> check : <include>
+change_user_role ..> crud_bd : <include>
+!endsub
+@enduml

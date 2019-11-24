@@ -11,9 +11,9 @@ rectangle {
 !include low/select_item.puml
 !include low/create_chat.puml
 }
+user -- create_chat
 
 !startsub BASIC
-user -- create_chat
 create_chat ..> check : <include>
 create_chat ..> select_stuff : <include>
 create_chat ..> crud_bd : <include>

@@ -1,12 +1,14 @@
 @startuml
 
 !include access_login.puml
+!include change_user_role.puml
 !include check.puml
 !include chek_login.puml
 !include create_chat.puml
 !include create_group_chat.puml
 !include create_order.puml
 !include create_report.puml
+!include create_user.puml
 !include crud_bd.puml
 !include forward_msg.puml
 !include log_doc.puml

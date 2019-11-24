@@ -1,0 +1,3 @@
+@startuml
+usecase (Изменить роль\n Пользователя) as change_user_role
+@enduml
