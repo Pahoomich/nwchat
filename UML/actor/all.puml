@@ -8,7 +8,7 @@
 
 
 
-user <----- lk
+user <---- lk
 user <-- manager
 'user <---- brother
 !endsub

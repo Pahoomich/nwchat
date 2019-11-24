@@ -1,3 +1,3 @@
 @startuml
-usecase (Показать чек-лист ) as show_checklists
+usecase (Показать список\n чек-листов) as show_checklists
 @enduml

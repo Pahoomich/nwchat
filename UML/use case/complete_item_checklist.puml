@@ -1,16 +1,14 @@
 @startuml
 
-!include ../actor/manager.puml
+!include ../actor/user.puml
 
 rectangle {
 !include low/complete_task.puml
 !include low/crud_bd.puml
-
-
 }
+
 !startsub BASIC
-lk -- complete_task
-manager -- complete_task
+user -- complete_task
 complete_task ..> crud_bd
 !endsub
 @enduml

@@ -1,11 +1,13 @@
 @startuml
 !include ../actor/lk.puml
 !include ../actor/manager.puml
+
 rectangle {
 !include low/select_item.puml
 !include low/crud_bd.puml
 !include low/show_checklists.puml
 }
+
 !startsub BASIC
 lk -- select_item
 manager -- select_item
