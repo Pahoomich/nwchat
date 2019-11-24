@@ -1,0 +1,13 @@
+@startuml
+!include ../actor/lk.puml
+rectangle {
+!include low/create_item_check_list.puml
+!include low/crud_bd.puml
+!include low/show_checklists.puml
+}
+!startsub BASIC
+lk -- create_item_order
+create_item_order ..> crud_bd
+create_item_order ..> show_checklists
+!endsub
+@enduml

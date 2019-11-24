@@ -31,5 +31,6 @@
 !include show_msg.puml
 !include update_msg.puml
 !include use_case_login.puml
+!include create_item_check_list.puml
 
 @enduml

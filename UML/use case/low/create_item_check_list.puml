@@ -1,0 +1,3 @@
+@startuml
+usecase (Создать пункты чек-листа) as create_item_order
+@enduml

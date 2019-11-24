@@ -1,0 +1,35 @@
+@startuml
+[*] --> ResourcesProcessing
+
+state ResourcesProcessing {
+  [*] --> PushOrederButtomIsPress
+  PushOrederButtomIsPress --> CreateChatPageIsOpen
+  CreateChatPageIsOpen --> CreateListOfPeople
+  CreateListOfPeople --> ResultSearch
+  ResultSearch --> BlockPress
+}
+CreateListOfPeople --> Controller
+BlockPress --> Controller
+state com.nwchat{
+    state Controller{
+
+    }
+    state Repository {
+        RequestGen --> Service: listOfStaff
+
+
+    }
+    state Service {
+
+    }
+    Controller --> Repository
+}
+
+
+State "'Create chat' Buttom is press    " as PushOrederButtomIsPress: Нажата кнопка 'Создать чат'
+State "'Create Chat' Page is open" as CreateChatPageIsOpen: Страница 'Создание чата' \n открыта у Управляющего на экране
+State "Creating a list \n of available staffs   " as CreateListOfPeople: Формирование списка людей \n доступных для создания чата
+State "Request generation    " as RequestGen
+State "Displaying Result of search  " as ResultSearch
+State "Block with staff is press   " as BlockPress
+@enduml
