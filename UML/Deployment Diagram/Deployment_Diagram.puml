@@ -1,6 +1,6 @@
 @startuml
 node "server" {
-	component "Sping back-end \n aplication" as back_end
+	component "Spring back-end \n aplication" as back_end
 	component "rest api" as rest_api
     database "Postgresql" as db
     component "web-aplication" as web_aplication
