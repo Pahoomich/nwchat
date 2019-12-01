@@ -1,21 +1,21 @@
 @startuml
-node "server" {
-	component "Spring back-end \n aplication" as back_end
-	component "rest api" as rest_api
-    database "Postgresql" as db
-    component "web-aplication" as web_aplication
-}
-rest_api .> back_end
-back_end .> db
+frame "Deployment NWchat Web Application        " {
+    node "<<divice>> \n :AplicationServer \n {OS=Solaris}" as back_end {
+        node "<<JSP server>> \n Tomcat" as jsp{
+            artifact "<<artifact>> \n NWchat.war" as war
+        }
+        node "<<DB>> \n PostgreSQL" as bd{
+            database "NWchatDB"
+        }
+     }
+    jsp -- bd: <<JDBC>>
 
-node "client" {
-    component "Front-end \n web aplication" as front_end
-    component "Bootstrap.js \n visualization" as visual
-    component "Bootstrap.js \n component" as components
-}
-front_end *. visual
-front_end *.. components
 
-rest_api -(0- front_end : "JSON over HTTP, \n TCP port 8080"
-web_aplication -(0- front_end : "Load HTTP, CSS and JS files\n over HTTP, \n TCP port 80 "
+    node "<<device>> \n :ClientDevices" as client {
+        component "Web Browser"
+    }
+
+    client -- back_end: <<protocol>> \n HTTP/HTTPS v1.1
+
+}
 @enduml
