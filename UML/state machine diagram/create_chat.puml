@@ -50,12 +50,15 @@ state ИзменениеКлассаСервлет {
 state DB {
     state "Данные получены  " as data_recive
     state "Данные сохранены" as data_save
+    [*] --> data_recive
     data_recive --> data_save
+    data_save --> [*]
 }
 ИзменениеКлассаСервлетБЛ -> DB :JDBC
 DB -> ИзменениеКлассаСервлетБЛ :JDBC
 
-ИзменениеКлассаСервлет --> НоваяСтраница : <<HTML page>>
+ИзменениеКлассаСервлет -left-> НоваяСтраница : <<HTML page>>
+НоваяСтраница --> [*]
 
 state "Ожидание нажатия \n кнопки 'Create chat'    " as ИзменениеОбъектаВРесурсах:
 state "Servlet Conteiner Spring \n Ожидает запрос" as ИзменениеКлассаСервлет
