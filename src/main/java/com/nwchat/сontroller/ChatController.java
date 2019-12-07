@@ -92,8 +92,13 @@ public class ChatController {
 			model.setViewName("chat/form");
 			return model;
 		}
-
 		chatEntity = chatRepository.save(chatEntity);
+		UserEntity user = userService.getAuthenticationUser();
+
+		ChatUserEntity chatUser = new ChatUserEntity();
+		chatUser.setChatId(chatEntity.getId());
+		chatUser.setUserId(user.getId());
+		chatUserRepository.save(chatUser);
 
 		model.setViewName(String.format("redirect:%d", chatEntity.getId()));
 		return model;

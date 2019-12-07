@@ -27,9 +27,9 @@
         </thead>
 
         <tbody>
-        <th:block th:each="chat : ${chatList}">
+        <th:block th:each="chat : ${chatList}" th:with="baseUrl=('/chat/')">
             <tr>
-                <td th:text="${chat.getName()}"></td>
+                <td><a th:href="@{${baseUrl}+${chat.id}}" th:text="${chat.getName()}"> </a></td>
             </tr>
         </th:block>
         </tbody>
