@@ -51,6 +51,7 @@ public class UserController {
 		if(bindingResult.hasErrors()) {
 			model.setViewName("user/signup");
 		} else {
+			user.setRoleId(1);
 			userService.saveUser(user);
 			model.addObject("msg", "User has been registered successfully!");
 			model.setViewName("redirect:/user/login");
