@@ -47,12 +47,11 @@ function createMessage(text, type) {
     }
 }
 
-
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
-    var chatMessage = createMessage("",'JOIN');
+    var chatMessage = createMessage("", 'JOIN');
 
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
@@ -63,12 +62,10 @@ function onConnected() {
     connectingElement.classList.add('hidden');
 }
 
-
 function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
-
 
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
@@ -86,11 +83,25 @@ function sendMessage(event) {
     event.preventDefault();
 }
 
-
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
     if (parseInt(message.chatId) != chatId) return;
+    const messageElement = constractElementChat(message);
+    messageArea.appendChild(messageElement);
+    messageArea.scrollTop = messageArea.scrollHeight;
+}
 
+function getAvatarColor(messageSender) {
+    var hash = 0;
+    for (var i = 0; i < messageSender.length; i++) {
+        hash = 31 * hash + messageSender.charCodeAt(i);
+    }
+
+    var index = Math.abs(hash % colors.length);
+    return colors[index];
+}
+
+function constractElementChat(message) {
     var messageElement = document.createElement('li');
 
     if (message.type === 'JOIN') {
@@ -113,6 +124,12 @@ function onMessageReceived(payload) {
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
+
+        var timeElement = document.createElement('time');
+        var date = new Date(message.dateTimeInMs);
+        var dateTimeText = document.createTextNode(date.toLocaleString());
+        timeElement.appendChild(dateTimeText);
+        messageElement.appendChild(timeElement);
     }
 
     var textElement = document.createElement('p');
@@ -120,21 +137,9 @@ function onMessageReceived(payload) {
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);
-
-    messageArea.appendChild(messageElement);
-    messageArea.scrollTop = messageArea.scrollHeight;
+    return messageElement;
 }
 
-
-function getAvatarColor(messageSender) {
-    var hash = 0;
-    for (var i = 0; i < messageSender.length; i++) {
-        hash = 31 * hash + messageSender.charCodeAt(i);
-    }
-
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
-}
 
 // usernameForm.addEventListener('submit', connect, true);
 
