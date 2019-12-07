@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final DataSource dataSource;
 
     private final String USERS_QUERY = "select login, password, active from users where login=?";
-    private final String ROLES_QUERY = "select u.login, r.role from users u inner join user_role ur on (u.user_id = ur.user_id) inner join roles r on (ur.role_id=r.role_id) where u.login=?";
+    private final String ROLES_QUERY = "select u.login, r.role from users u inner join role r on (u.role_id=r.id) where u.login=?";
 
     public SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, DataSource dataSource) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -31,9 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
+                .dataSource(dataSource)
                 .usersByUsernameQuery(USERS_QUERY)
                 .authoritiesByUsernameQuery(ROLES_QUERY)
-                .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 

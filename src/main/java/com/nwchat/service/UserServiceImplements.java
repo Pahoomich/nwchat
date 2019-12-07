@@ -1,16 +1,11 @@
 package com.nwchat.service;
 
-import com.nwchat.model.Role;
-import com.nwchat.model.User;
-import com.nwchat.repository.UserRepository;
+import com.nwchat.entity.RoleEntity;
+import com.nwchat.entity.UserEntity;
 import com.nwchat.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nwchat.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 
 @Service("userService")
 public class UserServiceImplements implements UserService {
@@ -28,16 +23,18 @@ public class UserServiceImplements implements UserService {
 	}
 
 	@Override
-	public User findUserByLogin(String login) {
+	public UserEntity findUserByLogin(String login) {
 		return userRepository.findByLogin(login);
 	}
 
 	@Override
-	public void saveUser(User user) {
+	public void saveUser(UserEntity user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
-		Role userRole = roleRepository.findByRole("admin");
-		user.setRoles(Collections.singleton(userRole));
+		RoleEntity userRole = roleRepository.findByRole("admin");
+		user.setRole(userRole);
 		userRepository.save(user);
 	}
+
+
 }

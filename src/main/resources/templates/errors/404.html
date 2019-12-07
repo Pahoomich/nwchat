@@ -29,7 +29,9 @@
     var a = document.getElementById("goToUp");
     var arrlink = window.location.href.split('/');
     arrlink.pop();
-    a.href = arrlink.join('/') + "/";
+    var nurl = arrlink.join('/') + "/";
+    a.href = nurl;
+    a.innerText = nurl;
 </script>
 </body>
 </html>

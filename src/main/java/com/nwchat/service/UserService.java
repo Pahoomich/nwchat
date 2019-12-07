@@ -1,9 +1,9 @@
 package com.nwchat.service;
 
-import com.nwchat.model.User;
+import com.nwchat.entity.UserEntity;
 
 public interface UserService {
-    public User findUserByLogin(String login);
+    UserEntity findUserByLogin(String login);
 
-    public void saveUser(User user);
+    void saveUser(UserEntity user);
 }

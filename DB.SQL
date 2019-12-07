@@ -1,39 +1,31 @@
-create table users
+create table if not exists roles
 (
-    user_id serial not null
+    role varchar(255) not null,
+    id serial not null
+        constraint roles_pk
+            primary key
+);
+
+alter table role owner to postgres;
+
+create table if not exists users
+(
+    id serial not null
         constraint users_pk
             primary key,
     login varchar(255) not null,
     password varchar(255) not null,
     firstname varchar(255) not null,
     lastname varchar(255) not null,
-    active integer
+    active integer,
+    role_id integer
+        constraint users_roles_role_id_fk
+            references role
 );
 
-create table roles
-(
-    role varchar(255) not null,
-    role_id serial not null
-        constraint roles_pk
-            primary key
-);
+alter table users owner to postgres;
 
-
-create table user_role
-(
-    user_id integer not null
-        constraint user_user___fk
-            references users,
-    role_id integer not null
-        constraint user_role___fk
-            references roles
-);
-
-alter table user_role
-    add constraint user_role_pk
-        primary key (user_id, role_id);
-
-create table persistent_logins
+create table if not exists persistent_logins
 (
     username varchar(64) not null,
     series varchar(64) not null
@@ -43,34 +35,125 @@ create table persistent_logins
     last_used timestamp not null
 );
 
-
-create function update_changetimestamp_column() returns trigger
-    language plpgsql
-as $$
-BEGIN
-    NEW.changetimestamp = now();
-    RETURN NEW;
-END;
-$$;
-
-
-create function update_modified_column() returns trigger
-    language plpgsql
-as $$
-BEGIN
-    IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
-        NEW.last_used = now();
-        RETURN NEW;
-    ELSE
-        RETURN OLD;
-    END IF;
-END;
-$$;
-
+alter table persistent_logins owner to postgres;
 
 create trigger bu_persistent_logins
     before update
     on persistent_logins
     for each row
 execute procedure update_modified_column();
+
+create table if not exists orders
+(
+    id serial not null
+        constraint order_pk
+            primary key,
+    num text,
+    text text,
+    creator_id integer
+        constraint docs_users_user_id_fk
+            references users,
+    date_update timestamp,
+    date_create timestamp,
+    manager_id integer
+        constraint orders_users_user_id_fk
+            references users,
+    at date,
+    title text
+);
+
+alter table "order" owner to postgres;
+
+create table if not exists chats
+(
+    id integer not null
+        constraint chat_pk
+            primary key,
+    name text
+);
+
+alter table chat owner to postgres;
+
+create table if not exists chat_message
+(
+    id integer not null
+        constraint chat_massage_pk
+            primary key,
+    text text,
+    chat_id integer
+        constraint chat_massage_chat_id_fk
+            references chat,
+    author_id integer
+        constraint chat_massage_users_user_id_fk
+            references users,
+    date_create timestamp,
+    parent_message_id integer
+        constraint chat_message_chat_message_id_fk
+            references chat_message,
+    response_to_message_id integer
+        constraint chat_message_chat_message_id_fk_2
+            references chat_message
+);
+
+alter table chat_message owner to postgres;
+
+create table if not exists chat_user
+(
+    chat_id integer
+        constraint chat_user_chat_id_fk
+            references chat,
+    user_id integer
+        constraint chat_user_users_user_id_fk
+            references users
+);
+
+alter table chat_user owner to postgres;
+
+create table if not exists reports
+(
+    id integer not null
+        constraint reports_pk
+            primary key,
+    num text,
+    text integer,
+    creator_id integer
+        constraint reports_users_user_id_fk
+            references users,
+    order_id integer
+        constraint reports_docs_id_fk
+            references "order" (id),
+    at date
+);
+
+alter table report owner to postgres;
+
+create table if not exists check_list_items
+(
+    id integer not null
+        constraint check_list_items_pk
+            primary key,
+    doc_id integer
+        constraint check_lists_docs_id_fk
+            references "order" (id),
+    name text,
+    date_start_work date,
+    date_end_work date,
+    report_id integer
+        constraint check_list_items_reports_id_fk
+            references report
+);
+
+alter table check_list_item owner to postgres;
+
+create table if not exists check_list_item_chat
+(
+    chat_id integer
+        constraint check_list_item_chat_chat_id_fk
+            references chat,
+    check_list_item_id integer
+        constraint check_list_item_chat_check_list_items_id_fk
+            references check_list_item
+);
+
+alter table check_list_item_chat owner to postgres;
 

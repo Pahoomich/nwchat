@@ -1,6 +1,6 @@
 package com.nwchat.сontroller;
 
-import com.nwchat.model.User;
+import com.nwchat.entity.UserEntity;
 import com.nwchat.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,9 +35,9 @@ public class IndexController {
 	public ModelAndView home() {
 		ModelAndView model = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByLogin(auth.getName());
+		UserEntity user = userService.findUserByLogin(auth.getName());
 
-		model.addObject("userName", user.getFirstName() + " " + user.getLastName());
+		model.addObject("userName", user.getFirstname() + " " + user.getLastname());
 		model.setViewName("home/home");
 		return model;
 	}

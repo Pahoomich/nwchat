@@ -1,6 +1,6 @@
 package com.nwchat.сontroller;
 
-import com.nwchat.model.User;
+import com.nwchat.entity.UserEntity;
 import com.nwchat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,17 +33,17 @@ public class UserController {
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signup() {
 		ModelAndView model = new ModelAndView();
-		User user = new User();
+		UserEntity user = new UserEntity();
 		model.addObject("user", user);
 		model.setViewName("user/signup");
 
 		return model;
 	}
 
-	@RequestMapping(value= {"/signup"}, method=RequestMethod.POST)
-	public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
+	@RequestMapping(value= "/signup", method=RequestMethod.POST)
+	public ModelAndView createUser(@Valid UserEntity user, BindingResult bindingResult) {
 		ModelAndView model = new ModelAndView();
-		User userExists = userService.findUserByLogin(user.getLogin());
+		UserEntity userExists = userService.findUserByLogin(user.getLogin());
 
 		if(userExists != null) {
 			bindingResult.rejectValue("login", "error.user", "This login already exists!");
@@ -60,7 +60,7 @@ public class UserController {
 
 	@RequestMapping(value = "/checkLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> checkLogin(@RequestBody String login) {
-		User userExists = userService.findUserByLogin(login);
+		UserEntity userExists = userService.findUserByLogin(login);
 
 		return new ResponseEntity<>(userExists != null, HttpStatus.OK);
 	}
