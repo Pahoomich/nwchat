@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     UserEntity findByLogin(String login);
 
     @Query(value = "SELECT u FROM UserEntity u WHERE u.firstname = :name AND u.lastname = :surname")
