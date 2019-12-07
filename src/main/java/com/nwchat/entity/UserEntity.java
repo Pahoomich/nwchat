@@ -1,6 +1,7 @@
 package com.nwchat.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "nwchat")
@@ -104,26 +105,17 @@ public class UserEntity {
 
 		UserEntity that = (UserEntity) o;
 
-		if (id != that.id) return false;
-		if (login != null ? !login.equals(that.login) : that.login != null) return false;
-		if (password != null ? !password.equals(that.password) : that.password != null) return false;
-		if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-		if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-		if (active != null ? !active.equals(that.active) : that.active != null) return false;
-		if (roleId != null ? !roleId.equals(that.roleId) : that.roleId != null) return false;
-
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(login, that.login) &&
+				Objects.equals(password, that.password) &&
+				Objects.equals(firstname, that.firstname) &&
+				Objects.equals(lastname, that.lastname) &&
+				Objects.equals(active, that.active) &&
+				Objects.equals(roleId, that.roleId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id;
-		result = 31 * result + (login != null ? login.hashCode() : 0);
-		result = 31 * result + (password != null ? password.hashCode() : 0);
-		result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-		result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-		result = 31 * result + (active != null ? active.hashCode() : 0);
-		result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
-		return result;
+		return Objects.hash(id, login, password, firstname, lastname, active, roleId);
 	}
 }

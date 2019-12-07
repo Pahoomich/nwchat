@@ -3,12 +3,13 @@ package com.nwchat.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "check_list_item", schema = "public", catalog = "nwchat")
 public class CheckListItemEntity {
 	private int id;
-	private Integer docId;
+	private Integer orderId;
 	private String name;
 	private Date dateStartWork;
 	private Date dateEndWork;
@@ -29,12 +30,12 @@ public class CheckListItemEntity {
 
 	@Basic
 	@Column(name = "order_id", nullable = true)
-	public Integer getDocId() {
-		return docId;
+	public Integer getOrderId() {
+		return orderId;
 	}
 
-	public void setDocId(Integer docId) {
-		this.docId = docId;
+	public void setOrderId(Integer docId) {
+		this.orderId = docId;
 	}
 
 	@Basic
@@ -84,26 +85,18 @@ public class CheckListItemEntity {
 
 		CheckListItemEntity that = (CheckListItemEntity) o;
 
-		if (id != that.id) return false;
-		if (docId != null ? !docId.equals(that.docId) : that.docId != null) return false;
-		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-		if (dateStartWork != null ? !dateStartWork.equals(that.dateStartWork) : that.dateStartWork != null)
-			return false;
-		if (dateEndWork != null ? !dateEndWork.equals(that.dateEndWork) : that.dateEndWork != null) return false;
-		if (reportId != null ? !reportId.equals(that.reportId) : that.reportId != null) return false;
 
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(orderId, that.orderId) &&
+				Objects.equals(name, that.name) &&
+				Objects.equals(dateStartWork, that.dateStartWork) &&
+				Objects.equals(dateEndWork, that.dateEndWork) &&
+				Objects.equals(reportId, that.reportId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id;
-		result = 31 * result + (docId != null ? docId.hashCode() : 0);
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (dateStartWork != null ? dateStartWork.hashCode() : 0);
-		result = 31 * result + (dateEndWork != null ? dateEndWork.hashCode() : 0);
-		result = 31 * result + (reportId != null ? reportId.hashCode() : 0);
-		return result;
+		return Objects.hash(id, orderId, name,dateStartWork,dateEndWork,reportId);
 	}
 
 	@OneToMany(mappedBy = "checkListItemsByCheckListItemId")

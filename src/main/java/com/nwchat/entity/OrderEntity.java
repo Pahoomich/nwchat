@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order", schema = "public", catalog = "nwchat")
@@ -117,31 +118,21 @@ public class OrderEntity {
 
 		OrderEntity that = (OrderEntity) o;
 
-		if (id != that.id) return false;
-		if (num != null ? !num.equals(that.num) : that.num != null) return false;
-		if (text != null ? !text.equals(that.text) : that.text != null) return false;
-		if (creatorId != null ? !creatorId.equals(that.creatorId) : that.creatorId != null) return false;
-		if (dateUpdate != null ? !dateUpdate.equals(that.dateUpdate) : that.dateUpdate != null) return false;
-		if (dateCreate != null ? !dateCreate.equals(that.dateCreate) : that.dateCreate != null) return false;
-		if (managerId != null ? !managerId.equals(that.managerId) : that.managerId != null) return false;
-		if (at != null ? !at.equals(that.at) : that.at != null) return false;
-		if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(num, that.num) &&
+				Objects.equals(text, that.text) &&
+				Objects.equals(creatorId, that.creatorId) &&
+				Objects.equals(dateUpdate, that.dateUpdate) &&
+				Objects.equals(dateCreate, that.dateCreate) &&
+				Objects.equals(managerId, that.managerId) &&
+				Objects.equals(at, that.at) &&
+				Objects.equals(title, that.title);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id;
-		result = 31 * result + (num != null ? num.hashCode() : 0);
-		result = 31 * result + (text != null ? text.hashCode() : 0);
-		result = 31 * result + (creatorId != null ? creatorId.hashCode() : 0);
-		result = 31 * result + (dateUpdate != null ? dateUpdate.hashCode() : 0);
-		result = 31 * result + (dateCreate != null ? dateCreate.hashCode() : 0);
-		result = 31 * result + (managerId != null ? managerId.hashCode() : 0);
-		result = 31 * result + (at != null ? at.hashCode() : 0);
-		result = 31 * result + (title != null ? title.hashCode() : 0);
-		return result;
+		return Objects.hash(id, num, text, creatorId, dateUpdate, dateCreate, managerId, at, title);
 	}
 
 	@OneToMany(mappedBy = "ordersByDocId")

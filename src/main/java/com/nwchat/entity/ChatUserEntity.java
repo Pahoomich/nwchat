@@ -1,6 +1,7 @@
 package com.nwchat.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "chat_user", schema = "public", catalog = "nwchat")
@@ -36,16 +37,12 @@ public class ChatUserEntity {
 
 		ChatUserEntity that = (ChatUserEntity) o;
 
-		if (chatId != that.chatId) return false;
-		if (userId != that.userId) return false;
-
-		return true;
+		return Objects.equals(chatId, that.chatId) &&
+				Objects.equals(userId, that.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = chatId;
-		result = 31 * result + userId;
-		return result;
+		return Objects.hash(chatId, userId);
 	}
 }

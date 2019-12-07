@@ -40,15 +40,13 @@ public class ChatEntity {
 
 		ChatEntity that = (ChatEntity) o;
 
-		if (id != that.id) return false;
-		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(name, that.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id,name);
+		return Objects.hash(id, name);
 	}
 
 	@OneToMany(mappedBy = "chatsByChatId")

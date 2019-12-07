@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CheckListItemChatEntityPK implements Serializable {
 	private Integer chatId;
@@ -37,18 +38,12 @@ public class CheckListItemChatEntityPK implements Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 
 		CheckListItemChatEntityPK that = (CheckListItemChatEntityPK) o;
-
-		if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
-		if (checkListItemId != null ? !checkListItemId.equals(that.checkListItemId) : that.checkListItemId != null)
-			return false;
-
-		return true;
+		return Objects.equals(chatId, that.chatId) &&
+				Objects.equals(checkListItemId, that.checkListItemId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = chatId != null ? chatId.hashCode() : 0;
-		result = 31 * result + (checkListItemId != null ? checkListItemId.hashCode() : 0);
-		return result;
+		return Objects.hash(chatId, checkListItemId);
 	}
 }

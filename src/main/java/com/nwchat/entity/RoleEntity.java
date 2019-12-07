@@ -1,6 +1,7 @@
 package com.nwchat.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "role", schema = "public", catalog = "nwchat")
@@ -35,16 +36,12 @@ public class RoleEntity {
 
 		RoleEntity that = (RoleEntity) o;
 
-		if (id != that.id) return false;
-		if (role != null ? !role.equals(that.role) : that.role != null) return false;
-
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(role, that.role);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = role != null ? role.hashCode() : 0;
-		result = 31 * result + id;
-		return result;
+		return Objects.hash(id, role);
 	}
 }

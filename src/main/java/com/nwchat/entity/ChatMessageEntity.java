@@ -3,6 +3,7 @@ package com.nwchat.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "chat_message", schema = "public", catalog = "nwchat")
@@ -97,29 +98,18 @@ public class ChatMessageEntity {
 
 		ChatMessageEntity that = (ChatMessageEntity) o;
 
-		if (id != that.id) return false;
-		if (text != null ? !text.equals(that.text) : that.text != null) return false;
-		if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
-		if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
-		if (dateCreate != null ? !dateCreate.equals(that.dateCreate) : that.dateCreate != null) return false;
-		if (parentMessageId != null ? !parentMessageId.equals(that.parentMessageId) : that.parentMessageId != null)
-			return false;
-		if (responseToMessageId != null ? !responseToMessageId.equals(that.responseToMessageId) : that.responseToMessageId != null)
-			return false;
-
-		return true;
+		return Objects.equals(id, that.id) &&
+				Objects.equals(text, that.text) &&
+				Objects.equals(chatId, that.chatId) &&
+				Objects.equals(authorId, that.authorId) &&
+				Objects.equals(dateCreate, that.dateCreate) &&
+				Objects.equals(parentMessageId, that.parentMessageId) &&
+				Objects.equals(responseToMessageId, that.responseToMessageId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id;
-		result = 31 * result + (text != null ? text.hashCode() : 0);
-		result = 31 * result + (chatId != null ? chatId.hashCode() : 0);
-		result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
-		result = 31 * result + (dateCreate != null ? dateCreate.hashCode() : 0);
-		result = 31 * result + (parentMessageId != null ? parentMessageId.hashCode() : 0);
-		result = 31 * result + (responseToMessageId != null ? responseToMessageId.hashCode() : 0);
-		return result;
+		return Objects.hash(id, text, chatId, authorId, dateCreate, parentMessageId, responseToMessageId);
 	}
 
 	@ManyToOne

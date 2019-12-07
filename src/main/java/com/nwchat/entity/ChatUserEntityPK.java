@@ -3,6 +3,7 @@ package com.nwchat.entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ChatUserEntityPK implements Serializable {
 	private int chatId;
@@ -35,16 +36,13 @@ public class ChatUserEntityPK implements Serializable {
 
 		ChatUserEntityPK that = (ChatUserEntityPK) o;
 
-		if (chatId != that.chatId) return false;
-		if (userId != that.userId) return false;
-
-		return true;
+		return Objects.equals(chatId, that.chatId) &&
+				Objects.equals(userId, that.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = chatId;
-		result = 31 * result + userId;
-		return result;
+		return Objects.hash(chatId, userId);
+
 	}
 }

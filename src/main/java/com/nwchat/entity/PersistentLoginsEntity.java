@@ -2,6 +2,7 @@ package com.nwchat.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "persistent_logins", schema = "public", catalog = "nwchat")
@@ -58,20 +59,14 @@ public class PersistentLoginsEntity {
 
 		PersistentLoginsEntity that = (PersistentLoginsEntity) o;
 
-		if (username != null ? !username.equals(that.username) : that.username != null) return false;
-		if (series != null ? !series.equals(that.series) : that.series != null) return false;
-		if (token != null ? !token.equals(that.token) : that.token != null) return false;
-		if (lastUsed != null ? !lastUsed.equals(that.lastUsed) : that.lastUsed != null) return false;
-
-		return true;
+		return Objects.equals(username, that.username) &&
+				Objects.equals(series, that.series) &&
+				Objects.equals(token, that.token) &&
+				Objects.equals(lastUsed, that.lastUsed);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = username != null ? username.hashCode() : 0;
-		result = 31 * result + (series != null ? series.hashCode() : 0);
-		result = 31 * result + (token != null ? token.hashCode() : 0);
-		result = 31 * result + (lastUsed != null ? lastUsed.hashCode() : 0);
-		return result;
+		return Objects.hash(username, series, token, lastUsed);
 	}
 }

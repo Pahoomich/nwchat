@@ -1,6 +1,7 @@
 package com.nwchat.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "check_list_item_chat", schema = "public", catalog = "nwchat")
@@ -47,19 +48,13 @@ public class CheckListItemChatEntity {
 		if (o == null || getClass() != o.getClass()) return false;
 
 		CheckListItemChatEntity that = (CheckListItemChatEntity) o;
-
-		if (chatId != null ? !chatId.equals(that.chatId) : that.chatId != null) return false;
-		if (checkListItemId != null ? !checkListItemId.equals(that.checkListItemId) : that.checkListItemId != null)
-			return false;
-
-		return true;
+		return Objects.equals(chatId, that.chatId) &&
+				Objects.equals(checkListItemId, that.checkListItemId);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = chatId != null ? chatId.hashCode() : 0;
-		result = 31 * result + (checkListItemId != null ? checkListItemId.hashCode() : 0);
-		return result;
+		return Objects.hash(chatId, checkListItemId);
 	}
 
 	@ManyToOne
