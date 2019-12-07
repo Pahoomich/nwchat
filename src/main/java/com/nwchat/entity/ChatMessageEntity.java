@@ -1,5 +1,7 @@
 package com.nwchat.entity;
 
+import com.nwchat.model.ChatMessage;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -8,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "chat_message", schema = "public", catalog = "nwchat")
 public class ChatMessageEntity {
-	private int id;
+	private Integer id;
 	private String text;
 	private Integer chatId;
 	private Integer authorId;
@@ -21,14 +23,24 @@ public class ChatMessageEntity {
 	private ChatMessageEntity chatMessageByResponseToMessageId;
 	private Collection<ChatMessageEntity> chatMessagesById_0;
 
+	public ChatMessageEntity() {
+	}
+
+	public ChatMessageEntity(ChatMessage chatMessage) {
+		authorId = chatMessage.getUserId();
+		chatId = chatMessage.getChatId();
+		text = chatMessage.getContent();
+		dateCreate = new Timestamp(chatMessage.getDateTimeInMs());
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id", nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -11,6 +11,7 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 var chatId = null;
+var userId = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -20,6 +21,7 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#name').value.trim();
     chatId = document.querySelector('#chatId').value.trim();
+    userId = parseInt(document.querySelector('#userId').value.trim());
 
     if (username) {
         usernamePage.classList.add('hidden');
@@ -33,19 +35,29 @@ function connect(event) {
     event.preventDefault();
 }
 
+function createMessage(text, type) {
+    var Today = new Date();
+    return {
+        sender: username,
+        content: text,
+        dateTimeInMs: Today.getTime(),
+        type: type,
+        userId: userId,
+        chatId: chatId
+    }
+}
+
 
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
+    var chatMessage = createMessage("",'JOIN');
+
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
-        JSON.stringify({
-            sender: username,
-            type: 'JOIN',
-            chatId: chatId
-        })
+        JSON.stringify(chatMessage)
     );
 
     connectingElement.classList.add('hidden');
@@ -62,14 +74,13 @@ function sendMessage(event) {
     var messageContent = messageInput.value.trim();
 
     if (messageContent && stompClient) {
-        var chatMessage = {
-            sender: username,
-            content: messageInput.value,
-            type: 'CHAT',
-            chatId: chatId
-        };
+        var chatMessage = createMessage(messageInput.value, 'CHAT');
 
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send(
+            "/app/chat.sendMessage",
+            {},
+            JSON.stringify(chatMessage)
+        );
         messageInput.value = '';
     }
     event.preventDefault();
@@ -131,6 +142,7 @@ messageForm.addEventListener('submit', sendMessage, true);
 
 username = document.querySelector('#name').value.trim();
 chatId = parseInt(document.querySelector('#chatId').value.trim());
+userId = parseInt(document.querySelector('#userId').value.trim());
 
 if (username) {
     usernamePage.classList.add('hidden');

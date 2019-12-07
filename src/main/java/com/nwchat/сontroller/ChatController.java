@@ -1,9 +1,11 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.ChatEntity;
+import com.nwchat.entity.ChatMessageEntity;
 import com.nwchat.entity.ChatUserEntity;
 import com.nwchat.entity.UserEntity;
 import com.nwchat.model.ChatMessage;
+import com.nwchat.repository.ChatMessageRepository;
 import com.nwchat.repository.ChatRepository;
 import com.nwchat.repository.ChatUserRepository;
 import com.nwchat.service.UserService;
@@ -29,18 +31,23 @@ public class ChatController {
 	private final UserService userService;
 	private final ChatRepository chatRepository;
 	private final ChatUserRepository chatUserRepository;
+	private final ChatMessageRepository chatMessageRepository;
 
 	public ChatController(UserService userService,
 	                      ChatRepository chatRepository,
-	                      ChatUserRepository chatUserRepository) {
+	                      ChatUserRepository chatUserRepository,
+	                      ChatMessageRepository chatMessageRepository) {
 		this.userService = userService;
 		this.chatRepository = chatRepository;
 		this.chatUserRepository = chatUserRepository;
+		this.chatMessageRepository = chatMessageRepository;
 	}
 
 	@MessageMapping("/chat.sendMessage")
 	@SendTo("/topic/public")
 	public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+		ChatMessageEntity chatMessageEntity = new ChatMessageEntity(chatMessage);
+		chatMessageRepository.save(chatMessageEntity);
 		return chatMessage;
 	}
 
@@ -74,6 +81,7 @@ public class ChatController {
 		if (optChatEntity.isPresent() && chatUser.isPresent()) {
 			model.addObject("chatName", optChatEntity.get().getName());
 			model.addObject("chatId", optChatEntity.get().getId());
+			model.addObject("userId", user.getId());
 			model.addObject("userName", user.getFirstname() + " " + user.getLastname());
 			model.setViewName("chat/chat");
 		} else {
