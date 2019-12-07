@@ -10,6 +10,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
+var chatId = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -18,8 +19,9 @@ var colors = [
 
 function connect(event) {
     username = document.querySelector('#name').value.trim();
+    chatId = document.querySelector('#chatId').value.trim();
 
-    if(username) {
+    if (username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
@@ -39,8 +41,12 @@ function onConnected() {
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
-    )
+        JSON.stringify({
+            sender: username,
+            type: 'JOIN',
+            chatId: chatId
+        })
+    );
 
     connectingElement.classList.add('hidden');
 }
@@ -55,11 +61,12 @@ function onError(error) {
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
-            type: 'CHAT'
+            type: 'CHAT',
+            chatId: chatId
         };
 
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
@@ -71,10 +78,11 @@ function sendMessage(event) {
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
+    if (parseInt(message.chatId) != chatId) return;
 
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
     } else if (message.type === 'LEAVE') {
@@ -122,8 +130,9 @@ function getAvatarColor(messageSender) {
 messageForm.addEventListener('submit', sendMessage, true);
 
 username = document.querySelector('#name').value.trim();
+chatId = parseInt(document.querySelector('#chatId').value.trim());
 
-if(username) {
+if (username) {
     usernamePage.classList.add('hidden');
     chatPage.classList.remove('hidden');
 

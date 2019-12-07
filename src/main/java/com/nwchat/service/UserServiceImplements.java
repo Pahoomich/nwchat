@@ -4,6 +4,8 @@ import com.nwchat.entity.RoleEntity;
 import com.nwchat.entity.UserEntity;
 import com.nwchat.repository.RoleRepository;
 import com.nwchat.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,9 @@ public class UserServiceImplements implements UserService {
 		userRepository.save(user);
 	}
 
-
+	@Override
+	public UserEntity getAuthenticationUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return findUserByLogin(auth.getName());
+	}
 }

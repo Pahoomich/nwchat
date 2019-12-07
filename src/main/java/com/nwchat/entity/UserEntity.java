@@ -2,11 +2,13 @@ package com.nwchat.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "nwchat")
 public class UserEntity {
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	private int id;
 	@Basic
@@ -33,6 +35,14 @@ public class UserEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id", nullable = true, insertable = false, updatable = false)
 	private RoleEntity role;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "chat_user",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "chat_id")
+	)
+	private Set<ChatEntity> chats;
 
 	public int getId() {
 		return id;
@@ -96,6 +106,14 @@ public class UserEntity {
 
 	public void setRole(RoleEntity rol) {
 		this.role = role;
+	}
+
+	public Set<ChatEntity> getChats() {
+		return chats;
+	}
+
+	public void setChats(Set<ChatEntity> chats) {
+		this.chats = chats;
 	}
 
 	@Override

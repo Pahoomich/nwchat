@@ -22,6 +22,7 @@ public class OrderEntity {
 	private Collection<ReportEntity> reportsById;
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;

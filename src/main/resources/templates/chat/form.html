@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/authenticated}">
+<head>
+    <title>Edit Doc</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form class="form-signin was-validated" th:action="@{/chat/}" method="post" th:object="${chat}">
+
+        <div class="row">
+            <input type="hidden" th:field="*{id}" name="id">
+
+            <div class="col-sm-2 col-12">
+                <label for="title">Name:</label>
+            </div>
+            <div class="col-sm-10 col-12 text-left">
+                <input name="title" type="text" id="title" class="form-control"
+                       placeholder="First Name" required autofocus th:field="*{name}">
+            </div>
+
+            <div class="actions col-12">
+                <button class="btn btn-success text-uppercase" type="submit">Save</button>
+                <a class="btn btn-secondary" th:href="@{/chat/}">Back</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

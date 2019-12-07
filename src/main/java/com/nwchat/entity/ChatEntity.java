@@ -14,6 +14,7 @@ public class ChatEntity {
 	private Collection<CheckListItemChatEntity> checkListItemChatsById;
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;
@@ -49,7 +50,7 @@ public class ChatEntity {
 		return Objects.hash(id, name);
 	}
 
-	@OneToMany(mappedBy = "chatsByChatId")
+	@OneToMany(mappedBy = "chatsByChatId", fetch = FetchType.LAZY)
 	public Collection<ChatMessageEntity> getChatMessagesById() {
 		return chatMessagesById;
 	}
@@ -58,7 +59,7 @@ public class ChatEntity {
 		this.chatMessagesById = chatMessagesById;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "chat_user")
 	public Collection<ChatUserEntity> getChatUsersById() {
 		return chatUsersById;
@@ -68,7 +69,7 @@ public class ChatEntity {
 		this.chatUsersById = chatUsersById;
 	}
 
-	@OneToMany(mappedBy = "chatsByChatId")
+	@OneToMany(mappedBy = "chatsByChatId",fetch = FetchType.LAZY)
 	public Collection<CheckListItemChatEntity> getCheckListItemChatsById() {
 		return checkListItemChatsById;
 	}

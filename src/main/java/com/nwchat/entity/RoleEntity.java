@@ -20,6 +20,7 @@ public class RoleEntity {
 	}
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;

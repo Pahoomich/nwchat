@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/authenticated}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div class="" layout:fragment="content">
+    <div class="row">
+        <div class="col-10">
+            <h1>
+                Chats
+            </h1>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-success my-2 my-lg-0" th:href="@{/chat/new}">Create</a>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <th:block th:each="chat : ${chatList}">
+            <tr>
+                <td th:text="${chat.getName()}"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

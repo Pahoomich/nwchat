@@ -22,6 +22,7 @@ public class ChatMessageEntity {
 	private Collection<ChatMessageEntity> chatMessagesById_0;
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;

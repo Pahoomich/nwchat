@@ -19,6 +19,7 @@ public class CheckListItemEntity {
 	private ReportEntity reportsByReportId;
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;

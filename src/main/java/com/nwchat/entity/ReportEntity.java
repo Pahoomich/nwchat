@@ -18,6 +18,7 @@ public class ReportEntity {
 	private OrderEntity ordersByOrderId;
 
 	@Id
+	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	public int getId() {
 		return id;
