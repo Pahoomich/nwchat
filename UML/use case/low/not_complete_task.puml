@@ -1,0 +1,3 @@
+@startuml
+usecase (Пометить пункт \n чек-листа, \n как невыполненный ) as not_complete_task
+@enduml

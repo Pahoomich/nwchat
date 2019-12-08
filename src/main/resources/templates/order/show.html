@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/authenticated}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content" th:with="baseUrl=('/order/'+${order.id})">
+    <div id="formOrder" class="row d-print-none bg-gray">
+        <h1 class="col-12" >
+            Просмотр приказа
+        </h1>
+
+        <div class="col-12">
+            <a class="btn btn-secondary" th:href="@{/order/}">Назад</a>
+            <a class="btn btn-outline-warning" th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
+            <a class="btn btn-outline-danger" th:href="@{${baseUrl}+'/delete'}">Удалить</a>
+        </div>
+
+
+        <div class="col-sm-2 col-12">
+            Исполнитель:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${order.manager.getFirstname() + ' ' + order.manager.getLastname()}">
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Приказ:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${order.num}">
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Приказ от:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${order.at}">
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Заголовок:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${order.title}">
+
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Текст:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${order.text}">
+
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

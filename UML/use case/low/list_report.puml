@@ -1,0 +1,3 @@
+@startuml
+usecase (Показать список отчетов) as list_report
+@enduml
