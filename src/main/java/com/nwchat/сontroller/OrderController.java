@@ -54,15 +54,13 @@ public class OrderController {
 	public ModelAndView create(@Valid OrderEntity orderEntity, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
-		System.out.println(result.getAllErrors());
+		orderEntity.setState(0);
 		if (result.hasErrors()) {
 			model.addObject("userList",userRepository.findAll());
 			model.addObject("order", orderEntity);
 			model.setViewName("order/form");
 			return model;
 		}
-		System.out.println(userService.getAuthenticationUser().getId());
-
 		orderEntity = orderRepository.save(orderEntity);
 
 		model.setViewName(String.format("redirect:%d", orderEntity.getId()));
@@ -84,9 +82,13 @@ public class OrderController {
 	public ModelAndView update(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
-		//UserEntity user = userService.getAuthenticationUser();
+		OrderEntity orderEntity =optOrder.get();
+		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
+
 		if (optOrder.isPresent()) {
-			model.addObject("order", optOrder.get());
+			orderEntity.setState(0);
+			System.out.println(orderEntity.getState());
+			model.addObject("order", orderEntity);
 			model.addObject("userList",userRepository.findAll());//todo list manager
 			model.setViewName("order/form");
 		}
