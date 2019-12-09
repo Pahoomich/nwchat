@@ -1,35 +1,4 @@
 @startuml
-'[*] --> ResourcesProcessing
-'
-'state ResourcesProcessing {
-'  [*] --> PushOrederButtomIsPress
-'  PushOrederButtomIsPress --> CreateChatPageIsOpen
-'  CreateChatPageIsOpen --> CreateListOfPeople
-'  CreateListOfPeople --> ResultSearch
-'  ResultSearch --> BlockPress
-'}
-'CreateListOfPeople --> Controller
-'BlockPress --> Controller
-'state Controller{
-'    state request_response {
-'
-'    }
-'    state query_db {
-'
-'    }
-'
-'    Controller --> request_response
-'    request_response -> query_db
-'    query_db --> request_response: listOfStaff
-'}
-'
-'
-'State "'Create chat' Buttom is press    " as PushOrederButtomIsPress: Нажата кнопка 'Создать чат'
-'State "'Create Chat' Page is open" as CreateChatPageIsOpen: Страница 'Создание чата' \n открыта у Управляющего на экране
-'State "Creating a list \n of available staffs   " as CreateListOfPeople: Формирование списка людей \n доступных для создания чата
-'State "Request generation    " as RequestGen
-'State "Displaying Result of search  " as ResultSearch
-'State "Block with staff is press   " as BlockPress
 
 [*] --> ИзменениеОбъектаВРесурсах
 state ИзменениеОбъектаВРесурсах {
@@ -37,7 +6,7 @@ state ИзменениеОбъектаВРесурсах {
 }
 
 state ИзменениеКлассаСервлет {
-    state "Выбор метода и контройлера \n для создания чата    " as ИзменениеВКонтройлере
+    state "Method and controller is selected    \n for creating chat " as ИзменениеВКонтройлере
     [*] -> ИзменениеВКонтройлере
     state "Выбор модели" as ИзменениеКлассаСервлетБЛ
     ИзменениеВКонтройлере --> ИзменениеКлассаСервлетБЛ: <<ChatModel>>
@@ -48,8 +17,8 @@ state ИзменениеКлассаСервлет {
 
 
 state DB {
-    state "Данные получены  " as data_recive
-    state "Данные сохранены" as data_save
+    state "Data is received  " as data_recive
+    state "Data is saved" as data_save
     [*] --> data_recive
     data_recive --> data_save
     data_save --> [*]
@@ -60,10 +29,10 @@ DB -> ИзменениеКлассаСервлетБЛ :JDBC
 ИзменениеКлассаСервлет -left-> НоваяСтраница : <<HTML page>>
 НоваяСтраница --> [*]
 
-state "Ожидание нажатия \n кнопки 'Create chat'    " as ИзменениеОбъектаВРесурсах:
-state "Servlet Conteiner Spring \n Ожидает запрос" as ИзменениеКлассаСервлет
-state "Исполнение бизнес логиги " as ИзменениеКлассаСервлетБЛ
-state "Формирование ответа для клиента" as ФормированиеОтвета
-state "Отображение новой страницы" as НоваяСтраница
+state "Waiting for click \n button 'Create chat'    " as ИзменениеОбъектаВРесурсах:
+state "Servlet Conteiner Spring \n Waiting for request" as ИзменениеКлассаСервлет
+state "Execution of \n Business logic " as ИзменениеКлассаСервлетБЛ
+state "Formation of response for client     " as ФормированиеОтвета
+state "New page is displayed    " as НоваяСтраница
 
 @enduml

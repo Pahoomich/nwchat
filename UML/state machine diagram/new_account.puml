@@ -1,0 +1,20 @@
+@startuml
+[*] --> PageIsOpen: set window.location.href = /new_acc/      \n UserServices.getAuthenticationUser()
+PageIsOpen --> FullNameFieldsIsFilled: nameIsEmpty()\n secondNameIsEmpty()
+FullNameFieldsIsFilled --> LoginAndPassIsGenerated: genUserLogin(User new_user)\n genUserPassword(User new_user)
+LoginAndPassIsGenerated --> SaveButtonIsPress
+SaveButtonIsPress --> RequestForBD : UserRepository.getUserByName(User new_user)    \n
+RequestForBD --> ShowMessageSuccess : Model.setViewName()   \n
+RequestForBD --> ShowMessageIncorrectFullName : Model.setViewName('Error message')  \n
+ShowMessageSuccess --> [*]
+ShowMessageIncorrectFullName --> [*]
+
+
+state PageIsOpen : entry/User.firstName = ""; \n User.SecondName = ""; \n User.login = ""; \n User.Password = "";
+state FullNameFieldsIsFilled :do/ User.setUserFirstName();\n User.setUserSecondName()\n
+state LoginAndPassIsGenerated :do/ Filling Login and Pass fields    \n
+state SaveButtonIsPress
+state RequestForBD
+state ShowMessageSuccess
+state ShowMessageIncorrectFullName
+@enduml
