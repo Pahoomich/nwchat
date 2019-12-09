@@ -10,7 +10,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue
 	@Column(name = "id", nullable = false)
-	private int id;
+	private Integer id;
 	@Basic
 	@Column(name = "login", nullable = false, length = 255)
 	private String login;
@@ -44,11 +44,11 @@ public class UserEntity {
 	)
 	private Set<ChatEntity> chats;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -116,6 +116,9 @@ public class UserEntity {
 		this.chats = chats;
 	}
 
+	public String getFIO(){
+		return firstname + " " + lastname;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

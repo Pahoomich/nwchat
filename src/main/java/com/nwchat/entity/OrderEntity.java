@@ -13,13 +13,15 @@ public class OrderEntity {
 	private String num;
 	private String text;
 	private Integer creatorId;
-	private Timestamp dateUpdate;
-	private Timestamp dateCreate;
+
 	private Integer managerId;
+	private UserEntity manager;
 	private Date at;
 	private String title;
 	private Collection<CheckListItemEntity> checkListItemsById;
 	private Collection<ReportEntity> reportsById;
+	private Integer state;
+
 
 	@Id
 	@GeneratedValue
@@ -63,31 +65,46 @@ public class OrderEntity {
 	}
 
 	@Basic
-	@Column(name = "date_update", nullable = true)
-	public Timestamp getDateUpdate() {
-		return dateUpdate;
+	@Column(name ="state", nullable = false)
+	public Integer getState() {
+		return state;
 	}
 
-	public void setDateUpdate(Timestamp dateUpdate) {
-		this.dateUpdate = dateUpdate;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
+	//	@Basic
+//	@Column(name = "date_update", nullable = true)
+//	public Timestamp getDateUpdate() {
+//		return dateUpdate;
+//	}
+//
+//	public void setDateUpdate(Timestamp dateUpdate) {
+//		this.dateUpdate = dateUpdate;
+//	}
+//
+//	@Basic
+//	@Column(name = "date_create", nullable = true)
+//	public Timestamp getDateCreate() {
+//		return dateCreate;
+//	}
+//
+//	public void setDateCreate(Timestamp dateCreate) {
+//		this.dateCreate = dateCreate;
+//	}
+////
 	@Basic
-	@Column(name = "date_create", nullable = true)
-	public Timestamp getDateCreate() {
-		return dateCreate;
-	}
-
-	public void setDateCreate(Timestamp dateCreate) {
-		this.dateCreate = dateCreate;
-	}
-
-	@Basic
-	@Column(name = "manager_id", nullable = true)
+	@Column(name = "manager_id", nullable = true, insertable= false , updatable = false)
 	public Integer getManagerId() {
 		return managerId;
 	}
 
+//	@ManyToOne(targetEntity = UserEntity.class)
+//	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+//	public Integer getManagerId() {
+//		return managerId;
+//	}
 	public void setManagerId(Integer managerId) {
 		this.managerId = managerId;
 	}
@@ -124,16 +141,16 @@ public class OrderEntity {
 				Objects.equals(num, that.num) &&
 				Objects.equals(text, that.text) &&
 				Objects.equals(creatorId, that.creatorId) &&
-				Objects.equals(dateUpdate, that.dateUpdate) &&
-				Objects.equals(dateCreate, that.dateCreate) &&
+				Objects.equals(manager, that.manager) &&
 				Objects.equals(managerId, that.managerId) &&
 				Objects.equals(at, that.at) &&
+				Objects.equals(state, that.state) &&
 				Objects.equals(title, that.title);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, num, text, creatorId, dateUpdate, dateCreate, managerId, at, title);
+		return Objects.hash(id, num, text, creatorId, manager,managerId, at, title, state);
 	}
 
 	@OneToMany(mappedBy = "ordersByDocId")
@@ -144,6 +161,14 @@ public class OrderEntity {
 	public void setCheckListItemsById(Collection<CheckListItemEntity> checkListItemsById) {
 		this.checkListItemsById = checkListItemsById;
 	}
+	@ManyToOne
+	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = false)
+	public UserEntity getManager(){return manager;}
+
+	public void setManager(UserEntity manager) {
+		this.manager = manager;
+	}
+
 
 	@OneToMany(mappedBy = "ordersByOrderId")
 	public Collection<ReportEntity> getReportsById() {
@@ -153,4 +178,6 @@ public class OrderEntity {
 	public void setReportsById(Collection<ReportEntity> reportsById) {
 		this.reportsById = reportsById;
 	}
+
+
 }

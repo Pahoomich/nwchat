@@ -1,0 +1,18 @@
+@startuml
+!include ../actor/lk.puml
+!include ../actor/manager.puml
+
+rectangle {
+!include low/list_orders.puml
+!include low/crud_bd.puml
+!include low/check.puml
+
+}
+
+!startsub BASIC
+lk -- list_orders
+manager --list_orders
+list_orders ..>crud_bd:<include>
+list_orders ..> check:<include>
+!endsub
+@enduml

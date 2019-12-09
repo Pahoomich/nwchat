@@ -75,6 +75,7 @@ public class ChatController {
 	public ModelAndView show(@PathVariable(value = "id") int id) {
 		ModelAndView model = new ModelAndView();
 		UserEntity user = userService.getAuthenticationUser();
+		//user.getRole();
 		Optional<ChatEntity> optChatEntity = chatRepository.findById(id);
 		Optional<ChatUserEntity> chatUser = chatUserRepository.findByChatIdAndUserId(id, user.getId());
 
