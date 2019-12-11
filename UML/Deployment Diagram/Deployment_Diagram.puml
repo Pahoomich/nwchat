@@ -1,21 +1,23 @@
 @startuml
 frame "Deployment NWchat Web Application        " {
-    node "<<divice>> \n :AplicationServer \n {OS=Solaris}" as back_end {
+    node "<<divice>> \n :AplicationServer \n SunOS helios 5.10 \n RAM: 5 GB \n Место на жестком диске: 10 GB" as back_end {
         node "<<JSP server>> \n Tomcat" as jsp{
             artifact "<<artifact>> \n NWchat.war" as war
         }
         node "<<DB>> \n PostgreSQL" as bd{
-            database "NWchatDB"
+            database "NWchatDB" as bd_nwchat
         }
      }
-    jsp -- bd: <<JDBC>>
+    jsp -- bd: <<TCP/IP>> \n port 5432
 
 
     node "<<device>> \n :ClientDevices" as client {
-        component "Web Browser"
+        component "Web Browser" as webBrowser
     }
 
-    client -- back_end: <<protocol>> \n HTTP/HTTPS v1.1
+    client -- back_end:  <<TCP/IP>> \n port 8080
+    webBrowser -(0- jsp: <<protocol>> \n HTTP/HTTPS v1.1
+    bd_nwchat -0)- jsp: <<JDBC>>
 
 }
 @enduml

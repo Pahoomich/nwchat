@@ -1,0 +1,18 @@
+@startuml
+
+(*) --> "Click 'View report'   "
+--> " set window.location.href = /report/     "
+if "Security.check(cookies)" then
+    --> [yes] "ReportController.index()  "
+    --> " UserServices.getAuthenticationUser()      "
+    -->  "ReportRepository.findAllForLK(user.id)       "
+    -->  "ReportRepository.findAllForManager(user.id)       "
+    --> " Model.setViewName('report/index')   "
+    --> "window.load"
+else
+    --> [no] "Model.setViewName('Error message')     "
+endif
+    --> "window.load"
+    --> "window.render"
+    --> (*)
+@enduml
