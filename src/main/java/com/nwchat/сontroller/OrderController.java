@@ -73,7 +73,7 @@ public class OrderController {
 
 		OrderEntity orderEntity = new OrderEntity();
 		model.addObject("order", orderEntity);
-		model.addObject("userList",userRepository.findAll());//todo list manager
+		model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
 		model.setViewName("order/form");
 		return model;
 	}
@@ -83,19 +83,22 @@ public class OrderController {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
 		OrderEntity orderEntity =optOrder.get();
-		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
+		if (orderEntity.getState() == 0) {
+            orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 
-		if (optOrder.isPresent()) {
-			orderEntity.setState(0);
-			System.out.println(orderEntity.getState());
-			model.addObject("order", orderEntity);
-			model.addObject("userList",userRepository.findAll());//todo list manager
-			model.setViewName("order/form");
-		}
+            if (optOrder.isPresent()) {
+                orderEntity.setState(0);
+                System.out.println(orderEntity.getState());
+                model.addObject("order", orderEntity);
+                model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+                model.setViewName("order/form");
+            } else {
+                model.setViewName("redirect:/order/");
+            }
+        }
 		else {
-			model.setViewName("redirect:/order/");
-		}
-
+            model.setViewName("redirect:/order/");
+        }
 
 		return model;
 	}

@@ -15,7 +15,7 @@
 
         <div class="col-12">
             <a class="btn btn-secondary" th:href="@{/order/}">Назад</a>
-            <a class="btn btn-outline-warning" th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
+            <a class="btn btn-outline-warning" th:if ="${order.getState()==0}"th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
             <a class="btn btn-outline-danger" th:href="@{${baseUrl}+'/delete'}">Удалить</a>
         </div>
 

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/authenticated}">
 <head>
-    <title>Edit Doc</title>
+    <title>Edit order</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -34,23 +34,23 @@
                 <label for="title">Приказ:</label>
             </div>
             <div class="col-sm-10 col-12 text-left">
-                <input name="title" type="text" id="num" class="form-control"
-                       placeholder="form-control" required autofocus th:field="*{num}">
+                <input name="num" type="text" id="num" class="form-control"
+                       placeholder="Введите номер приказа" required autofocus th:field="*{num}">
             </div>
 
             <div class="col-sm-2 col-12">
                 <label for="title">Приказ от:</label>
             </div>
             <div class="col-sm-10 col-12 text-left">
-                <input name="title" type="date" id="at" class="form-control"
-                       placeholder="form-control" required autofocus th:field="*{at}">
+                <input name="at" type="date" id="at" class="form-control"
+                       placeholder="Выберите дату" required autofocus th:field="*{at}">
             </div>
             <div class="col-sm-2 col-12">
                 <label for="title">Заголовок:</label>
             </div>
             <div class="col-sm-10 col-12 text-left">
                 <input name="title" type="text" id="title" class="form-control"
-                       placeholder="First Name" required autofocus th:field="*{title}">
+                       placeholder="Введите заголовок приказа" required autofocus th:field="*{title}">
             </div>
 
             <div class="col-sm-2 col-12">
