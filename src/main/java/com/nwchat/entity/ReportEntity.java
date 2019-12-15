@@ -1,5 +1,7 @@
 package com.nwchat.entity;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
@@ -10,12 +12,14 @@ import java.util.Objects;
 public class ReportEntity {
 	private int id;
 	private String num;
-	private Integer text;
+	private String text;
 	private Integer creatorId;
 	private Integer orderId;
 	private Date at;
 	private Collection<CheckListItemEntity> checkListItemsById;
 	private OrderEntity ordersByOrderId;
+	private Integer state;
+	private UserEntity manager;
 
 	@Id
 	@GeneratedValue
@@ -40,11 +44,11 @@ public class ReportEntity {
 
 	@Basic
 	@Column(name = "text", nullable = true)
-	public Integer getText() {
+	public String getText() {
 		return text;
 	}
 
-	public void setText(Integer text) {
+	public void setText(String text) {
 		this.text = text;
 	}
 
@@ -78,23 +82,36 @@ public class ReportEntity {
 		this.at = at;
 	}
 
+	@Basic
+	@Column(name = "state", nullable = true)
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		ReportEntity that = (ReportEntity) o;
-		return Objects.equals(id, that.id) &&
-				Objects.equals(num, that.num)&&
-				Objects.equals(text, that.text)&&
-				Objects.equals(creatorId, that.creatorId)&&
-				Objects.equals(orderId, that.orderId)&&
-				Objects.equals(at, that.at);
+		return id == that.id &&
+				Objects.equals(num, that.num) &&
+				Objects.equals(text, that.text) &&
+				Objects.equals(creatorId, that.creatorId) &&
+				Objects.equals(orderId, that.orderId) &&
+				Objects.equals(at, that.at) &&
+				Objects.equals(checkListItemsById, that.checkListItemsById) &&
+				Objects.equals(ordersByOrderId, that.ordersByOrderId) &&
+				Objects.equals(state, that.state) &&
+				Objects.equals(manager, that.manager);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, num,text,creatorId,orderId,at);
+		return Objects.hash(id, num, text, creatorId, orderId, at, checkListItemsById, ordersByOrderId, state, manager);
 	}
 
 	@OneToMany(mappedBy = "reportsByReportId")
@@ -114,5 +131,12 @@ public class ReportEntity {
 
 	public void setOrdersByOrderId(OrderEntity ordersByOrderId) {
 		this.ordersByOrderId = ordersByOrderId;
+	}
+	@ManyToOne
+	@JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+	public UserEntity getManager(){return manager;}
+
+	public void setManager(UserEntity manager) {
+		this.manager = manager;
 	}
 }

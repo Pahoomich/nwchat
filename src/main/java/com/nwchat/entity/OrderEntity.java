@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "order", schema = "public", catalog = "nwchat")
 public class OrderEntity {
-	private int id;
+	private Integer id;
 	private String num;
 	private String text;
 	private Integer creatorId;
@@ -26,11 +26,11 @@ public class OrderEntity {
 	@Id
 	@GeneratedValue
 	@Column(name = "id", nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

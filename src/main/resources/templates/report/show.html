@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/authenticated}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content" th:with="baseUrl=('/report/'+${report.id})">
+    <div id="formReport" class="row d-print-none bg-gray">
+        <h1 class="col-12" >
+            Просмотр отчета
+        </h1>
+
+        <div class="col-12">
+            <a class="btn btn-secondary" th:href="@{/report/}">Назад</a>
+            <a class="btn btn-outline-primary" th:if="${userRole == 2 and report.getState() == 0}" th:href="@{${baseUrl} + '/send'}" > Отправить</a>
+            <a class="btn btn-outline-warning" th:if ="${report.getState()==0 and userRole==2 }" th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
+            <a class="btn btn-outline-danger" th:if="${report.getState()==0}" th:href="@{${baseUrl}+'/delete'}">Удалить</a>
+        </div>
+
+
+        <div class="col-sm-2 col-12">
+            Исполнитель:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${report.manager.getFirstname() + ' ' + report.manager.getLastname()}">
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Отчет номер:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${report.num}">
+        </div>
+
+        <div class="col-sm-2 col-12">
+            Отчет от:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${report.at}">
+        </div>
+
+
+        <div class="col-sm-2 col-12">
+            Текст:
+        </div>
+        <div class="col-sm-10 col-12 text-left" th:text="${report.text}">
+
+        </div>
+
+        <div id="formOrder" class="row d-print-none bg-gray" style="margin-left: 10px">
+
+            <div class="col-sm-6 col-12">
+                <h3>Составлен на основании приказа №</h3>
+            </div>
+             <div class="col-sm-6 col-12 text-left"   >
+                 <h3 th:text="${order.num}"></h3>
+            </div>
+
+            <div class="col-sm-2 col-12">
+                Исполнитель:
+            </div>
+            <div class="col-sm-10 col-12 text-left" th:text="${order.manager.getFIO()}">
+            </div>
+
+            <div class="col-sm-2 col-12">
+                Заголовок:
+            </div>
+            <div class="col-sm-10 col-12 text-left" th:text="${order.title}">
+            </div>
+
+            <div class="col-sm-2 col-12">
+                Текст:
+            </div>
+            <div class="col-sm-10 col-12 text-left" th:text="${order.text}">
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
