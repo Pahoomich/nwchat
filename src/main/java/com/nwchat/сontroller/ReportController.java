@@ -94,8 +94,8 @@ public class ReportController {
         ModelAndView model = new ModelAndView();
 
         ReportEntity reportEntity = new ReportEntity();
-
-        model.addObject("orderList",orderRepository.findAll());
+        List<OrderEntity> orderEntityList = orderRepository.findAllByManagerIdEquals(userService.getAuthenticationUser().getId());
+        model.addObject("orderList",orderEntityList);
         model.addObject("report", reportEntity);
         model.setViewName("report/form");
         return model;
