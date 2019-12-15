@@ -1,3 +1,12 @@
+-- we don't know how to generate root <with-no-name> (class Root) :(
+create sequence hibernate_sequence;
+
+alter sequence hibernate_sequence owner to admin;
+
+create sequence report_id_seq;
+
+alter sequence report_id_seq owner to admin;
+
 create table role
 (
 	role varchar(255) not null,
@@ -37,12 +46,6 @@ create table persistent_logins
 
 alter table persistent_logins owner to postgres;
 
-create trigger bu_persistent_logins
-	before update
-	on persistent_logins
-	for each row
-	execute procedure update_modified_column();
-
 create table "order"
 (
 	id serial not null
@@ -58,7 +61,7 @@ create table "order"
 			references users,
 	at date,
 	title text,
-	state integer not null
+	state integer
 );
 
 alter table "order" owner to postgres;
@@ -112,18 +115,19 @@ alter table chat_user owner to postgres;
 
 create table report
 (
-	id integer not null
+	id integer default nextval('report_id_seq'::regclass) not null
 		constraint reports_pk
 			primary key,
 	num text,
-	text integer,
+	text text,
 	creator_id integer
 		constraint reports_users_user_id_fk
 			references users,
 	order_id integer
 		constraint reports_docs_id_fk
 			references "order",
-	at date
+	at date,
+	state integer
 );
 
 alter table report owner to postgres;
@@ -159,4 +163,36 @@ create table check_list_item_chat
 );
 
 alter table check_list_item_chat owner to postgres;
+
+create function update_changetimestamp_column() returns trigger
+	language plpgsql
+as $$
+BEGIN
+    NEW.changetimestamp = now();
+    RETURN NEW;
+END;
+$$;
+
+alter function update_changetimestamp_column() owner to admin;
+
+create function update_modified_column() returns trigger
+	language plpgsql
+as $$
+BEGIN
+    IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
+        NEW.last_used = now();
+        RETURN NEW;
+    ELSE
+        RETURN OLD;
+    END IF;
+END;
+$$;
+
+alter function update_modified_column() owner to admin;
+
+create trigger bu_persistent_logins
+	before update
+	on persistent_logins
+	for each row
+	execute procedure update_modified_column();
 

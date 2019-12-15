@@ -8,49 +8,44 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form class="form-signin was-validated" th:action="@{/order/}" method="post" th:object="${order}">
+    <form class="form-signin was-validated" th:action="@{/report/}" method="post" th:object="${report}">
 
         <div class="row">
             <input type="hidden" th:field="*{id}" name="id">
             <input type="hidden" th:field="*{state}" name="state">
-
+            <input type="hidden" th:field="*{orderId}" name="orderId">
 
             <div class="col-sm-2 col-12">
-                <label for="title">Исполнитель:</label>
+                <label for="num">Отчет №:</label>
+            </div>
+            <div class="col-sm-10 col-12 text-left">
+                <input name="num" type="text" id="num" class="form-control"
+                       placeholder="Введите номер отчета" required autofocus th:field="*{num}">
+            </div>
+
+            <div class="col-sm-2 col-12">
+                <label for="num">Отчет на основании приказа №</label>
             </div>
             <div class="col-sm-10 col-12 text-left">
 
-                <div>
+                <div >
 
-                    <select class="js-example-basic-single js-states form-control" type="integer" id="manager" name="manager" >
-                        <th:block th:each="user : ${userList}">
-                            <option  th:value="${user.getId()}" th:selected="${user.getId().equals(order.managerId)}" th:text="${user.getFIO()}" ></option>
+                    <select class="js-example-basic-single js-states form-control" id="ordersByOrderId" name="ordersByOrderId" >
+                        <th:block th:each="order : ${orderList}">
+
+                            <option  th:value="${order.getId()}" th:selected="${order.getId().equals(report.orderId)}" th:text="${order.getNum()}" ></option>
                         </th:block>
                     </select>
                 </div>
 
             </div>
-            <div class="col-sm-2 col-12">
-                <label for="title">Приказ:</label>
-            </div>
-            <div class="col-sm-10 col-12 text-left">
-                <input name="num" type="text" id="num" class="form-control"
-                       placeholder="Введите номер приказа" required autofocus th:field="*{num}">
-            </div>
 
             <div class="col-sm-2 col-12">
-                <label for="title">Приказ от:</label>
+                <label for="at">Отчет от:</label>
             </div>
             <div class="col-sm-10 col-12 text-left">
                 <input name="at" type="date" id="at" class="form-control"
                        placeholder="Выберите дату" required autofocus th:field="*{at}">
-            </div>
-            <div class="col-sm-2 col-12">
-                <label for="title">Заголовок:</label>
-            </div>
-            <div class="col-sm-10 col-12 text-left">
-                <input name="title" type="text" id="title" class="form-control"
-                       placeholder="Введите заголовок приказа" required autofocus th:field="*{title}">
             </div>
 
             <div class="col-sm-2 col-12">
@@ -62,7 +57,7 @@
 
             <div class="actions col-12">
                 <button class="btn btn-success text-uppercase" type="submit">Save</button>
-                <a class="btn btn-secondary" th:href="@{/order/}">Back</a>
+                <a class="btn btn-secondary" th:href="@{/report/}">Back</a>
             </div>
         </div>
     </form>

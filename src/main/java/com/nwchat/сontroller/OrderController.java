@@ -1,8 +1,7 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.OrderEntity;
-import com.nwchat.entity.UserEntity;
-import com.nwchat.model.Doc;
+import com.nwchat.entity.ReportEntity;
 import com.nwchat.repository.OrderRepository;
 import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
@@ -34,19 +33,47 @@ public class OrderController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView model = new ModelAndView();
-        Iterable<OrderEntity> listOrder =  orderRepository.findAll();
-        model.addObject("orderList", listOrder);
-        model.setViewName("order/index");
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+        if (roleId==1) {
+			Iterable<OrderEntity> listOrder = orderRepository.findAll();
+			model.addObject("orderList", listOrder);
+			model.addObject("userRole", roleId);
+			model.setViewName("order/index");
+		}
+        else if(roleId==2){
+        	List<OrderEntity> listOrders = orderRepository.findAllByManagerIdEquals(userService.getAuthenticationUser().getId());
+        	model.addObject("orderList",listOrders);
+			model.addObject("userRole", roleId);
+			model.setViewName("order/index");
+		}
         return model;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable(value = "id") int id) {
 		ModelAndView model = new ModelAndView();
-
 		OrderEntity orderEntity = orderRepository.findById(id).get();
-        model.addObject("order", orderEntity);
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+		model.addObject("userRole", roleId);
+		model.addObject("order", orderEntity);
 		model.setViewName("order/show");
+
+		return model;
+	}
+	@RequestMapping(value = "/{id}/send",method = RequestMethod.GET)
+	public ModelAndView send(@PathVariable int id ){
+		ModelAndView model = new ModelAndView();
+		OrderEntity orderEntity = orderRepository.findById(id).get();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+		if (roleId ==1) {
+			orderEntity.setState(1);
+			orderEntity = orderRepository.save(orderEntity);
+			model.addObject("order",orderEntity);
+			model.setViewName("redirect:/order/");
+		}
+		else {
+			model.setViewName("redirect:/order/");
+		}
 		return model;
 	}
 
@@ -73,7 +100,7 @@ public class OrderController {
 
 		OrderEntity orderEntity = new OrderEntity();
 		model.addObject("order", orderEntity);
-		model.addObject("userList",userRepository.findAll());//todo list manager
+		model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
 		model.setViewName("order/form");
 		return model;
 	}
@@ -83,19 +110,22 @@ public class OrderController {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
 		OrderEntity orderEntity =optOrder.get();
-		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
+		if (orderEntity.getState() == 0) {
+            orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 
-		if (optOrder.isPresent()) {
-			orderEntity.setState(0);
-			System.out.println(orderEntity.getState());
-			model.addObject("order", orderEntity);
-			model.addObject("userList",userRepository.findAll());//todo list manager
-			model.setViewName("order/form");
-		}
+            if (optOrder.isPresent()) {
+                orderEntity.setState(0);
+                System.out.println(orderEntity.getState());
+                model.addObject("order", orderEntity);
+                model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+                model.setViewName("order/form");
+            } else {
+                model.setViewName("redirect:/order/");
+            }
+        }
 		else {
-			model.setViewName("redirect:/order/");
-		}
-
+            model.setViewName("redirect:/order/");
+        }
 
 		return model;
 	}
@@ -103,8 +133,15 @@ public class OrderController {
 	@RequestMapping(value = "/{id}/delete")
 	public ModelAndView delete(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
-		orderRepository.deleteById(id);
-		model.setViewName("redirect:/order/");
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+		OrderEntity orderEntity = orderRepository.findById(id).get();
+		Integer state = orderEntity.getState();
+		if ((roleId ==1) && (state==0)) {
+			orderRepository.deleteById(id);
+			model.setViewName("redirect:/order/");
+		} else {
+			model.setViewName("redirect:/order/");
+		}
 		return model;
 	}
 

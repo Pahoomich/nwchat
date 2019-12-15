@@ -16,4 +16,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     @Query(value = "SELECT u FROM UserEntity u WHERE u.firstname = :name AND u.lastname = :surname")
     List<UserEntity> findAllByNameAndSurnameEquals(@Param("name") String name,
                                              @Param("surname") String surname);
+
+    List< UserEntity> findAllByRoleIdEquals(@Param ("role_id") Integer role_Id);
 }
