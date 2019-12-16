@@ -30,10 +30,9 @@
 
                 <div >
 
-                    <select class="js-example-basic-single js-states form-control" id="ordersByOrderId" name="ordersByOrderId" >
-                        <th:block th:each="order : ${orderList}">
-
-                            <option  th:value="${order.getId()}" th:selected="${order.getId().equals(report.orderId)}" th:text="${order.getNum()}" ></option>
+                    <select class="js-example-basic-single js-states form-control" id="ordersByOrderId" name="ordersByOrderId"   >
+                        <th:block th:each="order : ${orderList}" >
+                            <option  th:if="${order.getState()==1}"  th:value="${order.getId()}" th:selected="${order.getId().equals(report.orderId)}" th:text="${order.getNum()}" ></option>
                         </th:block>
                     </select>
                 </div>
