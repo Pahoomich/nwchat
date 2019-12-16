@@ -1,7 +1,6 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.OrderEntity;
-import com.nwchat.entity.ReportEntity;
 import com.nwchat.repository.OrderRepository;
 import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
@@ -20,36 +19,34 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-    @Autowired
-    private OrderRepository orderRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
-    @Autowired
+	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private  UserService userService;
+	private UserService userService;
 
-	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView index() {
-        ModelAndView model = new ModelAndView();
+	public ModelAndView index() {
+		ModelAndView model = new ModelAndView();
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
-        if (roleId==1) {
+		if (roleId == 1) {
 			Iterable<OrderEntity> listOrder = orderRepository.findAll();
 			model.addObject("orderList", listOrder);
 			model.addObject("userRole", roleId);
 			model.setViewName("order/index");
-		}
-        else if(roleId==2){
-        	List<OrderEntity> listOrders = orderRepository.findAllByManagerIdEquals(userService.getAuthenticationUser().getId());
-        	model.addObject("orderList",listOrders);
+		} else if (roleId == 2) {
+			List<OrderEntity> listOrders = orderRepository.findAllByManagerIdEquals(userService.getAuthenticationUser().getId());
+			model.addObject("orderList", listOrders);
 			model.addObject("userRole", roleId);
 			model.setViewName("order/index");
 		}
-        return model;
-    }
+		return model;
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable(value = "id") int id) {
 		ModelAndView model = new ModelAndView();
 		OrderEntity orderEntity = orderRepository.findById(id).get();
@@ -60,30 +57,30 @@ public class OrderController {
 
 		return model;
 	}
-	@RequestMapping(value = "/{id}/send",method = RequestMethod.GET)
-	public ModelAndView send(@PathVariable int id ){
+
+	@RequestMapping(value = "/{id}/send", method = RequestMethod.GET)
+	public ModelAndView send(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		OrderEntity orderEntity = orderRepository.findById(id).get();
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
-		if (roleId ==1) {
+		if (roleId == 1) {
 			orderEntity.setState(1);
 			orderEntity = orderRepository.save(orderEntity);
-			model.addObject("order",orderEntity);
+			model.addObject("order", orderEntity);
 			model.setViewName("redirect:/order/");
-		}
-		else {
+		} else {
 			model.setViewName("redirect:/order/");
 		}
 		return model;
 	}
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView create(@Valid OrderEntity orderEntity, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 		orderEntity.setState(0);
 		if (result.hasErrors()) {
-			model.addObject("userList",userRepository.findAll());
+			model.addObject("userList", userRepository.findAll());
 			model.addObject("order", orderEntity);
 			model.setViewName("order/form");
 			return model;
@@ -109,23 +106,22 @@ public class OrderController {
 	public ModelAndView update(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
-		OrderEntity orderEntity =optOrder.get();
+		OrderEntity orderEntity = optOrder.get();
 		if (orderEntity.getState() == 0) {
-            orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
+			orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 
-            if (optOrder.isPresent()) {
-                orderEntity.setState(0);
-                System.out.println(orderEntity.getState());
-                model.addObject("order", orderEntity);
-                model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
-                model.setViewName("order/form");
-            } else {
-                model.setViewName("redirect:/order/");
-            }
-        }
-		else {
-            model.setViewName("redirect:/order/");
-        }
+			if (optOrder.isPresent()) {
+				orderEntity.setState(0);
+				System.out.println(orderEntity.getState());
+				model.addObject("order", orderEntity);
+				model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+				model.setViewName("order/form");
+			} else {
+				model.setViewName("redirect:/order/");
+			}
+		} else {
+			model.setViewName("redirect:/order/");
+		}
 
 		return model;
 	}
@@ -136,7 +132,7 @@ public class OrderController {
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
 		OrderEntity orderEntity = orderRepository.findById(id).get();
 		Integer state = orderEntity.getState();
-		if ((roleId ==1) && (state==0)) {
+		if ((roleId == 1) && (state == 0)) {
 			orderRepository.deleteById(id);
 			model.setViewName("redirect:/order/");
 		} else {

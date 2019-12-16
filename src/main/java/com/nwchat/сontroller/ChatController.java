@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/chat")
-public class ChatController {
+public class ChatController  {
 
 	private final UserService userService;
 	private final ChatRepository chatRepository;
