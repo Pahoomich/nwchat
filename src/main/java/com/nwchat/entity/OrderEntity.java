@@ -120,7 +120,7 @@ public class OrderEntity {
 	}
 
 	@Basic
-	@Column(name = "title", nullable = true, length = -1)
+	@Column(name = "title", nullable = true)
 	public String getTitle() {
 		return title;
 	}

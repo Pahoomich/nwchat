@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController  {
 
 	@Autowired
 	private UserService userService;
@@ -40,15 +40,15 @@ public class UserController {
 		return model;
 	}
 
-	@RequestMapping(value= "/signup", method=RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView createUser(@Valid UserEntity user, BindingResult bindingResult) {
 		ModelAndView model = new ModelAndView();
 		UserEntity userExists = userService.findUserByLogin(user.getLogin());
 
-		if(userExists != null) {
+		if (userExists != null) {
 			bindingResult.rejectValue("login", "error.user", "This login already exists!");
 		}
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			model.setViewName("user/signup");
 		} else {
 			user.setRoleId(1);
