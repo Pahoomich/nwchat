@@ -8,7 +8,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form class="form-signin was-validated" th:action="@{/order/}" method="post" th:object="${order}">
+    <form class="form-signin was-validated" th:action="@{/order/}" method="post"   modelAttribute="orderEntity" th:object="${order}">
 
         <div class="row">
             <input type="hidden" th:field="*{id}" name="id">
@@ -67,10 +67,14 @@
             <div class="col-sm-10 col-12 text-left" id="checklist">
                 <div class="check-list">
                     <ul id="incomplete-tasks">
-                                            <li th:each="checkItem : *{checkListItemsById}">
-                                                <input name="checkListItemsById[0].name"  type="text" th:value="${checkItem.name}" >
-                                                <button type="button" class="btn delete btn-danger">Delete</button>
-                                            </li>
+                        <li th:each="checkItem,iter : *{checkListItemsById}">
+
+                            <input th:name="'checkListItemsById['+${iter.index}+'].name'"  type="text" th:value="${checkItem.name}" >
+                            <input th:name="'checkListItemsById['+${iter.index}+'].id'" type="hidden" th:value="${checkItem.id}" >
+                            <input th:name="'checkListItemsById['+${iter.index}+'].dateStartWork'"  type="hidden" th:value="${checkItem.getDateStartWork()}" >
+                            <input th:name="'checkListItemsById['+${iter.index}+'].dateEndWork'"  type="hidden" th:value="${checkItem.getDateEndWork()}" >
+                            <button type="button" class="btn delete btn-danger">Delete</button>
+                        </li>
 
                     </ul>
                     <button type="button" class="btn btn-success" id="addButton">Добавить пунк чеклиста</button>

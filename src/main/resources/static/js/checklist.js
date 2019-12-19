@@ -1,8 +1,14 @@
 var incompleteTaskHolder;
-
+var iter =0;
+var getFreeIndex = function () {
+    return iter ++;
+};
 var createNewTaskElement = function (taskString) {
+
     var editInput = document.createElement("input");
     editInput.type = "text";
+
+    editInput.name = 'checkListItemsById['+getFreeIndex()+'].name';
 
     var deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";

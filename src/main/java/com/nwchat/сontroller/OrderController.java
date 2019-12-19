@@ -9,6 +9,7 @@ import com.nwchat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -79,7 +80,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView save(@Valid OrderEntity orderEntity,  BindingResult result) {
+	public ModelAndView save(@Valid @ModelAttribute("OrderEntity") OrderEntity orderEntity, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 		orderEntity.setState(0);
@@ -92,8 +93,12 @@ public class OrderController {
 			model.setViewName("order/form");
 			return model;
 		}
+		List<CheckListItemEntity> checkListItemsById = orderEntity.getCheckListItemsById();
 		orderEntity = orderRepository.save(orderEntity);
-
+		for (CheckListItemEntity entity : checkListItemsById) {
+			entity.setOrderId(orderEntity.getId());
+		}
+		checkListItemRepository.saveAll(checkListItemsById);
 		model.setViewName(String.format("redirect:%d", orderEntity.getId()));
 		return model;
 	}

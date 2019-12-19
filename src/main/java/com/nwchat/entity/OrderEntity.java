@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,10 +19,24 @@ public class OrderEntity {
 	private UserEntity manager;
 	private Date at;
 	private String title;
-	private Collection<CheckListItemEntity> checkListItemsById;
+	private List<CheckListItemEntity> checkListItemsById;
 	private Collection<ReportEntity> reportsById;
 	private Integer state;
 
+	public OrderEntity() {
+	}
+
+	public OrderEntity(Integer id, String num, String text, Integer creatorId, Integer managerId, Date at, String title, List<CheckListItemEntity> checkListItemsById, Integer state) {
+		this.id = id;
+		this.num = num;
+		this.text = text;
+		this.creatorId = creatorId;
+		this.managerId = managerId;
+		this.at = at;
+		this.title = title;
+		this.checkListItemsById = checkListItemsById;
+		this.state = state;
+	}
 
 	@Id
 	@GeneratedValue
@@ -155,11 +170,11 @@ public class OrderEntity {
 	}
 
 	@OneToMany(mappedBy = "ordersByOrderId")
-	public Collection<CheckListItemEntity> getCheckListItemsById() {
+	public List<CheckListItemEntity> getCheckListItemsById() {
 		return checkListItemsById;
 	}
 
-	public void setCheckListItemsById(Collection<CheckListItemEntity> checkListItemsById) {
+	public void setCheckListItemsById(List<CheckListItemEntity> checkListItemsById) {
 		this.checkListItemsById = checkListItemsById;
 	}
 	@ManyToOne
