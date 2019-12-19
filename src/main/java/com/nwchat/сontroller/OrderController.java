@@ -1,6 +1,8 @@
 package com.nwchat.сontroller;
 
+import com.nwchat.entity.CheckListItemEntity;
 import com.nwchat.entity.OrderEntity;
+import com.nwchat.repository.CheckListItemRepository;
 import com.nwchat.repository.OrderRepository;
 import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +29,8 @@ public class OrderController {
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private CheckListItemRepository checkListItemRepository;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -75,13 +79,16 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView create(@Valid OrderEntity orderEntity, BindingResult result) {
+	public ModelAndView save(@Valid OrderEntity orderEntity,  BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 		orderEntity.setState(0);
+
 		if (result.hasErrors()) {
+
 			model.addObject("userList", userRepository.findAll());
 			model.addObject("order", orderEntity);
+			//model.addObject("checkListItem", checkListItemEntityList);
 			model.setViewName("order/form");
 			return model;
 		}
@@ -96,8 +103,12 @@ public class OrderController {
 		ModelAndView model = new ModelAndView();
 
 		OrderEntity orderEntity = new OrderEntity();
+		//CheckListItemEntity checkListItemEntity = new CheckListItemEntity();
+		//List<CheckListItemEntity> checkListItemEntityList = new ArrayList<>();
+		//checkListItemEntityList.add(checkListItemEntity);
 		model.addObject("order", orderEntity);
 		model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+	//	model.addObject("checkListItem", checkListItemEntityList);
 		model.setViewName("order/form");
 		return model;
 	}
@@ -106,14 +117,15 @@ public class OrderController {
 	public ModelAndView update(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
+	//	List<CheckListItemEntity> checkListItemEntity = checkListItemRepository.findAllByOrderIdEquals(id);
 		OrderEntity orderEntity = optOrder.get();
 		if (orderEntity.getState() == 0) {
 			orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 
 			if (optOrder.isPresent()) {
 				orderEntity.setState(0);
-				System.out.println(orderEntity.getState());
 				model.addObject("order", orderEntity);
+				//model.addObject("checkListItem",checkListItemEntity);
 				model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
 				model.setViewName("order/form");
 			} else {

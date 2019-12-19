@@ -15,7 +15,7 @@ public class CheckListItemEntity {
 	private Date dateEndWork;
 	private Integer reportId;
 	private Collection<CheckListItemChatEntity> checkListItemChatsById;
-	private OrderEntity ordersByDocId;
+	private OrderEntity ordersByOrderId;
 	private ReportEntity reportsByReportId;
 
 	@Id
@@ -35,8 +35,8 @@ public class CheckListItemEntity {
 		return orderId;
 	}
 
-	public void setOrderId(Integer docId) {
-		this.orderId = docId;
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
 	}
 
 	@Basic
@@ -111,12 +111,12 @@ public class CheckListItemEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "order_id", referencedColumnName = "id", insertable = false, updatable = false)
-	public OrderEntity getOrdersByDocId() {
-		return ordersByDocId;
+	public OrderEntity getOrdersByOrderId() {
+		return ordersByOrderId;
 	}
 
-	public void setOrdersByDocId(OrderEntity ordersByDocId) {
-		this.ordersByDocId = ordersByDocId;
+	public void setOrdersByOrderId(OrderEntity ordersByOrderId) {
+		this.ordersByOrderId = ordersByOrderId;
 	}
 
 	@ManyToOne

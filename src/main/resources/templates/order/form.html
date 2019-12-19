@@ -67,10 +67,10 @@
             <div class="col-sm-10 col-12 text-left" id="checklist">
                 <div class="check-list">
                     <ul id="incomplete-tasks">
-                        <!--                    <li>-->
-                        <!--                        <input type="text">-->
-                        <!--                        <button type="button" class="btn delete btn-danger">Delete</button>-->
-                        <!--                    </li>-->
+                                            <li th:each="checkItem : *{checkListItemsById}">
+                                                <input name="checkListItemsById[0].name"  type="text" th:value="${checkItem.name}" >
+                                                <button type="button" class="btn delete btn-danger">Delete</button>
+                                            </li>
 
                     </ul>
                     <button type="button" class="btn btn-success" id="addButton">Добавить пунк чеклиста</button>

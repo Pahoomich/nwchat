@@ -145,15 +145,16 @@ public class OrderEntity {
 				Objects.equals(managerId, that.managerId) &&
 				Objects.equals(at, that.at) &&
 				Objects.equals(state, that.state) &&
+				Objects.equals(checkListItemsById, that.checkListItemsById) &&
 				Objects.equals(title, that.title);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, num, text, creatorId, manager,managerId, at, title, state);
+		return Objects.hash(id, num, text, creatorId, manager,managerId, at, title, state,checkListItemsById);
 	}
 
-	@OneToMany(mappedBy = "ordersByDocId")
+	@OneToMany(mappedBy = "ordersByOrderId")
 	public Collection<CheckListItemEntity> getCheckListItemsById() {
 		return checkListItemsById;
 	}

@@ -164,35 +164,3 @@ create table check_list_item_chat
 
 alter table check_list_item_chat owner to postgres;
 
-create function update_changetimestamp_column() returns trigger
-	language plpgsql
-as $$
-BEGIN
-    NEW.changetimestamp = now();
-    RETURN NEW;
-END;
-$$;
-
-alter function update_changetimestamp_column() owner to admin;
-
-create function update_modified_column() returns trigger
-	language plpgsql
-as $$
-BEGIN
-    IF row(NEW.*) IS DISTINCT FROM row(OLD.*) THEN
-        NEW.last_used = now();
-        RETURN NEW;
-    ELSE
-        RETURN OLD;
-    END IF;
-END;
-$$;
-
-alter function update_modified_column() owner to admin;
-
-create trigger bu_persistent_logins
-	before update
-	on persistent_logins
-	for each row
-	execute procedure update_modified_column();
-
