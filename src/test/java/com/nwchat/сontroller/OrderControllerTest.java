@@ -1,25 +1,34 @@
 package com.nwchat.сontroller;
 
-import com.nwchat.entity.OrderEntity;
-import com.nwchat.repository.testOrderRepo;
+import com.nwchat.entity.UserEntity;
+import com.nwchat.repository.TestCheckListRepo;
+import com.nwchat.repository.TestOrderRepo;
+import com.nwchat.repository.TestUserRepo;
+import com.nwchat.service.TestUserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderControllerTest {
 	private OrderController orderController;
-	private testOrderRepo testOrderRepo;
+	private TestOrderRepo testOrderRepo;
+	private TestUserRepo testUserRepo;
+	private TestCheckListRepo testCheckListRepo;
+	private TestUserService testUserService;
 
 
 	@BeforeEach
 	void setUp() {
-		testOrderRepo = new testOrderRepo();
-		orderController = new OrderController(testOrderRepo, );
+		testOrderRepo = new TestOrderRepo();
+		testUserRepo = new TestUserRepo();
+		testCheckListRepo = new TestCheckListRepo();
+		testUserService = new TestUserService();
+
+		orderController = new OrderController(testOrderRepo, testUserRepo, testUserService, testCheckListRepo);
 
 	}
 
@@ -33,16 +42,30 @@ class OrderControllerTest {
 	}
 
 	@Test
-	void show() {
+	void showGood() {
 		int id = 0;
 
-		Optional<OrderEntity> expend = testOrderRepo.findById(id);
+		UserEntity expend = testUserService.getAuthenticationUser();
 
 
 		ModelAndView show = orderController.show(id);
 		assertEquals("order/show", show.getViewName());
-		assertEquals(expend, show.getModel().get("userRole"));
+		assertEquals(expend.getRoleId(), show.getModel().get("userRole"));
 	}
+
+	@Test
+	void showBad() {
+		int id = 99;
+
+		UserEntity expend = testUserService.getAuthenticationUser();
+
+
+
+		assertThrows(Exception.class,()->{
+			orderController.show(id);
+		});
+	}
+
 
 	@Test
 	void send() {
