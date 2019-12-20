@@ -2,16 +2,19 @@
 frame "Выбрать людей из списка"{
 !include ../actor/user.puml
 'Выбрать людей из списка'
-rectangle "List People" as lp
-rectangle Server as ser
-rectangle "List item" as item
+
+rectangle "UserRepository" as userRep
+rectangle "List<User>" as listUser
+rectangle "Controller"
+rectangle "Dispatcher"
 }
-user -> lp : 1: нажать на кнопку 'Выбрать пользователя'
-lp -> ser : 2: Получить список пользователей
-lp <- ser : 3: Response()
-lp --> item : 4: create()
-item -> user : 5: отобразить
-user -> item : 6: Выбрать Васю
+
+user -> Dispatcher :  "1:http method get: /user/"
+Dispatcher -> Controller : 2: index()
+Controller --> userRep: 3:findAllById()
+userRep -> listUser : 4: Create()
+
+
 
 
 

@@ -23,15 +23,18 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	@Autowired
-	private OrderRepository orderRepository;
+	private final OrderRepository orderRepository;
 
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private CheckListItemRepository checkListItemRepository;
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final CheckListItemRepository checkListItemRepository;
+
+	public OrderController(OrderRepository orderRepository, UserRepository userRepository, UserService userService, CheckListItemRepository checkListItemRepository) {
+		this.orderRepository = orderRepository;
+		this.userRepository = userRepository;
+		this.userService = userService;
+		this.checkListItemRepository = checkListItemRepository;
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -89,7 +92,7 @@ public class OrderController {
 
 			model.addObject("userList", userRepository.findAll());
 			model.addObject("order", orderEntity);
-			//model.addObject("checkListItem", checkListItemEntityList);
+
 			model.setViewName("order/form");
 			return model;
 		}
@@ -108,12 +111,8 @@ public class OrderController {
 		ModelAndView model = new ModelAndView();
 
 		OrderEntity orderEntity = new OrderEntity();
-		//CheckListItemEntity checkListItemEntity = new CheckListItemEntity();
-		//List<CheckListItemEntity> checkListItemEntityList = new ArrayList<>();
-		//checkListItemEntityList.add(checkListItemEntity);
 		model.addObject("order", orderEntity);
 		model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
-	//	model.addObject("checkListItem", checkListItemEntityList);
 		model.setViewName("order/form");
 		return model;
 	}
@@ -122,7 +121,6 @@ public class OrderController {
 	public ModelAndView update(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
-	//	List<CheckListItemEntity> checkListItemEntity = checkListItemRepository.findAllByOrderIdEquals(id);
 		OrderEntity orderEntity = optOrder.get();
 		if (orderEntity.getState() == 0) {
 			orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
@@ -130,7 +128,6 @@ public class OrderController {
 			if (optOrder.isPresent()) {
 				orderEntity.setState(0);
 				model.addObject("order", orderEntity);
-				//model.addObject("checkListItem",checkListItemEntity);
 				model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
 				model.setViewName("order/form");
 			} else {

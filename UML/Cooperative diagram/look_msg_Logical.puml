@@ -2,14 +2,15 @@
 'Просмотр сообщений'
 frame "Просмотр сообщений"{
 !include ../actor/user.puml
-rectangle "WebPage" as addManger
-rectangle Server
-rectangle "Data base" as db
 
-user ->addManger: 1: Выбрать чат
+rectangle "ChatMessageRepository" as messageRep
+rectangle "List<ChatMessageEntity>" as listMessage
+rectangle "Controller"
+rectangle "Dispatcher"
+}
+user ->Dispatcher: "1:http method get: /messages/"
+Dispatcher -> Controller :2: index()
+Controller --> messageRep :3:findAllById()
+messageRep --> listMessage:4: showMessage()
 
-addManger--> Server: 2:Get("/chat/{id}/messages/", count, last message)
-addManger<----- Server: 5: Response()
-Server->db: 3: Select messages
-Server<-db: 4:Response()
 @enduml
