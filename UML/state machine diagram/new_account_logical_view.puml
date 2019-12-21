@@ -1,0 +1,6 @@
+@startuml
+[*] --> CreatedNewUser : request to create a new user
+CreatedNewUser --> UserDescribed : filling in user object fields
+UserDescribed --> UserSavedInDB : record user object fields in the DB
+UserSavedInDB --> [*]
+@enduml

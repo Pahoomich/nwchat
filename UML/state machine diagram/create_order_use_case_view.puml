@@ -1,0 +1,11 @@
+@startuml
+[*] --> NewEmptyReport
+NewEmptyReport --> ReportModified
+ReportModified --> DraftReport
+DraftReport --> ReportModified
+DraftReport --> ReportSend
+ReportSend --> [*]
+NewEmptyReport --> [*]
+ReportModified --> [*]
+DraftReport --> [*]
+@enduml

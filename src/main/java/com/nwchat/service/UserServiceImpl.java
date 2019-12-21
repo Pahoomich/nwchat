@@ -1,0 +1,80 @@
+package com.nwchat.service;
+
+import com.nwchat.entity.RoleEntity;
+import com.nwchat.entity.UserEntity;
+import com.nwchat.repository.RoleRepository;
+import com.nwchat.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service("userService")
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Override
+    public UserEntity findUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public List<UserEntity> findAllUserByFIOEquals(String name, String surname) {
+        return userRepository.findAllByNameAndSurnameEquals(name, surname);
+    }
+
+
+    @Override
+    public void saveUser(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
+//        RoleEntity userRole = roleRepository.findByRole("admin");
+//        RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
+//        user.setRole(userRole);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity getAuthenticationUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return findUserByLogin(auth.getName());
+    }
+
+    @Override
+    public Page<UserEntity> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
+        return userRepository.findAllByLastnameContainingIgnoreCase(pageable, lastname);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserEntity findById(long id) {
+        return userRepository.findById(id);
+
+    }
+
+
+}

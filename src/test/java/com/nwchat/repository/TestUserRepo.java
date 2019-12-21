@@ -1,6 +1,9 @@
 package com.nwchat.repository;
 
 import com.nwchat.entity.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +30,35 @@ public class TestUserRepo extends AbstTestRepo<UserEntity> implements UserReposi
 		saveAll(orderList);
 	}
 
-	@Override
 	public UserEntity findByLogin(String login) {
 		return null;
 	}
 
-	@Override
 	public List<UserEntity> findAllByNameAndSurnameEquals(String name, String surname) {
 		return null;
 	}
 
-	@Override
 	public List<UserEntity> findAllByRoleIdEquals(Integer role_Id) {
+		return null;
+	}
+
+	@Override
+	public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
+		return null;
+	}
+
+	@Override
+	public UserEntity findById(long id) {
+		return null;
+	}
+
+	@Override
+	public Iterable<UserEntity> findAll(Sort sort) {
+		return null;
+	}
+
+	@Override
+	public Page<UserEntity> findAll(Pageable pageable) {
 		return null;
 	}
 }
