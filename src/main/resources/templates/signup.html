@@ -12,7 +12,7 @@
         <div class="card card-signin my-5 fadeInDown">
             <div class="card-body">
                 <h5 class="card-title text-center">Register New User</h5>
-                <form class="form-signin was-validated" th:action="@{/user/signup}" method="post" th:object="${user}">
+                <form class="form-signin was-validated" th:action="@{/signup}" method="post" th:object="${user}">
                     <!--First Name-->
 
                     <div class="form-label-group">
@@ -72,7 +72,7 @@
                     </div>
                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
                     <hr class="hr-text" data-content="OR">
-                    <a class="btn btn-lg btn-red btn-block text-uppercase" th:href="@{/user/login}">Login</a>
+                    <a class="btn btn-lg btn-red btn-block text-uppercase" th:href="@{/login}">Login</a>
                 </form>
             </div>
         </div>

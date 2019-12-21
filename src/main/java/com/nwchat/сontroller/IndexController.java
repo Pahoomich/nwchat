@@ -23,7 +23,7 @@ public class IndexController  {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (!auth.isAuthenticated()) {
-			return new ModelAndView("redirect:/user/login");
+			return new ModelAndView("redirect:/login");
 		}
 
 		ModelAndView model = new ModelAndView();

@@ -22,4 +22,6 @@ public interface UserService {
     void deleteById(int id);
 
     UserEntity findById(long id);
+
+    void saveSingUpUser(UserEntity user);
 }

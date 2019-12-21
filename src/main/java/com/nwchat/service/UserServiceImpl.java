@@ -40,14 +40,24 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public void saveSingUpUser(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
+        RoleEntity userRole = roleRepository.findByRole("admin");
+//        RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
+        user.setRole(userRole);
+        userRepository.save(user);
+    }
+
+    @Override
     public void saveUser(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-//        RoleEntity userRole = roleRepository.findByRole("admin");
-//        RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
-//        user.setRole(userRole);
+        RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
+        user.setRole(userRole);
         userRepository.save(user);
     }
+
 
     @Override
     public UserEntity getAuthenticationUser() {

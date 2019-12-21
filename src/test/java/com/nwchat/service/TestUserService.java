@@ -49,4 +49,9 @@ public class TestUserService implements UserService {
 	public UserEntity findById(long id) {
 		return null;
 	}
+
+	@Override
+	public void saveSingUpUser(UserEntity user) {
+
+	}
 }

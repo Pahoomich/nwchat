@@ -12,7 +12,7 @@
         <div class="card card-signin my-5 fadeInDown">
             <div class="card-body">
                 <h5 class="card-title text-center">Sign In</h5>
-                <form class="form-signin" th:action="@{/user/login}" method="post">
+                <form class="form-signin" th:action="@{/login}" method="post">
                     <div class="form-label-group">
                         <input name="login" type="text" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
                         <label for="inputLogin">Login</label>
@@ -29,7 +29,7 @@
                     </div>
                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                     <hr class="hr-text" data-content="OR">
-                    <a class="btn btn-lg btn-red btn-block text-uppercase" th:href="@{/user/signup}">Create an account</a>
+                    <a class="btn btn-lg btn-red btn-block text-uppercase" th:href="@{/signup}">Create an account</a>
                 </form>
             </div>
         </div>

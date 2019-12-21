@@ -17,7 +17,7 @@
         </div>
 
         <div class="row">
-            <form th:action="@{/user/list}" class="form-inline" method="get">
+            <form th:action="@{/users}" class="form-inline" method="get">
                 <div class="form-group mr-sm-3 mb-2">
                     <input type="text" name="value" class="form-control" placeholder="Name"
                            th:if="${key} == null"/>
@@ -27,7 +27,7 @@
                 <button type="submit" class="btn btn-primary mr-sm-3 mb-2">Search</button>
 
             </form>
-            <a th:href="@{/user/form}" class="btn btn-primary mb-2">Добавить нового пользователя</a>
+            <a th:href="@{/users/form}" class="btn btn-primary mb-2">Добавить нового пользователя</a>
         </div>
 
         <div class="row">
@@ -47,10 +47,10 @@
                     <td th:text="${p.login}"></td>
                     <td th:text="${p.role.role}"></td>
                     <td>
-                        <a href="#" class="btn btn-success" title="Edit user" th:href="@{/user/form(id=${p.id})}">
+                        <a href="#" class="btn btn-success" title="Edit user" th:href="@{/users/form(id=${p.id})}">
                             <i class="glyphicon glyphicon-edit"></i> Edit
                         </a>
-                        <a href="#" class="btn btn-danger" title="Delete user" th:href="@{/user/delete(id=${p.id})}">
+                        <a href="#" class="btn btn-danger" title="Delete user" th:href="@{/users/delete(id=${p.id})}">
                             <i class="glyphicon glyphicon-trash"></i> Delete
                         </a>
                     </td>
@@ -58,8 +58,8 @@
             </table>
             <div th:if="${userPage.totalPages > 0}" class="pagination"
                  th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/user/list(size=${userPage.size}, page=${pageNumber})}"
-                   th:text=${pageNumber}
+                <a th:href="@{/users(size=${userPage.size}, page=${pageNumber})}"
+                   th:text="${pageNumber}"
                    th:class="${pageNumber==userPage.number + 1} ? active"></a>
             </div>
         </div>
