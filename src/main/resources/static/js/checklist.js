@@ -7,7 +7,6 @@ function getFreeIndex() {
 }
 
 
-
 function check_loginNewTaskElement(taskString) {
 
     var editInput = document.createElement("input");
@@ -59,11 +58,14 @@ window.onload = function () {
     var addButton = document.getElementById("addButton");
     incompleteTaskHolder = document.getElementById("incomplete-tasks");
 
+    if (addButton == null || incompleteTaskHolder == null)
+        return;
+
     iter = incompleteTaskHolder.children.length;
 
     addButton.addEventListener("click", addTask);
 
-    for (var i=0; i<incompleteTaskHolder.children.length;i++){
+    for (var i = 0; i < incompleteTaskHolder.children.length; i++) {
         bindTaskEvents(incompleteTaskHolder.children[i]);
     }
 

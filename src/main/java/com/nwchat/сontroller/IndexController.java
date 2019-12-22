@@ -36,9 +36,12 @@ public class IndexController {
 		ModelAndView model = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userService.findUserByLogin(auth.getName());
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 
 		model.addObject("userName", user.getFIO());
 		model.addObject("role", user.getRole().getRole());
+		model.addObject("roleId", roleId);
 		model.setViewName("home/home");
 		return model;
 	}

@@ -43,7 +43,7 @@ public class TestUserRepo extends AbstTestRepo<UserEntity> implements UserReposi
 	}
 
 	@Override
-	public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
+	public Page<UserEntity> findAllByFirstnameContainingIgnoreCaseOrLastnameContainingIgnoreCaseOrderByRoleId(Pageable pageable, String firstname, String lastname) {
 		return null;
 	}
 

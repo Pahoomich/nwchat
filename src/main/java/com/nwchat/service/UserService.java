@@ -2,7 +2,6 @@ package com.nwchat.service;
 
 import com.nwchat.entity.UserEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public interface UserService {
 
     Page<UserEntity> findAllByActive(Pageable pageable, int active);
 
-    Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname);
+    Page<UserEntity> findAllByFioIgnoreCase(Pageable pageable, String name);
 
     void deleteById(int id);
 

@@ -41,7 +41,7 @@ public class TestUserService implements UserService {
 	}
 
 	@Override
-	public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
+	public Page<UserEntity> findAllByFioIgnoreCase(Pageable pageable, String lastname) {
 		return null;
 	}
 

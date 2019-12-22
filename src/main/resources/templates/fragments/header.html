@@ -14,10 +14,10 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/users}">Пользователей</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" th:if="${roleId} < 3">
                 <a class="nav-link" th:href="@{/order/}">Приказы</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" th:if="${roleId} < 3">
                 <a class="nav-link" th:href="@{/report/}">Отчеты</a>
             </li>
             <li class="nav-item">

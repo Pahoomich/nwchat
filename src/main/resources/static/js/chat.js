@@ -150,13 +150,12 @@ $(document).ready(function () {
     userId = parseInt(document.querySelector('#userId').value.trim());
 
 
-
     if (username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
 
-        $.get("/chat/0/hist",
+        $.get("/chat/" + chatId + "/hist",
             function (data) {
                 console.log("Load was performed.");
                 console.log(data);

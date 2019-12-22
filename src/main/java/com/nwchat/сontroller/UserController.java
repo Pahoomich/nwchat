@@ -21,75 +21,84 @@ import java.util.stream.IntStream;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @GetMapping("")
-    public String userList(Model model,
-                           @RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "size", defaultValue = "10") int size,
-                           @RequestParam(name = "value", required = false) String value) {
-        Page<UserEntity> all;
-        PageRequest pageable = PageRequest.of(page - 1, size);
+	@GetMapping("")
+	public String userList(Model model,
+	                       @RequestParam(value = "page", defaultValue = "1") int page,
+	                       @RequestParam(value = "size", defaultValue = "10") int size,
+	                       @RequestParam(name = "value", required = false) String value) {
+		Page<UserEntity> all;
+		PageRequest pageable = PageRequest.of(page - 1, size);
 
-        if (value != null && !value.isEmpty()) {
-            all = userService.findAllByLastnameContainingIgnoreCase(pageable, value);
-        } else {
-            //all = userService.findAll(pageable);
-            all = userService.findAllByActive(pageable, 1);
-        }
+		if (value != null && !value.isEmpty()) {
+			all = userService.findAllByFioIgnoreCase(pageable, value);
+		} else {
+			//all = userService.findAll(pageable);
+			all = userService.findAllByActive(pageable, 1);
+		}
 
-        model.addAttribute("key", value);
-        model.addAttribute("userPage", all);
-        model.addAttribute("pageNumbers", getPageNumbers(all));
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
-        return "users/list";
-    }
+		model.addAttribute("key", value);
+		model.addAttribute("userPage", all);
+		model.addAttribute("pageNumbers", getPageNumbers(all));
+		model.addAttribute("roleId", roleId);
 
-    private List<Integer> getPageNumbers(Page<UserEntity> page) {
-        List<Integer> pageNumbers = new ArrayList<>();
 
-        if (page != null) {
-            int totalPages = page.getTotalPages();
-            if (totalPages > 0) {
-                pageNumbers = IntStream.rangeClosed(1, totalPages)
-                        .boxed()
-                        .collect(Collectors.toList());
+		return "users/list";
+	}
 
-            }
-        }
+	private List<Integer> getPageNumbers(Page<UserEntity> page) {
+		List<Integer> pageNumbers = new ArrayList<>();
 
-        return pageNumbers;
-    }
+		if (page != null) {
+			int totalPages = page.getTotalPages();
+			if (totalPages > 0) {
+				pageNumbers = IntStream.rangeClosed(1, totalPages)
+						.boxed()
+						.collect(Collectors.toList());
 
-    @GetMapping("/form")
-    public String showUser(Model model, @RequestParam(value = "id", required = false) UserEntity user) {
-        if (user == null) {
-            user = new UserEntity();
-        }
-        model.addAttribute("user", user);
+			}
+		}
 
-        return "users/form";
-    }
+		return pageNumbers;
+	}
 
-    @PostMapping("/form")
-    public String addNewUser(@ModelAttribute @Valid UserEntity user, BindingResult errors, SessionStatus status) {
+	@GetMapping("/form")
+	public String showUser(Model model, @RequestParam(value = "id", required = false) UserEntity user) {
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
+		if (user == null) {
+			user = new UserEntity();
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("roleId", roleId);
+
+
+		return "users/form";
+	}
+
+	@PostMapping("/form")
+	public String addNewUser(@ModelAttribute @Valid UserEntity user, BindingResult errors, SessionStatus status) {
+
         if (errors.hasErrors()) {
-            return "users/form";
-        }
-        user.setActive(1);
-        userService.saveUser(user);
-        status.setComplete();
-        return "redirect:";
-    }
+			return "users/form";
+		}
+		user.setActive(1);
+		userService.saveUser(user);
+		status.setComplete();
+		return "redirect:";
+	}
 
-    @RequestMapping("/delete")
-    public String deleteUser(@RequestParam("id") int id) {
+	@RequestMapping("/delete")
+	public String deleteUser(@RequestParam("id") int id) {
 //        userService.deleteById(id);
-        UserEntity user = new UserEntity();
-        user = userService.findById(id);
-        user.setActive(0);
-        userService.saveUser(user);
-        return "redirect:";
-    }
+		UserEntity user = new UserEntity();
+		user = userService.findById(id);
+		user.setActive(0);
+		userService.saveUser(user);
+		return "redirect:";
+	}
 }

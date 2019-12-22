@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sd="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/authenticated}">
 
 <head>
@@ -19,15 +19,15 @@
         <div class="row">
             <form th:action="@{/users}" class="form-inline" method="get">
                 <div class="form-group mr-sm-3 mb-2">
-                    <input type="text" name="value" class="form-control" placeholder="Name"
+                    <input type="text" name="value" class="form-control" placeholder="ФИО"
                            th:if="${key} == null"/>
-                    <input type="text" name="value" class="form-control" placeholder="Name"
+                    <input type="text" name="value" class="form-control" placeholder="ФИО"
                            th:if="${key} != null" th:value="${key}"/>
                 </div>
-                <button type="submit" class="btn btn-primary mr-sm-3 mb-2">Search</button>
+                <button type="submit" class="btn btn-primary mr-sm-3 mb-2">Поиск</button>
 
             </form>
-            <a th:href="@{/users/form}" class="btn btn-primary mb-2">Добавить нового пользователя</a>
+            <a th:href="@{/users/form}" class="btn btn-success mb-2">Добавить нового пользователя</a>
         </div>
 
         <div class="row">

@@ -37,17 +37,20 @@ public class OrderController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView();
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
+		ModelAndView model = new ModelAndView();
 		if (roleId == 1) {
 			Iterable<OrderEntity> listOrder = orderRepository.findAll();
 			model.addObject("orderList", listOrder);
 			model.addObject("userRole", roleId);
+			model.addObject("roleId", roleId);
 			model.setViewName("order/index");
 		} else if (roleId == 2) {
 			List<OrderEntity> listOrders = orderRepository.findAllByManagerIdEquals(userService.getAuthenticationUser().getId());
 			model.addObject("orderList", listOrders);
 			model.addObject("userRole", roleId);
+			model.addObject("roleId", roleId);
 			model.setViewName("order/index");
 		}
 		return model;
@@ -55,11 +58,13 @@ public class OrderController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView show(@PathVariable(value = "id") int id) {
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 		ModelAndView model = new ModelAndView();
 		OrderEntity orderEntity = orderRepository.findById(id).get();
-		Integer roleId = userService.getAuthenticationUser().getRoleId();
 		model.addObject("userRole", roleId);
 		model.addObject("order", orderEntity);
+		model.addObject("roleId", roleId);
 		model.setViewName("order/show");
 
 		return model;
@@ -84,6 +89,7 @@ public class OrderController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView save(@Valid @ModelAttribute("OrderEntity") OrderEntity orderEntity, BindingResult result) {
 		ModelAndView model = new ModelAndView();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
 		orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
 		orderEntity.setState(0);
 
@@ -91,7 +97,7 @@ public class OrderController {
 
 			model.addObject("userList", userRepository.findAll());
 			model.addObject("order", orderEntity);
-
+			model.addObject("roleId", roleId);
 			model.setViewName("order/form");
 			return model;
 		}
@@ -115,11 +121,13 @@ public class OrderController {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView create() {
-		ModelAndView model = new ModelAndView();
-
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
 		OrderEntity orderEntity = new OrderEntity();
+
+		ModelAndView model = new ModelAndView();
 		model.addObject("order", orderEntity);
 		model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+		model.addObject("roleId", roleId);
 		model.setViewName("order/form");
 		return model;
 	}
@@ -127,6 +135,8 @@ public class OrderController {
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public ModelAndView update(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
 		OrderEntity orderEntity = optOrder.get();
 		if (orderEntity.getState() == 0) {
@@ -136,6 +146,7 @@ public class OrderController {
 				orderEntity.setState(0);
 				model.addObject("order", orderEntity);
 				model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+				model.addObject("roleId", roleId);
 				model.setViewName("order/form");
 			} else {
 				model.setViewName("redirect:/order/");

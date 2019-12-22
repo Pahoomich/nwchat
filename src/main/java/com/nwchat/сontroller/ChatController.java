@@ -72,8 +72,11 @@ public class ChatController {
 		ModelAndView model = new ModelAndView();
 		UserEntity user = userService.getAuthenticationUser();
 		Set<ChatEntity> chats = user.getChats();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 
 		model.addObject("chatList", chats);
+		model.addObject("roleId", roleId);
 		model.setViewName("chat/index");
 		return model;
 	}
@@ -85,12 +88,16 @@ public class ChatController {
 		//user.getRole();
 		Optional<ChatEntity> optChatEntity = chatRepository.findById(id);
 		Optional<ChatUserEntity> chatUser = chatUserRepository.findByChatIdAndUserId(id, user.getId());
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 
 		if (optChatEntity.isPresent() && chatUser.isPresent()) {
 			model.addObject("chatName", optChatEntity.get().getName());
 			model.addObject("chatId", optChatEntity.get().getId());
 			model.addObject("userId", user.getId());
 			model.addObject("userName", user.getFirstname() + " " + user.getLastname());
+			model.addObject("roleId", roleId);
+
 			model.setViewName("chat/chat");
 		} else {
 			model.setViewName("redirect:/");
@@ -101,9 +108,12 @@ public class ChatController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView save(ChatFormDto chatDto, BindingResult result) {
 		ModelAndView model = new ModelAndView();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 
 		if (result.hasErrors() || chatDto.getUserIds() == null) {
 			model.addObject("chat", chatDto);
+			model.addObject("roleId", roleId);
 			model.setViewName("chat/form");
 			return model;
 		}
@@ -132,9 +142,11 @@ public class ChatController {
 		ChatEntity chat = new ChatEntity();
 		Iterable<UserEntity> userList = userRepository.findAll();
 
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
 		model.addObject("chat", chat);
 		model.addObject("userList", userList);
+		model.addObject("roleId", roleId);
 		model.setViewName("chat/form");
 		return model;
 	}
@@ -145,11 +157,13 @@ public class ChatController {
 		Optional<ChatEntity> optChatEntity = chatRepository.findById(id);
 		ChatEntity chatEntity = optChatEntity.get();
 
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
 		Iterable<UserEntity> userList = userRepository.findAll();
 
 		model.addObject("chat", chatEntity);
 		model.addObject("userList", userList);
+		model.addObject("roleId", roleId);
 		model.setViewName("chat/form");
 
 
