@@ -36,6 +36,11 @@ public class TestUserService implements UserService {
 	}
 
 	@Override
+	public Page<UserEntity> findAllByActive(Pageable pageable, int active) {
+		return null;
+	}
+
+	@Override
 	public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
 		return null;
 	}
@@ -46,7 +51,7 @@ public class TestUserService implements UserService {
 	}
 
 	@Override
-	public UserEntity findById(long id) {
+	public UserEntity findById(int id) {
 		return null;
 	}
 

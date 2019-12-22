@@ -35,7 +35,8 @@ public class UserController {
         if (value != null && !value.isEmpty()) {
             all = userService.findAllByLastnameContainingIgnoreCase(pageable, value);
         } else {
-            all = userService.findAll(pageable);
+            //all = userService.findAll(pageable);
+            all = userService.findAllByActive(pageable, 1);
         }
 
         model.addAttribute("key", value);
@@ -76,6 +77,7 @@ public class UserController {
         if (errors.hasErrors()) {
             return "users/form";
         }
+        user.setActive(1);
         userService.saveUser(user);
         status.setComplete();
         return "redirect:";
@@ -83,7 +85,11 @@ public class UserController {
 
     @RequestMapping("/delete")
     public String deleteUser(@RequestParam("id") int id) {
-        userService.deleteById(id);
+//        userService.deleteById(id);
+        UserEntity user = new UserEntity();
+        user = userService.findById(id);
+        user.setActive(0);
+        userService.saveUser(user);
         return "redirect:";
     }
 }

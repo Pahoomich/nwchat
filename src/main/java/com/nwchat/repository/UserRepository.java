@@ -23,6 +23,7 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, I
 
     Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, @Param("lastname") String lastname);
 
-    UserEntity findById(long id);
+    UserEntity findById(int id);
 
+    Page<UserEntity> findAllByActive(Pageable pageable, int active);
 }

@@ -48,7 +48,12 @@ public class TestUserRepo extends AbstTestRepo<UserEntity> implements UserReposi
 	}
 
 	@Override
-	public UserEntity findById(long id) {
+	public UserEntity findById(int id) {
+		return null;
+	}
+
+	@Override
+	public Page<UserEntity> findAllByActive(Pageable pageable, int active) {
 		return null;
 	}
 

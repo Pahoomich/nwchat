@@ -5,6 +5,7 @@ import com.nwchat.entity.UserEntity;
 import com.nwchat.repository.RoleRepository;
 import com.nwchat.repository.UserRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(1);
+//        user.setActive(1);
         RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
         user.setRole(userRole);
         userRepository.save(user);
@@ -71,6 +72,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserEntity> findAllByActive(Pageable pageable, int active) {
+        return userRepository.findAllByActive(pageable, active);
+    }
+
+    @Override
     public Page<UserEntity> findAllByLastnameContainingIgnoreCase(Pageable pageable, String lastname) {
         return userRepository.findAllByLastnameContainingIgnoreCase(pageable, lastname);
     }
@@ -81,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity findById(long id) {
+    public UserEntity findById(int id) {
         return userRepository.findById(id);
 
     }
