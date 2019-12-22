@@ -1,0 +1,16 @@
+@startuml
+[*]--> ChatControllerAwaitingRequest : RequestMethod.GET
+ChatControllerAwaitingRequest --> NewChatEntityCreated : new ChatEntity()
+NewChatEntityCreated --> ChatModified
+ChatModified --> ChatControllerAwaitingRequest : RequestMethod.POST
+ChatControllerAwaitingRequest --> ChatModified
+ChatControllerAwaitingRequest --> ChatSavedToDB
+ChatSavedToDB --> ChatControllerAwaitingRequest
+'ChatSavedToDB : ChatRepository
+ChatControllerAwaitingRequest --> ChatAssociatedWithUsers : ChatUserEntity.setChatId() \n ChatUserEntity.setUserId()
+ChatAssociatedWithUsers --> ChatControllerAwaitingRequest
+ChatControllerAwaitingRequest --> ChatLinksRecordedToDB : ChatUserRepository
+ChatLinksRecordedToDB --> [*]
+ChatSavedToDB --> [*]
+'atEntity.setId() \n ChatEntity.setName()
+@enduml

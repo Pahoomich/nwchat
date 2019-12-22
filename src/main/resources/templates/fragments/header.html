@@ -1,5 +1,5 @@
 <header xmlns:th="http://www.thymeleaf.org"
-            th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-light">
+        th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">
         <img th:src="@{/img/logo200x200.png}" width="30" height="30" class="d-inline-block align-top" alt="">
         Главная
@@ -11,20 +11,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-
             <li class="nav-item">
-                <a class="nav-link"  th:href="@{/order/}">Приказы</a>
+                <a class="nav-link" th:href="@{/users}">Пользователей</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  th:href="@{/report/}">Отчеты</a>
+                <a class="nav-link" th:href="@{/order/}">Приказы</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  th:href="@{/chat/}">Чаты</a>
+                <a class="nav-link" th:href="@{/report/}">Отчеты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/chat/}">Чаты</a>
             </li>
         </ul>
 
         <div class="form-inline my-2 my-lg-0">
-            <a class="nav-link" th:href="@{/user/logout}">Выйти из системы</a>
+            <a class="nav-link" th:href="@{/logout}">Выйти из системы</a>
         </div>
     </div>
 </header>
