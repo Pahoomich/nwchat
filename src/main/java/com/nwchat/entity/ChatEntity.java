@@ -1,7 +1,7 @@
 package com.nwchat.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,9 +9,9 @@ import java.util.Objects;
 public class ChatEntity {
 	private int id;
 	private String name;
-	private Collection<ChatMessageEntity> chatMessagesById;
-	private Collection<ChatUserEntity> chatUsersById;
-	private Collection<CheckListItemChatEntity> checkListItemChatsById;
+	private List<ChatMessageEntity> chatMessagesById;
+	private List<ChatUserEntity> chatUsersById;
+	private List<CheckListItemChatEntity> checkListItemChatsById;
 
 	@Id
 	@GeneratedValue
@@ -51,30 +51,30 @@ public class ChatEntity {
 	}
 
 	@OneToMany(mappedBy = "chatsByChatId", fetch = FetchType.LAZY)
-	public Collection<ChatMessageEntity> getChatMessagesById() {
+	public List<ChatMessageEntity> getChatMessagesById() {
 		return chatMessagesById;
 	}
 
-	public void setChatMessagesById(Collection<ChatMessageEntity> chatMessagesById) {
+	public void setChatMessagesById(List<ChatMessageEntity> chatMessagesById) {
 		this.chatMessagesById = chatMessagesById;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "chat_user")
-	public Collection<ChatUserEntity> getChatUsersById() {
+	public List<ChatUserEntity> getChatUsersById() {
 		return chatUsersById;
 	}
 
-	public void setChatUsersById(Collection<ChatUserEntity> chatUsersById) {
+	public void setChatUsersById(List<ChatUserEntity> chatUsersById) {
 		this.chatUsersById = chatUsersById;
 	}
 
 	@OneToMany(mappedBy = "chatsByChatId",fetch = FetchType.LAZY)
-	public Collection<CheckListItemChatEntity> getCheckListItemChatsById() {
+	public List<CheckListItemChatEntity> getCheckListItemChatsById() {
 		return checkListItemChatsById;
 	}
 
-	public void setCheckListItemChatsById(Collection<CheckListItemChatEntity> checkListItemChatsById) {
+	public void setCheckListItemChatsById(List<CheckListItemChatEntity> checkListItemChatsById) {
 		this.checkListItemChatsById = checkListItemChatsById;
 	}
 }

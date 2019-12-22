@@ -2,7 +2,6 @@ package com.nwchat.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ public class CheckListItemEntity {
 	private int id;
 	private Integer orderId;
 	private String name;
-	private Timestamp dateStartWork;
+	private Date dateStartWork;
 	private Date dateEndWork;
 	private Integer reportId;
 	private Collection<CheckListItemChatEntity> checkListItemChatsById;
@@ -52,11 +51,11 @@ public class CheckListItemEntity {
 
 	@Basic
 	@Column(name = "date_start_work", nullable = true)
-	public Timestamp getDateStartWork() {
+	public Date getDateStartWork() {
 		return dateStartWork;
 	}
 
-	public void setDateStartWork(Timestamp dateStartWork) {
+	public void setDateStartWork(Date dateStartWork) {
 		this.dateStartWork = dateStartWork;
 	}
 
@@ -129,12 +128,4 @@ public class CheckListItemEntity {
 	public void setReportsByReportId(ReportEntity reportsByReportId) {
 		this.reportsByReportId = reportsByReportId;
 	}
-
-	@PrePersist
-	protected void onCreate() {
-		dateStartWork = new Timestamp(System.currentTimeMillis());
-
-	}
-
-
 }

@@ -71,8 +71,8 @@
 
                             <input th:name="'checkListItemsById['+${iter.index}+'].name'"  type="text" th:value="${checkItem.name}" >
                             <input th:name="'checkListItemsById['+${iter.index}+'].id'" type="hidden" th:value="${checkItem.id}" >
-                            <input th:name="'checkListItemsById['+${iter.index}+'].dateStartWork'"  type="hidden" th:value="${checkItem.getDateStartWork()}" >
-                            <input th:name="'checkListItemsById['+${iter.index}+'].dateEndWork'"  type="hidden" th:value="${checkItem.getDateEndWork()}" >
+<!--                            <input th:name="'checkListItemsById['+${iter.index}+'].dateStartWork'"  type="hidden" th:value="${checkItem.getDateStartWork()}" >-->
+<!--                            <input th:name="'checkListItemsById['+${iter.index}+'].dateEndWork'"  type="hidden" th:value="${checkItem.getDateEndWork()}" >-->
                             <button type="button" class="btn delete btn-danger">Delete</button>
                         </li>
 

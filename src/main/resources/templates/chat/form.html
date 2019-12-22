@@ -8,25 +8,46 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <form class="form-signin was-validated" th:action="@{/chat/}" method="post" th:object="${chat}">
+    <div class="col-12 bg-gray">
 
-        <div class="row">
-            <input type="hidden" th:field="*{id}" name="id">
+        <form class="form-signin was-validated" th:action="@{/chat/}" method="post" th:object="${chat}">
 
-            <div class="col-sm-2 col-12">
-                <label for="title">Name:</label>
-            </div>
-            <div class="col-sm-10 col-12 text-left">
-                <input name="title" type="text" id="title" class="form-control"
-                       placeholder="First Name" required autofocus th:field="*{name}">
-            </div>
+            <div class="row">
+                <input name="chatEntity.id" type="hidden" th:value="*{id}">
 
-            <div class="actions col-12">
-                <button class="btn btn-success text-uppercase" type="submit">Save</button>
-                <a class="btn btn-secondary" th:href="@{/chat/}">Back</a>
+                <div class="col-sm-2 col-12">
+                    <label for="title">Name:</label>
+                </div>
+                <div class="col-sm-5 col-12 text-left">
+                    <input name="chatEntity.title" type="text" id="title" class="form-control"
+                           placeholder="Название чата" required autofocus th:value="*{name}">
+                </div>
+
+                <div class="col-sm-5 col-12 text-left">
+                </div>
+                <div class="col-sm-2 col-12">
+                    <label for="title">Участники:</label>
+                </div>
+                <div class="col-sm-5 col-12 text-left">
+                    <select class="select-two" name="UserIds[]" multiple="multiple">
+                        <th:block th:each="user : ${userList}">
+                            <option th:value="${user.getId()}" th:text="${user.getFIO()}">Alabama</option>
+                        </th:block>
+                    </select>
+                </div>
+
+                <div class="col-sm-5 col-12 text-left">
+                </div>
+
+
+                <div class="actions col-12">
+                    <button class="btn btn-success text-uppercase" type="submit">Save</button>
+                    <a class="btn btn-secondary" th:href="@{/chat/}">Back</a>
+                </div>
+
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

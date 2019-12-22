@@ -1,16 +1,19 @@
 var incompleteTaskHolder;
 
-var iter =0;
-var getFreeIndex = function () {
-    return iter ++;
-};
+var iter = 0;
 
-var createNewTaskElement = function (taskString) {
+function getFreeIndex() {
+    return iter++;
+}
+
+
+
+function check_loginNewTaskElement(taskString) {
 
     var editInput = document.createElement("input");
     editInput.type = "text";
 
-    editInput.name = 'checkListItemsById['+getFreeIndex()+'].name';
+    editInput.name = 'checkListItemsById[' + getFreeIndex() + '].name';
 
     var deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
@@ -21,34 +24,34 @@ var createNewTaskElement = function (taskString) {
     listItem.appendChild(editInput);
     listItem.appendChild(deleteButton);
     return listItem;
-};
+}
 
-var deleteTask = function () {
+function deleteTask() {
     console.log("Delete Task...");
 
     var listItem = this.parentNode;
     var ul = listItem.parentNode;
 
     ul.removeChild(listItem);
-};
+}
 
 
-var bindTaskEvents = function (taskListItem) {
+function bindTaskEvents(taskListItem) {
     console.log("bind list item events");
 
     var deleteButton = taskListItem.querySelector("button.delete");
 
     deleteButton.onclick = deleteTask;
-};
+}
 
-var addTask = function () {
+function addTask() {
     console.log("Add Task...");
     var listItem = createNewTaskElement();
 
     incompleteTaskHolder.appendChild(listItem);
 
     bindTaskEvents(listItem);
-};
+}
 
 
 window.onload = function () {
@@ -56,6 +59,12 @@ window.onload = function () {
     var addButton = document.getElementById("addButton");
     incompleteTaskHolder = document.getElementById("incomplete-tasks");
 
+    iter = incompleteTaskHolder.children.length;
+
     addButton.addEventListener("click", addTask);
+
+    for (var i=0; i<incompleteTaskHolder.children.length;i++){
+        bindTaskEvents(incompleteTaskHolder.children[i]);
+    }
 
 };

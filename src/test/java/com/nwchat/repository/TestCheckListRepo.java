@@ -30,4 +30,9 @@ public class TestCheckListRepo extends AbstTestRepo<CheckListItemEntity> impleme
 	public List<CheckListItemEntity> findAllByOrderIdEquals(Integer id) {
 		return null;
 	}
+
+	@Override
+	public void deleteAllByOrderId(int ids) {
+
+	}
 }

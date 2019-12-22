@@ -1,6 +1,6 @@
 package com.example.websocketdemo.controller;
 
-import com.nwchat.model.ChatMessage;
+import com.nwchat.DTO.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;

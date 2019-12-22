@@ -1,6 +1,6 @@
 package com.nwchat.entity;
 
-import com.nwchat.model.ChatMessage;
+import com.nwchat.DTO.ChatMessage;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,6 +18,7 @@ public class ChatMessageEntity {
 	private Integer parentMessageId;
 	private Integer responseToMessageId;
 	private ChatEntity chatsByChatId;
+	private UserEntity userByAuthorId;
 	private ChatMessageEntity chatMessageByParentMessageId;
 	private Collection<ChatMessageEntity> chatMessagesById;
 	private ChatMessageEntity chatMessageByResponseToMessageId;
@@ -136,6 +137,16 @@ public class ChatMessageEntity {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
+	public UserEntity getAuthorById() {
+		return userByAuthorId;
+	}
+
+	public void setAuthorById(UserEntity userByAuthorId) {
+		this.userByAuthorId = userByAuthorId;
+	}
+
+	@ManyToOne
 	@JoinColumn(name = "parent_message_id", referencedColumnName = "id", insertable = false, updatable = false)
 	public ChatMessageEntity getChatMessageByParentMessageId() {
 		return chatMessageByParentMessageId;
@@ -172,4 +183,6 @@ public class ChatMessageEntity {
 	public void setChatMessagesById_0(Collection<ChatMessageEntity> chatMessagesById_0) {
 		this.chatMessagesById_0 = chatMessagesById_0;
 	}
+
+
 }

@@ -15,14 +15,14 @@
             </h1>
         </div>
         <div class="col-2">
-            <a class="btn btn-success my-2 my-lg-0" th:href="@{/chat/new}">Create</a>
+            <a class="btn btn-success my-2 my-lg-0" th:href="@{/chat/new}">Создать</a>
         </div>
     </div>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">Title</th>
-
+            <th scope="col">Названия</th>
+            <th scope="col">Действия</th>
         </tr>
         </thead>
 
@@ -30,6 +30,7 @@
         <th:block th:each="chat : ${chatList}" th:with="baseUrl=('/chat/')">
             <tr>
                 <td><a th:href="@{${baseUrl}+${chat.id}}" th:text="${chat.getName()}"> </a></td>
+                <td><a class="btn btn-outline-warning"  th:href="@{${baseUrl}+${chat.id}+'/edit'}">Редактировать</a></td>
             </tr>
         </th:block>
         </tbody>

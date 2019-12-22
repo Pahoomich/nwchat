@@ -1,5 +1,7 @@
-package com.nwchat.model;
+package com.nwchat.DTO;
 
+
+import com.nwchat.entity.ChatMessageEntity;
 
 public class ChatMessage {
 	private MessageType type;
@@ -13,6 +15,18 @@ public class ChatMessage {
 		CHAT,
 		JOIN,
 		LEAVE
+	}
+
+	public ChatMessage() {
+	}
+
+	public ChatMessage(ChatMessageEntity entity) {
+		type = MessageType.CHAT;
+		content = entity.getText();
+		sender = entity.getAuthorById().getFIO();
+		chatId = entity.getChatId();
+		userId = entity.getAuthorId();
+		dateTimeInMs = entity.getDateCreate().getTime();
 	}
 
 	public MessageType getType() {

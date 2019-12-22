@@ -5,20 +5,21 @@
       layout:decorate="~{layouts/authenticated}">
 <head>
 
-<title th:text="${chatName}">NWChat  Demo</title>
+    <title th:text="${chatName}">NWChat Demo</title>
 
-<link th:href="@{/css/mainChat.css}" rel="stylesheet"/>
+    <link th:href="@{/css/mainChat.css}" rel="stylesheet"/>
 
 
 </head>
 <body>
 <div layout:fragment="content">
-    <div id="username-page">
+    <div id="username-page" style="display: none">
         <div class="username-page-container">
             <h1 class="title">Type your username</h1>
             <form id="usernameForm" name="usernameForm">
                 <div class="form-group">
-                    <input th:value="${userName}" type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
+                    <input th:value="${userName}" type="text" id="name" placeholder="Username" autocomplete="off"
+                           class="form-control"/>
                     <input th:value="${chatId}" type="hidden" id="chatId"/>
                     <input th:value="${userId}" type="hidden" id="userId"/>
                 </div>
@@ -32,7 +33,7 @@
     <div id="chat-page" class="hidden">
         <div class="chat-container">
             <div class="chat-header" style="width: 250px">
-                <h2 th:text="${chatName}">NWChat  Demo</h2>
+                <h2 th:text="${chatName}">NWChat Demo</h2>
             </div>
             <div class="connecting">
                 Connecting...
@@ -43,7 +44,8 @@
             <form id="messageForm" name="messageForm" nameForm="messageForm">
                 <div class="form-group">
                     <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off"
+                               class="form-control"/>
                         <button type="submit" class="primary">Send</button>
                     </div>
                 </div>

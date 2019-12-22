@@ -9,10 +9,13 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/animations.css}" rel="stylesheet"/>
+    <link th:href="@{/css/select.css}" rel="stylesheet"/>
 
     <!--JS-->
-    <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/select2.min.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 
 
     <!--Style Custom-->
@@ -22,6 +25,7 @@
 
     <!--JS Custom-->
     <script th:src="@{/js/checklist.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header">
@@ -40,6 +44,8 @@
         <!--   extend     -->
     </div>
 </div>
+
+
 
 </body>
 </html>

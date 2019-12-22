@@ -9,17 +9,18 @@
 <body>
 <div layout:fragment="content" th:with="baseUrl=('/order/'+${order.id})">
     <div id="formOrder" class="row d-print-none bg-gray">
-        <div class="col-sm-6 col-12">
-            <h3>Просмотр приказа №</h3>
+        <div class="col-12">
+            <h3>
+                <span>Просмотр приказа №</span>
+                <span th:text="${order.num}"> </span>
+            </h3>
         </div>
-        <div class="col-sm-6 col-12 text-left"   >
-            <h3 th:text="${order.num}"></h3>
-        </div>
-
         <div class="col-12">
             <a class="btn btn-secondary" th:href="@{/order/}">Назад</a>
-            <a class="btn btn-outline-primary" th:if="${userRole == 1 and order.getState() == 0}" th:href="@{${baseUrl} + '/send'}" > Отправить</a>
-            <a class="btn btn-outline-warning" th:if ="${order.getState()==0 and userRole==1 }" th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
+            <a class="btn btn-outline-primary" th:if="${userRole == 1 and order.getState() == 0}"
+               th:href="@{${baseUrl} + '/send'}"> Отправить</a>
+            <a class="btn btn-outline-warning" th:if="${order.getState()==0 and userRole==1 }"
+               th:href="@{${baseUrl}+'/edit'}">Редактировать</a>
             <a class="btn btn-outline-danger" th:if="${userRole == 1}" th:href="@{${baseUrl}+'/delete'}">Удалить</a>
         </div>
 
@@ -61,14 +62,17 @@
         <div class="col-sm-10 col-12 text-left" id="checklist">
             <div class="check-list">
                 <ul id="incomplete-tasks">
-                <li th:each="checkItem : ${order.checkListItemsById}">
-                    <span th:if="${checkItem.dateEndWork == null}">-</span>
-                    <span th:if="${checkItem.dateEndWork != null}">+</span>
-                    <span  type="text" th:text="${checkItem.name}" ></span>
-                </li>
+                    <li th:each="checkItem : ${order.checkListItemsById}">
+                        <span th:if="${checkItem.dateEndWork == null}">-</span>
+                        <span th:if="${checkItem.dateEndWork != null}">+</span>
+                        <span type="text" th:text="${checkItem.name}"></span>
+                    </li>
 
                 </ul>
             </div>
+        </div>
+        <div class="col-12">
+            <p><b>Примечание:</b> '-' невыполненый пункт чеклиста / '+' выполненый пункт чеклиста</p>
         </div>
     </div>
 </div>

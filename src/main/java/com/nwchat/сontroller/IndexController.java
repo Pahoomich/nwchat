@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class IndexController  {
+public class IndexController {
 
 	private final UserService userService;
 
@@ -37,7 +37,8 @@ public class IndexController  {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userService.findUserByLogin(auth.getName());
 
-		model.addObject("userName", user.getFirstname() + " " + user.getLastname());
+		model.addObject("userName", user.getFIO());
+		model.addObject("role", user.getRole().getRole());
 		model.setViewName("home/home");
 		return model;
 	}

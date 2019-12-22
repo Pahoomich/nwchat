@@ -141,20 +141,35 @@ function constractElementChat(message) {
 }
 
 
-// usernameForm.addEventListener('submit', connect, true);
+$(document).ready(function () {
 
-messageForm.addEventListener('submit', sendMessage, true);
+    messageForm.addEventListener('submit', sendMessage, true);
 
-username = document.querySelector('#name').value.trim();
-chatId = parseInt(document.querySelector('#chatId').value.trim());
-userId = parseInt(document.querySelector('#userId').value.trim());
+    username = document.querySelector('#name').value.trim();
+    chatId = parseInt(document.querySelector('#chatId').value.trim());
+    userId = parseInt(document.querySelector('#userId').value.trim());
 
-if (username) {
-    usernamePage.classList.add('hidden');
-    chatPage.classList.remove('hidden');
 
-    var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
 
-    stompClient.connect({}, onConnected, onError);
-}
+    if (username) {
+        usernamePage.classList.add('hidden');
+        chatPage.classList.remove('hidden');
+
+
+        $.get("/chat/0/hist",
+            function (data) {
+                console.log("Load was performed.");
+                console.log(data);
+                for (let element in data) {
+                    const messageElement = constractElementChat(data[element]);
+                    messageArea.appendChild(messageElement);
+                    messageArea.scrollTop = messageArea.scrollHeight;
+                }
+
+                var socket = new SockJS('/ws');
+                stompClient = Stomp.over(socket);
+
+                stompClient.connect({}, onConnected, onError);
+            });
+    }
+});

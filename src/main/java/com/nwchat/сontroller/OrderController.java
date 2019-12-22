@@ -6,7 +6,6 @@ import com.nwchat.repository.CheckListItemRepository;
 import com.nwchat.repository.OrderRepository;
 import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -98,10 +97,18 @@ public class OrderController {
 		}
 		List<CheckListItemEntity> checkListItemsById = orderEntity.getCheckListItemsById();
 		orderEntity = orderRepository.save(orderEntity);
+
+
+		checkListItemRepository.deleteAllByOrderId(orderEntity.getId());
+
+		List<CheckListItemEntity> endList = new ArrayList<>();
 		for (CheckListItemEntity entity : checkListItemsById) {
 			entity.setOrderId(orderEntity.getId());
+			if (entity.getName() != null && !entity.getName().trim().equals(""))
+				endList.add(entity);
 		}
-		checkListItemRepository.saveAll(checkListItemsById);
+
+		checkListItemRepository.saveAll(endList);
 		model.setViewName(String.format("redirect:%d", orderEntity.getId()));
 		return model;
 	}
