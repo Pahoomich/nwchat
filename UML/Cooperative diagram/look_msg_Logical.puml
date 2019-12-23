@@ -1,16 +1,14 @@
 @startuml
-'Просмотр сообщений'
-frame "Просмотр сообщений"{
-!include ../actor/user.puml
+'Получение новых сообщений'
+frame "Получение новых сообщений"{
+!include ../actor/time.puml
 
-rectangle "ChatMessageRepository" as messageRep
-rectangle "List<ChatMessageEntity>" as listMessage
-rectangle "Controller"
-rectangle "Dispatcher"
+
+rectangle "ChatEntity"
+rectangle "ChatMessageEntity"
 }
-user ->Dispatcher: "1:http method get: /messages/"
-Dispatcher -> Controller :2: index()
-Controller --> messageRep :3:findAllById()
-messageRep --> listMessage:4: showMessage()
+time ->ChatEntity: "1. getMessageAfter(data)"
+ChatEntity --> ChatMessageEntity :2. after(date)
+
 
 @enduml

@@ -8,19 +8,20 @@ import java.util.Optional;
 
 public class AbstTestRepo<T> implements CrudRepository<T, Integer> {
 	private List<T> list;
+	private T var ;
 
 
 	public AbstTestRepo() {
 		this.list = new ArrayList<>();
 	}
+	public AbstTestRepo(List<T> listOuter){
+
+		this.list = listOuter;
+	}
 
 	@Override
 	public <S extends T> S save(S s) {
-
-//		s.setId(list.size() + 1);
-
 		list.add(s);
-
 		return s;
 	}
 
@@ -48,6 +49,7 @@ public class AbstTestRepo<T> implements CrudRepository<T, Integer> {
 
 	@Override
 	public Iterable<T> findAll() {
+
 		return list;
 	}
 
@@ -63,7 +65,7 @@ public class AbstTestRepo<T> implements CrudRepository<T, Integer> {
 
 	@Override
 	public void deleteById(Integer integer) {
-
+		list.remove((int)integer);
 	}
 
 	@Override
