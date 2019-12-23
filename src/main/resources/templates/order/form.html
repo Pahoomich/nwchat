@@ -22,7 +22,7 @@
 
                 <div>
 
-                    <select class="js-example-basic-single js-states form-control" type="integer" id="manager"
+                    <select class="select-two js-example-basic-single js-states form-control" type="integer" id="manager"
                             name="manager">
                         <th:block th:each="user : ${userList}">
                             <option th:value="${user.getId()}" th:selected="${user.getId().equals(order.managerId)}"
@@ -82,14 +82,13 @@
             </div>
 
             <div class="actions col-12">
-                <button class="btn btn-success text-uppercase" type="submit">Save</button>
-                <a class="btn btn-secondary" th:href="@{/order/}">Back</a>
+                <button class="btn btn-success text-uppercase" type="submit">Сохранить</button>
+                <a class="btn btn-secondary" th:href="@{/order/}">Вернуться</a>
                 <!--                <a class="btn btn-secondary"  onclick="disp(document.getElementById('checkbox'))" >Добавить лист с задачами</a>-->
             </div>
 
         </div>
     </form>
 </div>
-
 </body>
 </html>

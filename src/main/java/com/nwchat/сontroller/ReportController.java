@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -127,21 +126,21 @@ public class ReportController {
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public ModelAndView update(@PathVariable int id) {
-		ModelAndView model = new ModelAndView();
+		Integer roleId = userService.getAuthenticationUser().getRoleId();
+
 		Optional<ReportEntity> optReport = reportRepository.findById(id);
+
+		Iterable<OrderEntity> orderEntityList = orderRepository.findAll();
+
 		ReportEntity reportEntity = optReport.get();
-		if (reportEntity.getState() == 0) {
-			reportEntity.setCreatorId(userService.getAuthenticationUser().getId());
-			List<OrderEntity> orderEntityList = new ArrayList<>();
-			orderEntityList.add(reportEntity.getOrdersByOrderId());
-			reportEntity.setOrderId(orderEntityList.get(0).getId());
-			if (optReport.isPresent()) {
-				model.addObject("report", reportEntity);
-				model.addObject("orderList", orderEntityList);
-				model.setViewName("report/form");
-			} else {
-				model.setViewName("redirect:/report/");
-			}
+
+		ModelAndView model = new ModelAndView();
+
+		if (optReport.isPresent() && reportEntity.getState() == 0) {
+			model.addObject("report", reportEntity);
+			model.addObject("orderList", orderEntityList);
+			model.addObject("roleId", roleId);
+			model.setViewName("report/form");
 		} else {
 			model.setViewName("redirect:/report/");
 		}

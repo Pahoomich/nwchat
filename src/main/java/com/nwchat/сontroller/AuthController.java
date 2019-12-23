@@ -1,8 +1,8 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.UserEntity;
+import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,56 +14,69 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+	private final UserService userService;
+	private final UserRepository userRepository;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
-        ModelAndView model = new ModelAndView();
+	public AuthController(UserService userService, UserRepository userRepository) {
+		this.userService = userService;
+		this.userRepository = userRepository;
+	}
 
-        model.setViewName("login");
-        return model;
-    }
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login() {
+		ModelAndView model = new ModelAndView();
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public ModelAndView signup() {
-        ModelAndView model = new ModelAndView();
-        UserEntity user = new UserEntity();
-        model.addObject("user", user);
-        model.setViewName("signup");
+		Optional<UserEntity> optUser = userRepository.findByActiveAndRoleId(1, 1);
 
-        return model;
-    }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ModelAndView createUser(@Valid UserEntity user, BindingResult bindingResult) {
-        ModelAndView model = new ModelAndView();
-        UserEntity userExists = userService.findUserByLogin(user.getLogin());
+		boolean isFirst = !optUser.isPresent();
 
-        if (userExists != null) {
-            bindingResult.rejectValue("login", "error.user", "This login already exists!");
-        }
-        if (bindingResult.hasErrors()) {
-            model.setViewName("signup");
-        } else {
-            user.setRoleId(1);
-            userService.saveSingUpUser(user);
-            model.addObject("msg", "User has been registered successfully!");
-            model.setViewName("redirect:/login");
-        }
-        return model;
-    }
+		model.addObject("first", isFirst);
 
-    @RequestMapping(value = "/checkLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> checkLogin(@RequestBody String login) {
-        UserEntity userExists = userService.findUserByLogin(login);
+		model.setViewName("login");
+		return model;
+	}
 
-        return new ResponseEntity<>(userExists != null, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public ModelAndView signup() {
+		ModelAndView model = new ModelAndView();
+		UserEntity user = new UserEntity();
+		model.addObject("user", user);
+		model.setViewName("signup");
+
+		return model;
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView createUser(@Valid UserEntity user, BindingResult bindingResult) {
+		ModelAndView model = new ModelAndView();
+		UserEntity userExists = userService.findUserByLogin(user.getLogin());
+
+		if (userExists != null) {
+			bindingResult.rejectValue("login", "error.user", "This login already exists!");
+		}
+		if (bindingResult.hasErrors()) {
+			model.setViewName("signup");
+		} else {
+			user.setRoleId(1);
+			userService.saveSingUpUser(user);
+			model.addObject("msg", "User has been registered successfully!");
+			model.setViewName("redirect:/login");
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/checkLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> checkLogin(@RequestBody String login) {
+		UserEntity userExists = userService.findUserByLogin(login);
+
+		return new ResponseEntity<>(userExists != null, HttpStatus.OK);
+	}
 
 }

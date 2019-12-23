@@ -2,7 +2,6 @@ package com.nwchat.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -10,17 +9,37 @@ import java.util.Objects;
 @Entity
 @Table(name = "order", schema = "public", catalog = "nwchat")
 public class OrderEntity {
+	@Id
+	@GeneratedValue
+	@Column(name = "id", nullable = false)
 	private Integer id;
+	@Basic
+	@Column(name = "num", nullable = true, length = -1)
 	private String num;
+	@Basic
+	@Column(name = "text", nullable = true, length = -1)
 	private String text;
+	@Basic
+	@Column(name = "creator_id", nullable = true)
 	private Integer creatorId;
-
+	@Basic
+	@Column(name = "manager_id", nullable = true, insertable = false, updatable = false)
 	private Integer managerId;
+	@ManyToOne
+	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = false)
 	private UserEntity manager;
+	@Basic
+	@Column(name = "at", nullable = true)
 	private Date at;
+	@Basic
+	@Column(name = "title", nullable = true)
 	private String title;
+	@OneToMany(mappedBy = "ordersByOrderId")
 	private List<CheckListItemEntity> checkListItemsById;
+	@OneToMany(mappedBy = "ordersByOrderId")
 	private Collection<ReportEntity> reportsById;
+	@Basic
+	@Column(name = "state", nullable = false)
 	private Integer state;
 
 	public OrderEntity() {
@@ -38,9 +57,6 @@ public class OrderEntity {
 		this.state = state;
 	}
 
-	@Id
-	@GeneratedValue
-	@Column(name = "id", nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -49,8 +65,7 @@ public class OrderEntity {
 		this.id = id;
 	}
 
-	@Basic
-	@Column(name = "num", nullable = true, length = -1)
+
 	public String getNum() {
 		return num;
 	}
@@ -59,8 +74,6 @@ public class OrderEntity {
 		this.num = num;
 	}
 
-	@Basic
-	@Column(name = "text", nullable = true, length = -1)
 	public String getText() {
 		return text;
 	}
@@ -69,8 +82,6 @@ public class OrderEntity {
 		this.text = text;
 	}
 
-	@Basic
-	@Column(name = "creator_id", nullable = true)
 	public Integer getCreatorId() {
 		return creatorId;
 	}
@@ -79,8 +90,6 @@ public class OrderEntity {
 		this.creatorId = creatorId;
 	}
 
-	@Basic
-	@Column(name ="state", nullable = false)
 	public Integer getState() {
 		return state;
 	}
@@ -109,13 +118,11 @@ public class OrderEntity {
 //		this.dateCreate = dateCreate;
 //	}
 ////
-	@Basic
-	@Column(name = "manager_id", nullable = true, insertable= false , updatable = false)
 	public Integer getManagerId() {
 		return managerId;
 	}
 
-//	@ManyToOne(targetEntity = UserEntity.class)
+	//	@ManyToOne(targetEntity = UserEntity.class)
 //	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 //	public Integer getManagerId() {
 //		return managerId;
@@ -124,8 +131,7 @@ public class OrderEntity {
 		this.managerId = managerId;
 	}
 
-	@Basic
-	@Column(name = "at", nullable = true)
+
 	public Date getAt() {
 		return at;
 	}
@@ -134,8 +140,7 @@ public class OrderEntity {
 		this.at = at;
 	}
 
-	@Basic
-	@Column(name = "title", nullable = true)
+
 	public String getTitle() {
 		return title;
 	}
@@ -166,10 +171,9 @@ public class OrderEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, num, text, creatorId, manager,managerId, at, title, state,checkListItemsById);
+		return Objects.hash(id, num, text, creatorId, manager, managerId, at, title, state, checkListItemsById);
 	}
 
-	@OneToMany(mappedBy = "ordersByOrderId")
 	public List<CheckListItemEntity> getCheckListItemsById() {
 		return checkListItemsById;
 	}
@@ -177,16 +181,16 @@ public class OrderEntity {
 	public void setCheckListItemsById(List<CheckListItemEntity> checkListItemsById) {
 		this.checkListItemsById = checkListItemsById;
 	}
-	@ManyToOne
-	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = false)
-	public UserEntity getManager(){return manager;}
+
+	public UserEntity getManager() {
+		return manager;
+	}
 
 	public void setManager(UserEntity manager) {
 		this.manager = manager;
 	}
 
 
-	@OneToMany(mappedBy = "ordersByOrderId")
 	public Collection<ReportEntity> getReportsById() {
 		return reportsById;
 	}
@@ -196,4 +200,8 @@ public class OrderEntity {
 	}
 
 
+
+	public String getNumNName() {
+		return title + " №" + num;
+	}
 }

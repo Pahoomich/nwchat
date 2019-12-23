@@ -63,9 +63,19 @@
             <div class="check-list">
                 <ul id="incomplete-tasks">
                     <li th:each="checkItem : ${order.checkListItemsById}">
-                        <span th:if="${checkItem.dateEndWork == null}">-</span>
-                        <span th:if="${checkItem.dateEndWork != null}">+</span>
-                        <span type="text" th:text="${checkItem.name}"></span>
+                        <p>
+                            <span th:if="${checkItem.dateEndWork == null}">-</span>
+                            <span th:if="${checkItem.dateEndWork != null}">+</span>
+                            <span type="text" th:text="${checkItem.name}"></span>
+                        </p>
+                        <p>
+                            <span>Отправлено на выполение:</span>
+                            <span type="text" th:text="${checkItem.getDateStartWork()}"></span>
+                        </p>
+                        <p>
+                            <span>Исполенно:</span>
+                            <span type="text" th:text="${checkItem.getDateEndWork()}"></span>
+                        </p>
                     </li>
 
                 </ul>

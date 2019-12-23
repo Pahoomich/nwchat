@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,14 +71,27 @@ public class OrderController {
 		return model;
 	}
 
+	private Date getSqlDate() {
+		java.util.Date uDate = new java.util.Date();
+		return new java.sql.Date(uDate.getTime());
+	}
+
 	@RequestMapping(value = "/{id}/send", method = RequestMethod.GET)
 	public ModelAndView send(@PathVariable int id) {
 		ModelAndView model = new ModelAndView();
 		OrderEntity orderEntity = orderRepository.findById(id).get();
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
+		List<CheckListItemEntity> itemlist = checkListItemRepository.findAllByOrderIdEquals(orderEntity.getId());
+		Date now = getSqlDate();
+		for (CheckListItemEntity item : itemlist) {
+			item.setDateStartWork(now);
+		}
+
 		if (roleId == 1) {
 			orderEntity.setState(1);
 			orderEntity = orderRepository.save(orderEntity);
+			checkListItemRepository.saveAll(itemlist);
+
 			model.addObject("order", orderEntity);
 			model.setViewName("redirect:/order/");
 		} else {
@@ -110,6 +124,7 @@ public class OrderController {
 		List<CheckListItemEntity> endList = new ArrayList<>();
 		for (CheckListItemEntity entity : checkListItemsById) {
 			entity.setOrderId(orderEntity.getId());
+			entity.setDateStartWork(getSqlDate());
 			if (entity.getName() != null && !entity.getName().trim().equals(""))
 				endList.add(entity);
 		}
@@ -139,18 +154,13 @@ public class OrderController {
 
 		Optional<OrderEntity> optOrder = orderRepository.findById(id);
 		OrderEntity orderEntity = optOrder.get();
-		if (orderEntity.getState() == 0) {
-			orderEntity.setCreatorId(userService.getAuthenticationUser().getId());
+		if (optOrder.isPresent() && orderEntity.getState() == 0) {
 
-			if (optOrder.isPresent()) {
-				orderEntity.setState(0);
-				model.addObject("order", orderEntity);
-				model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
-				model.addObject("roleId", roleId);
-				model.setViewName("order/form");
-			} else {
-				model.setViewName("redirect:/order/");
-			}
+			orderEntity.setState(0);
+			model.addObject("order", orderEntity);
+			model.addObject("userList", userRepository.findAllByRoleIdEquals(2));
+			model.addObject("roleId", roleId);
+			model.setViewName("order/form");
 		} else {
 			model.setViewName("redirect:/order/");
 		}

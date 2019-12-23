@@ -10,7 +10,7 @@ public class ChatEntity {
 	private int id;
 	private String name;
 	private List<ChatMessageEntity> chatMessagesById;
-	private List<ChatUserEntity> chatUsersById;
+//	private List<UserEntity> usersById;
 	private List<CheckListItemChatEntity> checkListItemChatsById;
 
 	@Id
@@ -59,15 +59,15 @@ public class ChatEntity {
 		this.chatMessagesById = chatMessagesById;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "chat_user")
-	public List<ChatUserEntity> getChatUsersById() {
-		return chatUsersById;
-	}
-
-	public void setChatUsersById(List<ChatUserEntity> chatUsersById) {
-		this.chatUsersById = chatUsersById;
-	}
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "chat_user")
+//	public List<UserEntity> getUsersById() {
+//		return usersById;
+//	}
+//
+//	public void setUsersById(List<UserEntity> chatUsersById) {
+//		this.usersById = chatUsersById;
+//	}
 
 	@OneToMany(mappedBy = "chatsByChatId",fetch = FetchType.LAZY)
 	public List<CheckListItemChatEntity> getCheckListItemChatsById() {

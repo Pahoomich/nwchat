@@ -2,14 +2,8 @@ package com.nwchat.сontroller;
 
 import com.nwchat.DTO.ChatFormDto;
 import com.nwchat.DTO.ChatMessage;
-import com.nwchat.entity.ChatEntity;
-import com.nwchat.entity.ChatMessageEntity;
-import com.nwchat.entity.ChatUserEntity;
-import com.nwchat.entity.UserEntity;
-import com.nwchat.repository.ChatMessageRepository;
-import com.nwchat.repository.ChatRepository;
-import com.nwchat.repository.ChatUserRepository;
-import com.nwchat.repository.UserRepository;
+import com.nwchat.entity.*;
+import com.nwchat.repository.*;
 import com.nwchat.service.UserService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -23,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,16 +33,23 @@ public class ChatController {
 	private final ChatUserRepository chatUserRepository;
 	private final ChatMessageRepository chatMessageRepository;
 	private final UserRepository userRepository;
+	private final OrderRepository orderRepository;
+	private final CheckListItemChatRepository checkListItemChatRepository;
 
 	public ChatController(UserService userService,
 	                      ChatRepository chatRepository,
 	                      ChatUserRepository chatUserRepository,
-	                      ChatMessageRepository chatMessageRepository, UserRepository userRepository) {
+	                      ChatMessageRepository chatMessageRepository,
+	                      UserRepository userRepository,
+	                      OrderRepository orderRepository,
+	                      CheckListItemChatRepository checkListItemChatRepository) {
 		this.userService = userService;
 		this.chatRepository = chatRepository;
 		this.chatUserRepository = chatUserRepository;
 		this.chatMessageRepository = chatMessageRepository;
 		this.userRepository = userRepository;
+		this.orderRepository = orderRepository;
+		this.checkListItemChatRepository = checkListItemChatRepository;
 	}
 
 	@MessageMapping("/chat.sendMessage")
@@ -98,6 +100,17 @@ public class ChatController {
 			model.addObject("userName", user.getFirstname() + " " + user.getLastname());
 			model.addObject("roleId", roleId);
 
+
+			ChatEntity chat = optChatEntity.get();
+			List<CheckListItemChatEntity> li = chat.getCheckListItemChatsById();
+
+			if (li.size()>0) {
+				model.addObject("checkLists",li);
+				model.addObject("eorderList", true);
+			} else {
+				model.addObject("eorderList", false);
+			}
+
 			model.setViewName("chat/chat");
 		} else {
 			model.setViewName("redirect:/");
@@ -109,27 +122,60 @@ public class ChatController {
 	public ModelAndView save(ChatFormDto chatDto, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
+		List<UserEntity> userList = (List<UserEntity>) userRepository.findAll();
+		UserEntity user = userService.getAuthenticationUser();
+		userList.remove(user);
+
+		List<ChatUserEntity> chatUserEntities = chatUserRepository.findAllByChatId(chatDto.getChatEntity().getId());
+		List<Integer> selectUserList = chatUserEntities.stream().map(ChatUserEntity::getUserId).collect(Collectors.toList());
 
 
 		if (result.hasErrors() || chatDto.getUserIds() == null) {
-			model.addObject("chat", chatDto);
+			if (roleId == 2) {
+				List<OrderEntity> orderList = orderRepository.findAllByManagerIdEquals(user.getId());
+				model.addObject("orderList", orderList);
+				model.addObject("selectedOrder", chatDto.getOrderId());
+				model.addObject("eorderList", true);
+			} else {
+				model.addObject("eorderList", false);
+
+			}
+
+			model.addObject("chat", chatDto.getChatEntity());
 			model.addObject("roleId", roleId);
+			model.addObject("userList", userList);
+			model.addObject("selectUserList", selectUserList);
 			model.setViewName("chat/form");
 			return model;
 		}
 		ChatEntity chatEntity = chatRepository.save(chatDto.getChatEntity());
-		UserEntity user = userService.getAuthenticationUser();
+		int charId = chatEntity.getId();
 
-		for (String strUserId : chatDto.getUserIds()) {
-			if (!strUserId.trim().equals("")) {
+		if (chatDto.getOrderId() != null) {
+			Integer orderId = chatDto.getOrderId();
+			Optional<OrderEntity> optOrder = orderRepository.findById(orderId);
+			if (optOrder.isPresent()) {
+				OrderEntity order = optOrder.get();
+				List<CheckListItemEntity> items = order.getCheckListItemsById();
 
-				int userId = Integer.parseInt(strUserId);
+				for (CheckListItemEntity item : items) {
+					CheckListItemChatEntity chatItem = new CheckListItemChatEntity();
+					chatItem.setChatId(charId);
+					chatItem.setCheckListItemId(item.getId());
 
-				ChatUserEntity chatUser = new ChatUserEntity();
-				chatUser.setChatId(chatEntity.getId());
-				chatUser.setUserId(userId);
-				chatUserRepository.save(chatUser);
+					checkListItemChatRepository.save(chatItem);
+				}
 			}
+		}
+
+		chatUserRepository.deleteAllByChatId(chatEntity.getId());
+		chatDto.getUserIds().add(user.getId());
+
+		for (Integer userId : chatDto.getUserIds()) {
+			ChatUserEntity chatUser = new ChatUserEntity();
+			chatUser.setChatId(chatEntity.getId());
+			chatUser.setUserId(userId);
+			chatUserRepository.save(chatUser);
 		}
 
 		model.setViewName(String.format("redirect:%d", chatEntity.getId()));
@@ -140,13 +186,33 @@ public class ChatController {
 	public ModelAndView create() {
 		ModelAndView model = new ModelAndView();
 		ChatEntity chat = new ChatEntity();
-		Iterable<UserEntity> userList = userRepository.findAll();
+		List<UserEntity> userList = (List<UserEntity>) userRepository.findAll();
+		UserEntity user = userService.getAuthenticationUser();
+		userList.remove(user);
 
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
+		ChatFormDto dto = new ChatFormDto();
+		dto.setChatEntity(chat);
+		Iterable<Integer> selectUserList = new ArrayList<>();
+
+
+		if (roleId == 2) {
+			List<OrderEntity> orderList = orderRepository.findAllByManagerIdEquals(user.getId());
+			model.addObject("orderList", orderList);
+			model.addObject("eorderList", true);
+
+		} else {
+			model.addObject("eorderList", false);
+
+		}
+
 		model.addObject("chat", chat);
+		model.addObject("dto", dto);
 		model.addObject("userList", userList);
+		model.addObject("selectUserList", selectUserList);
 		model.addObject("roleId", roleId);
+
 		model.setViewName("chat/form");
 		return model;
 	}
@@ -157,12 +223,25 @@ public class ChatController {
 		Optional<ChatEntity> optChatEntity = chatRepository.findById(id);
 		ChatEntity chatEntity = optChatEntity.get();
 
+		List<ChatUserEntity> chatUserEntities = chatUserRepository.findAllByChatId(id);
+		List<Integer> selectUserList = chatUserEntities.stream().map(ChatUserEntity::getUserId).collect(Collectors.toList());
+
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
-		Iterable<UserEntity> userList = userRepository.findAll();
+		List<UserEntity> userList = (List<UserEntity>) userRepository.findAll();
+		UserEntity user = userService.getAuthenticationUser();
+		userList.remove(user);
+
+//		if (roleId == 2) {
+//			List<OrderEntity> orderList = orderRepository.findAllByManagerIdEquals(user.getId());
+//			model.addObject("orderList", orderList);
+//		}
+
+		model.addObject("eorderList", false);
 
 		model.addObject("chat", chatEntity);
 		model.addObject("userList", userList);
+		model.addObject("selectUserList", selectUserList);
 		model.addObject("roleId", roleId);
 		model.setViewName("chat/form");
 

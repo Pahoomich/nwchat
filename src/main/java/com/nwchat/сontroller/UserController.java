@@ -1,8 +1,8 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.UserEntity;
+import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,8 +22,13 @@ import java.util.stream.IntStream;
 @RequestMapping("/users")
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+	private final UserRepository userRepository;
+
+	public UserController(UserService userService, UserRepository userRepository) {
+		this.userService = userService;
+		this.userRepository = userRepository;
+	}
 
 	@GetMapping("")
 	public String userList(Model model,
@@ -36,7 +42,7 @@ public class UserController {
 			all = userService.findAllByFioIgnoreCase(pageable, value);
 		} else {
 			//all = userService.findAll(pageable);
-			all = userService.findAllByActive(pageable, 1);
+			all = userService.findAll(pageable);
 		}
 
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
@@ -83,12 +89,18 @@ public class UserController {
 	@PostMapping("/form")
 	public String addNewUser(@ModelAttribute @Valid UserEntity user, BindingResult errors, SessionStatus status) {
 
-        if (errors.hasErrors()) {
+		Optional<UserEntity> r = userRepository.findByActiveAndRoleId(1, 1);
+
+
+		if (errors.hasErrors() && user.getRoleId() == 1 ) {
 			return "users/form";
 		}
 		user.setActive(1);
+
 		userService.saveUser(user);
 		status.setComplete();
+
+
 		return "redirect:";
 	}
 
@@ -98,6 +110,15 @@ public class UserController {
 		UserEntity user = new UserEntity();
 		user = userService.findById(id);
 		user.setActive(0);
+		userService.saveUser(user);
+		return "redirect:";
+	}
+	@RequestMapping("/active")
+	public String activeUser(@RequestParam("id") int id) {
+//        userService.deleteById(id);
+		UserEntity user = new UserEntity();
+		user = userService.findById(id);
+		user.setActive(1);
 		userService.saveUser(user);
 		return "redirect:";
 	}

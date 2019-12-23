@@ -30,10 +30,30 @@
         </div>
     </div>
 
+
     <div id="chat-page" class="hidden">
         <div class="chat-container">
             <div class="chat-header" style="width: 250px">
                 <h2 th:text="${chatName}">NWChat Demo</h2>
+                <div th:if="${eorderList}">
+                    <h5>Челист</h5>
+                    <th:block th:each="check : ${checkLists}">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox"
+                                           class="remoute"
+                                           th:attr="data-id=${check.getCheckListItemsByCheckListItemId().getId()}"
+                                           th:checked="${check.getCheckListItemsByCheckListItemId().getDateEndWork()}!=null">
+                                </div>
+                            </div>
+                            <span class="form-control"
+                                  th:text="${check.getCheckListItemsByCheckListItemId().getName()}">
+                                Редактировать
+                            </span>
+                        </div>
+                    </th:block>
+                </div>
             </div>
             <div class="connecting">
                 Connecting...

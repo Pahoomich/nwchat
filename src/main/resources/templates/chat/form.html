@@ -19,7 +19,7 @@
                     <label for="title">Name:</label>
                 </div>
                 <div class="col-sm-5 col-12 text-left">
-                    <input name="chatEntity.title" type="text" id="title" class="form-control"
+                    <input name="chatEntity.name" type="text" id="title" class="form-control"
                            placeholder="Название чата" required autofocus th:value="*{name}">
                 </div>
 
@@ -29,9 +29,43 @@
                     <label for="title">Участники:</label>
                 </div>
                 <div class="col-sm-5 col-12 text-left">
-                    <select class="select-two" name="UserIds[]" multiple="multiple">
+                    <select th:if="${roleId}<3" class="select-two select-two-ml" multiple="multiple">
                         <th:block th:each="user : ${userList}">
-                            <option th:value="${user.getId()}" th:text="${user.getFIO()}">Alabama</option>
+                            <option th:value="${user.getId()}"
+                                    th:selected="${selectUserList.contains(user.getId())}"
+                                    th:text="${user.getFIO()}">
+                                Alabama
+                            </option>
+                        </th:block>
+                    </select>
+                    <select th:if="${roleId}==3" class="select-two select-two-ml">
+                        <th:block th:each="user : ${userList}">
+                            <option th:value="${user.getId()}"
+                                    th:selected="${selectUserList.contains(user.getId())}"
+                                    th:text="${user.getFIO()}">
+                                Alabama
+                            </option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="col-sm-5 col-12 text-left">
+                </div>
+                <div id="hts" style="display: none">
+
+                </div>
+
+
+                <div th:if="${eorderList}" class="col-sm-2 col-12">
+                    <label for="title">Взять чеклист из приказа:</label>
+                </div>
+                <div th:if="${eorderList}" class="col-sm-5 col-12 text-left">
+                    <select class="select-two" name="orderId">
+                        <th:block th:each="order : ${orderList}">
+                            <option th:value="${order.getId()}"
+                                    th:selected="${order.equals(selectedOrder)}"
+                                    th:text="${order.getNumNName()}">
+                                Alabama
+                            </option>
                         </th:block>
                     </select>
                 </div>
@@ -41,10 +75,9 @@
 
 
                 <div class="actions col-12">
-                    <button class="btn btn-success text-uppercase" type="submit">Save</button>
+                    <button id="svbtn" class="btn btn-success text-uppercase" type="submit">Save</button>
                     <a class="btn btn-secondary" th:href="@{/chat/}">Back</a>
                 </div>
-
             </div>
         </form>
     </div>

@@ -7,7 +7,7 @@ function getFreeIndex() {
 }
 
 
-function check_loginNewTaskElement(taskString) {
+function createNewTaskElement() {
 
     var editInput = document.createElement("input");
     editInput.type = "text";
@@ -54,6 +54,23 @@ function addTask() {
 
 
 window.onload = function () {
+
+    var listCheckBocks = document.querySelectorAll(".remoute");
+
+    for (let listCheckBock of listCheckBocks) {
+
+        listCheckBock.addEventListener('change', (event) => {
+            var checkId = listCheckBock.getAttribute("data-id");
+            if (event.target.checked) {
+                console.log('checked');
+                $.post("/items/" + checkId + "/c");
+            } else {
+                console.log('not checked');
+                $.post("/items/" + checkId + "/u");
+            }
+        })
+    }
+
 
     var addButton = document.getElementById("addButton");
     incompleteTaskHolder = document.getElementById("incomplete-tasks");

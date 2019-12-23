@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -26,4 +27,6 @@ public interface UserRepository extends PagingAndSortingRepository<UserEntity, I
 	UserEntity findById(int id);
 
 	Page<UserEntity> findAllByActive(Pageable pageable, int active);
+
+	Optional<UserEntity> findByActiveAndRoleId(int active, int roleId);
 }
