@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TestUserServiceManager implements UserService {
 
@@ -61,5 +62,10 @@ public class TestUserServiceManager implements UserService {
     @Override
     public void saveSingUpUser(UserEntity user) {
 
+    }
+
+    @Override
+    public Optional<UserEntity> findByActiveAndRoleId(int i, int i1) {
+        return Optional.empty();
     }
 }

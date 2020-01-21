@@ -6,7 +6,6 @@ import com.nwchat.repository.OrderRepository;
 import com.nwchat.repository.ReportRepository;
 import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,16 +20,17 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/report")
 public class ReportController {
-	@Autowired
-	private ReportRepository reportRepository;
+	private final ReportRepository reportRepository;
+	private final OrderRepository orderRepository;
+	private final UserRepository userRepository;
+	private final UserService userService;
 
-	@Autowired
-	private OrderRepository orderRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserService userService;
+	public ReportController(ReportRepository reportRepository, OrderRepository orderRepository, UserRepository userRepository, UserService userService) {
+		this.reportRepository = reportRepository;
+		this.orderRepository = orderRepository;
+		this.userRepository = userRepository;
+		this.userService = userService;
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -72,7 +72,7 @@ public class ReportController {
 
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView create(@Valid ReportEntity reportEntity, BindingResult result) {
+	public ModelAndView save(@Valid ReportEntity reportEntity, BindingResult result) {
 		Integer roleId = userService.getAuthenticationUser().getRoleId();
 
 		ModelAndView model = new ModelAndView();

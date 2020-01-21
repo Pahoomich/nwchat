@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TestUserRepo extends AbstTestRepo<UserEntity> implements UserRepository {
 
@@ -108,7 +109,12 @@ public class TestUserRepo extends AbstTestRepo<UserEntity> implements UserReposi
 		return userEntityPage;
     }
 
-    @Override
+	@Override
+	public Optional<UserEntity> findByActiveAndRoleId(int active, int roleId) {
+		return Optional.empty();
+	}
+
+	@Override
     public Iterable<UserEntity> findAll(Sort sort) {
         return null;
     }

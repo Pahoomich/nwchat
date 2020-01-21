@@ -1,13 +1,13 @@
 package com.nwchat.service;
 
 import com.nwchat.entity.UserEntity;
-import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TestUserServiceLK implements UserService {
 	List<UserEntity> userEntitiesList = new ArrayList<>();
@@ -133,5 +133,10 @@ public class TestUserServiceLK implements UserService {
 	@Override
 	public void saveSingUpUser(UserEntity user) {
 
+	}
+
+	@Override
+	public Optional<UserEntity> findByActiveAndRoleId(int i, int i1) {
+		return Optional.empty();
 	}
 }

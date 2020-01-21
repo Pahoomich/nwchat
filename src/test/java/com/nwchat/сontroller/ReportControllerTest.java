@@ -20,7 +20,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReportControllerTest {
 
@@ -182,7 +183,7 @@ class ReportControllerTest {
         List<OrderEntity> orderEntityList = new ArrayList<>();
         ModelAndView show = reportController.update(id);
         ReportEntity reportEntity = testReportRepo.findById(id).get();
-        orderEntityList.add(reportEntity.getOrdersByOrderId());
+        orderEntityList.addAll((List<OrderEntity>)testOrderRepo.findAll());
         assertEquals("report/form",show.getViewName());
         assertEquals(reportEntity,show.getModel().get("report"));
         assertEquals(orderEntityList,show.getModel().get("orderList"));

@@ -1,7 +1,6 @@
 package com.nwchat.сontroller;
 
 import com.nwchat.entity.UserEntity;
-import com.nwchat.repository.UserRepository;
 import com.nwchat.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +22,9 @@ import java.util.stream.IntStream;
 public class UserController {
 
 	private final UserService userService;
-	private final UserRepository userRepository;
 
-	public UserController(UserService userService, UserRepository userRepository) {
+	public UserController(UserService userService) {
 		this.userService = userService;
-		this.userRepository = userRepository;
 	}
 
 	@GetMapping("")
@@ -88,8 +85,7 @@ public class UserController {
 
 	@PostMapping("/form")
 	public String addNewUser(@ModelAttribute @Valid UserEntity user, BindingResult errors, SessionStatus status) {
-
-		Optional<UserEntity> r = userRepository.findByActiveAndRoleId(1, 1);
+		Optional<UserEntity> r = userService.findByActiveAndRoleId(1, 1);
 
 
 		if (errors.hasErrors() && user.getRoleId() == 1 ) {

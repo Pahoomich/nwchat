@@ -274,7 +274,7 @@
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/home/pavelpp/Загрузки/apache-jmeter-5.2.1/bin/log_perf_test_last.jtl</stringProp>
       </ResultCollector>
       <hashTree/>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -311,7 +311,7 @@
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/home/pavelpp/Загрузки/apache-jmeter-5.2.1/bin/log_perf_test_last.jtl</stringProp>
       </ResultCollector>
       <hashTree/>
       <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
@@ -348,7 +348,7 @@
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/home/pavelpp/Загрузки/apache-jmeter-5.2.1/bin/log_perf_test_last.jtl</stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>

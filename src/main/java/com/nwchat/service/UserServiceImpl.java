@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -47,6 +48,11 @@ public class UserServiceImpl implements UserService {
 //        RoleEntity userRole = roleRepository.findById(user.getRoleId()).orElse(roleRepository.findByRole("user"));
 		user.setRole(userRole);
 		userRepository.save(user);
+	}
+
+	@Override
+	public Optional<UserEntity> findByActiveAndRoleId(int i, int i1) {
+		return userRepository.findByActiveAndRoleId(i,i1);
 	}
 
 	@Override
